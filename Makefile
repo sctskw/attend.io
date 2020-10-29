@@ -11,6 +11,7 @@ build:
 	@swagger generate server -A $(NAME) -f ./swagger.yml
 
 docs:
+	@npx swagger-markdown -i ./swagger.yml -o docs.md
 	@swagger-codegen generate -i ./swagger.yml -l html2 -o docs
 
 serve:
