@@ -14,7 +14,7 @@ import (
 
 // Talk talk
 //
-// swagger:model talk
+// swagger:model Talk
 type Talk struct {
 
 	// id

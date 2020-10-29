@@ -14,17 +14,17 @@ paths:
   /:
     get:
       tags:
-        - status
+        - system
       responses:
         200:
           description: api status
           schema:
             type: object
-            $ref: "#/definitions/status"
+            $ref: "#/definitions/SystemStatus"
         default:
           description: generic error response
           schema:
-            $ref: "#/definitions/error"
+            $ref: "#/definitions/Error"
   /talks:
     get:
       tags:
@@ -35,14 +35,14 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/talk"
+              $ref: "#/definitions/Talk"
         default:
           description: generic error response
           schema:
-            $ref: "#/definitions/error"
+            $ref: "#/definitions/Error"
 
 definitions:
-  talk:
+  Talk:
     type: object
     required:
       - name
@@ -54,7 +54,8 @@ definitions:
       name:
         type: string
         minLength: 1
-  attendee:
+
+  Attendee:
     type: object
     required:
       - name
@@ -66,7 +67,8 @@ definitions:
       name:
         type: string
         minLength: 1
-  event:
+
+  Event:
     type: object
     required:
       - name
@@ -81,7 +83,8 @@ definitions:
       talk:
         type: integer
         format: uuid
-  error:
+
+  Error:
     type: object
     required:
       - message
@@ -91,7 +94,8 @@ definitions:
         format: int64
       message:
         type: string
-  status:
+
+  SystemStatus:
     type: object
     required:
       - message

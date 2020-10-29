@@ -14,7 +14,7 @@ import (
 
 // Event event
 //
-// swagger:model event
+// swagger:model Event
 type Event struct {
 
 	// id

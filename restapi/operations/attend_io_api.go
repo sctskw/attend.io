@@ -19,7 +19,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/sctskw/attend.io/restapi/operations/status"
+	"github.com/sctskw/attend.io/restapi/operations/system"
 	"github.com/sctskw/attend.io/restapi/operations/talks"
 )
 
@@ -45,8 +45,8 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		StatusGetHandler: status.GetHandlerFunc(func(params status.GetParams) middleware.Responder {
-			return middleware.NotImplemented("operation status.Get has not yet been implemented")
+		SystemGetHandler: system.GetHandlerFunc(func(params system.GetParams) middleware.Responder {
+			return middleware.NotImplemented("operation system.Get has not yet been implemented")
 		}),
 		TalksGetTalksHandler: talks.GetTalksHandlerFunc(func(params talks.GetTalksParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.GetTalks has not yet been implemented")
@@ -85,8 +85,8 @@ type AttendIoAPI struct {
 	//   - application/github.com/sctskw/attend.io.v1+json
 	JSONProducer runtime.Producer
 
-	// StatusGetHandler sets the operation handler for the get operation
-	StatusGetHandler status.GetHandler
+	// SystemGetHandler sets the operation handler for the get operation
+	SystemGetHandler system.GetHandler
 	// TalksGetTalksHandler sets the operation handler for the get talks operation
 	TalksGetTalksHandler talks.GetTalksHandler
 	// ServeError is called when an error is received, there is a default handler
@@ -165,8 +165,8 @@ func (o *AttendIoAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.StatusGetHandler == nil {
-		unregistered = append(unregistered, "status.GetHandler")
+	if o.SystemGetHandler == nil {
+		unregistered = append(unregistered, "system.GetHandler")
 	}
 	if o.TalksGetTalksHandler == nil {
 		unregistered = append(unregistered, "talks.GetTalksHandler")
@@ -262,7 +262,7 @@ func (o *AttendIoAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"][""] = status.NewGet(o.context, o.StatusGetHandler)
+	o.handlers["GET"][""] = system.NewGet(o.context, o.SystemGetHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

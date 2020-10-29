@@ -37,20 +37,20 @@ func init() {
     "/": {
       "get": {
         "tags": [
-          "status"
+          "system"
         ],
         "responses": {
           "200": {
             "description": "api status",
             "schema": {
               "type": "object",
-              "$ref": "#/definitions/status"
+              "$ref": "#/definitions/SystemStatus"
             }
           },
           "default": {
             "description": "generic error response",
             "schema": {
-              "$ref": "#/definitions/error"
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -67,14 +67,14 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/talk"
+                "$ref": "#/definitions/Talk"
               }
             }
           },
           "default": {
             "description": "generic error response",
             "schema": {
-              "$ref": "#/definitions/error"
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -82,7 +82,7 @@ func init() {
     }
   },
   "definitions": {
-    "attendee": {
+    "Attendee": {
       "type": "object",
       "required": [
         "name"
@@ -99,7 +99,7 @@ func init() {
         }
       }
     },
-    "error": {
+    "Error": {
       "type": "object",
       "required": [
         "message"
@@ -114,7 +114,7 @@ func init() {
         }
       }
     },
-    "event": {
+    "Event": {
       "type": "object",
       "required": [
         "name"
@@ -135,7 +135,7 @@ func init() {
         }
       }
     },
-    "status": {
+    "SystemStatus": {
       "type": "object",
       "required": [
         "message"
@@ -150,7 +150,7 @@ func init() {
         }
       }
     },
-    "talk": {
+    "Talk": {
       "type": "object",
       "required": [
         "name"
@@ -189,20 +189,20 @@ func init() {
     "/": {
       "get": {
         "tags": [
-          "status"
+          "system"
         ],
         "responses": {
           "200": {
             "description": "api status",
             "schema": {
               "type": "object",
-              "$ref": "#/definitions/status"
+              "$ref": "#/definitions/SystemStatus"
             }
           },
           "default": {
             "description": "generic error response",
             "schema": {
-              "$ref": "#/definitions/error"
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -219,14 +219,14 @@ func init() {
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/talk"
+                "$ref": "#/definitions/Talk"
               }
             }
           },
           "default": {
             "description": "generic error response",
             "schema": {
-              "$ref": "#/definitions/error"
+              "$ref": "#/definitions/Error"
             }
           }
         }
@@ -234,7 +234,7 @@ func init() {
     }
   },
   "definitions": {
-    "attendee": {
+    "Attendee": {
       "type": "object",
       "required": [
         "name"
@@ -251,7 +251,7 @@ func init() {
         }
       }
     },
-    "error": {
+    "Error": {
       "type": "object",
       "required": [
         "message"
@@ -266,7 +266,7 @@ func init() {
         }
       }
     },
-    "event": {
+    "Event": {
       "type": "object",
       "required": [
         "name"
@@ -287,7 +287,7 @@ func init() {
         }
       }
     },
-    "status": {
+    "SystemStatus": {
       "type": "object",
       "required": [
         "message"
@@ -302,7 +302,7 @@ func init() {
         }
       }
     },
-    "talk": {
+    "Talk": {
       "type": "object",
       "required": [
         "name"

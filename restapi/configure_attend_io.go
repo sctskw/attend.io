@@ -6,12 +6,11 @@ import (
 	"crypto/tls"
 	"net/http"
 
+	"github.com/sctskw/attend.io/restapi/handlers"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/runtime/middleware"
-
 	"github.com/sctskw/attend.io/restapi/operations"
-	"github.com/sctskw/attend.io/restapi/operations/talks"
 )
 
 //go:generate swagger generate server --target ../../attend.io --name AttendIo --spec ../swagger.yml --principal interface{}
@@ -38,11 +37,8 @@ func configureAPI(api *operations.AttendIoAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.TalksGetTalksHandler == nil {
-		api.TalksGetTalksHandler = talks.GetTalksHandlerFunc(func(params talks.GetTalksParams) middleware.Responder {
-			return middleware.NotImplemented("operation talks.GetTalks has not yet been implemented")
-		})
-	}
+	//attach the handlers
+	handlers.AttachHandlers(api)
 
 	api.PreServerShutdown = func() {}
 

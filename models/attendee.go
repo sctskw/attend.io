@@ -14,7 +14,7 @@ import (
 
 // Attendee attendee
 //
-// swagger:model attendee
+// swagger:model Attendee
 type Attendee struct {
 
 	// id
