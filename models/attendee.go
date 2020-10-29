@@ -17,21 +17,51 @@ import (
 // swagger:model Attendee
 type Attendee struct {
 
+	// email
+	// Format: email
+	Email strfmt.Email `json:"email,omitempty"`
+
 	// id
 	// Read Only: true
-	ID int64 `json:"id,omitempty"`
+	// Format: uuid
+	ID strfmt.UUID `json:"id,omitempty"`
 
-	// name
+	// name display
+	// Min Length: 1
+	NameDisplay string `json:"name_display,omitempty"`
+
+	// name first
 	// Required: true
 	// Min Length: 1
-	Name *string `json:"name"`
+	NameFirst *string `json:"name_first"`
+
+	// name last
+	// Required: true
+	// Min Length: 1
+	NameLast *string `json:"name_last"`
 }
 
 // Validate validates this attendee
 func (m *Attendee) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateName(formats); err != nil {
+	if err := m.validateEmail(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNameDisplay(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNameFirst(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateNameLast(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -41,13 +71,65 @@ func (m *Attendee) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Attendee) validateName(formats strfmt.Registry) error {
+func (m *Attendee) validateEmail(formats strfmt.Registry) error {
 
-	if err := validate.Required("name", "body", m.Name); err != nil {
+	if swag.IsZero(m.Email) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("email", "body", "email", m.Email.String(), formats); err != nil {
 		return err
 	}
 
-	if err := validate.MinLength("name", "body", string(*m.Name), 1); err != nil {
+	return nil
+}
+
+func (m *Attendee) validateID(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ID) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("id", "body", "uuid", m.ID.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Attendee) validateNameDisplay(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.NameDisplay) { // not required
+		return nil
+	}
+
+	if err := validate.MinLength("name_display", "body", string(m.NameDisplay), 1); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Attendee) validateNameFirst(formats strfmt.Registry) error {
+
+	if err := validate.Required("name_first", "body", m.NameFirst); err != nil {
+		return err
+	}
+
+	if err := validate.MinLength("name_first", "body", string(*m.NameFirst), 1); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Attendee) validateNameLast(formats strfmt.Registry) error {
+
+	if err := validate.Required("name_last", "body", m.NameLast); err != nil {
+		return err
+	}
+
+	if err := validate.MinLength("name_last", "body", string(*m.NameLast), 1); err != nil {
 		return err
 	}
 

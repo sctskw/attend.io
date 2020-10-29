@@ -19,7 +19,8 @@ type Event struct {
 
 	// id
 	// Read Only: true
-	ID int64 `json:"id,omitempty"`
+	// Format: uuid
+	ID strfmt.UUID `json:"id,omitempty"`
 
 	// name
 	// Required: true
@@ -27,20 +28,42 @@ type Event struct {
 	Name *string `json:"name"`
 
 	// talk
-	Talk int64 `json:"talk,omitempty"`
+	// Format: uuid
+	Talk strfmt.UUID `json:"talk,omitempty"`
 }
 
 // Validate validates this event
 func (m *Event) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateName(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTalk(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Event) validateID(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ID) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("id", "body", "uuid", m.ID.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -51,6 +74,19 @@ func (m *Event) validateName(formats strfmt.Registry) error {
 	}
 
 	if err := validate.MinLength("name", "body", string(*m.Name), 1); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Event) validateTalk(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Talk) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("talk", "body", "uuid", m.Talk.String(), formats); err != nil {
 		return err
 	}
 

@@ -17,9 +17,13 @@ import (
 // swagger:model Talk
 type Talk struct {
 
+	// attendees
+	Attendees AttendeesList `json:"attendees,omitempty"`
+
 	// id
 	// Read Only: true
-	ID int64 `json:"id,omitempty"`
+	// Format: uuid
+	ID strfmt.UUID `json:"id,omitempty"`
 
 	// name
 	// Required: true
@@ -31,6 +35,14 @@ type Talk struct {
 func (m *Talk) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateAttendees(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateName(formats); err != nil {
 		res = append(res, err)
 	}
@@ -38,6 +50,35 @@ func (m *Talk) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Talk) validateAttendees(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Attendees) { // not required
+		return nil
+	}
+
+	if err := m.Attendees.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("attendees")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *Talk) validateID(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ID) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("id", "body", "uuid", m.ID.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

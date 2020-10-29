@@ -48,25 +48,43 @@ definitions:
       - name
     properties:
       id:
-        type: integer
-        format: int64
-        readOnly: true
-      name:
         type: string
-        minLength: 1
-
-  Attendee:
-    type: object
-    required:
-      - name
-    properties:
-      id:
-        type: integer
         format: uuid
         readOnly: true
       name:
         type: string
         minLength: 1
+
+      attendees:
+        $ref: "#/definitions/AttendeesList"
+
+  Attendee:
+    type: object
+    required:
+      - name_first
+      - name_last
+    properties:
+      id:
+        type: string
+        format: uuid
+        readOnly: true
+      name_display:
+        type: string
+        minLength: 1
+      name_first:
+        type: string
+        minLength: 1
+      name_last:
+        type: string
+        minLength: 1
+      email:
+        type: string
+        format: email
+
+  AttendeesList:
+    type: array
+    items:
+      $ref: "#/definitions/Attendee"
 
   Event:
     type: object
@@ -74,14 +92,14 @@ definitions:
       - name
     properties:
       id:
-        type: integer
+        type: string
         format: uuid
         readOnly: true
       name:
         type: string
         minLength: 1
       talk:
-        type: integer
+        type: string
         format: uuid
 
   Error:

@@ -2,10 +2,9 @@ package handlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/swag"
-	"github.com/sctskw/attend.io/models"
 	"github.com/sctskw/attend.io/restapi/operations"
 	"github.com/sctskw/attend.io/restapi/operations/system"
+	"github.com/sctskw/attend.io/services"
 )
 
 func AttachSystemHandlers(api *operations.AttendIoAPI) {
@@ -13,8 +12,5 @@ func AttachSystemHandlers(api *operations.AttendIoAPI) {
 }
 
 func GetSystemStatus(params system.GetParams) middleware.Responder {
-	return system.NewGetOK().WithPayload(&models.SystemStatus{
-		Code:    200,
-		Message: swag.String("attend.io is running"),
-	})
+	return system.NewGetOK().WithPayload(services.GetSystemStatus())
 }

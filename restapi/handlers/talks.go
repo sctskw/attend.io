@@ -4,6 +4,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/sctskw/attend.io/restapi/operations"
 	"github.com/sctskw/attend.io/restapi/operations/talks"
+	"github.com/sctskw/attend.io/services"
 )
 
 func AttachTalksHandlers(api *operations.AttendIoAPI) {
@@ -11,5 +12,5 @@ func AttachTalksHandlers(api *operations.AttendIoAPI) {
 }
 
 func GetTalks(params talks.GetTalksParams) middleware.Responder {
-	return middleware.NotImplemented("operation talks.GetTalks has not yet been implemented")
+	return talks.NewGetTalksOK().WithPayload(services.GetTalks())
 }

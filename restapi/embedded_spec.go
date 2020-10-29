@@ -85,18 +85,37 @@ func init() {
     "Attendee": {
       "type": "object",
       "required": [
-        "name"
+        "name_first",
+        "name_last"
       ],
       "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
         "id": {
-          "type": "integer",
+          "type": "string",
           "format": "uuid",
           "readOnly": true
         },
-        "name": {
+        "name_display": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name_first": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name_last": {
           "type": "string",
           "minLength": 1
         }
+      }
+    },
+    "AttendeesList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Attendee"
       }
     },
     "Error": {
@@ -121,7 +140,7 @@ func init() {
       ],
       "properties": {
         "id": {
-          "type": "integer",
+          "type": "string",
           "format": "uuid",
           "readOnly": true
         },
@@ -130,7 +149,7 @@ func init() {
           "minLength": 1
         },
         "talk": {
-          "type": "integer",
+          "type": "string",
           "format": "uuid"
         }
       }
@@ -156,9 +175,12 @@ func init() {
         "name"
       ],
       "properties": {
+        "attendees": {
+          "$ref": "#/definitions/AttendeesList"
+        },
         "id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
+          "format": "uuid",
           "readOnly": true
         },
         "name": {
@@ -237,18 +259,37 @@ func init() {
     "Attendee": {
       "type": "object",
       "required": [
-        "name"
+        "name_first",
+        "name_last"
       ],
       "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
         "id": {
-          "type": "integer",
+          "type": "string",
           "format": "uuid",
           "readOnly": true
         },
-        "name": {
+        "name_display": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name_first": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name_last": {
           "type": "string",
           "minLength": 1
         }
+      }
+    },
+    "AttendeesList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Attendee"
       }
     },
     "Error": {
@@ -273,7 +314,7 @@ func init() {
       ],
       "properties": {
         "id": {
-          "type": "integer",
+          "type": "string",
           "format": "uuid",
           "readOnly": true
         },
@@ -282,7 +323,7 @@ func init() {
           "minLength": 1
         },
         "talk": {
-          "type": "integer",
+          "type": "string",
           "format": "uuid"
         }
       }
@@ -308,9 +349,12 @@ func init() {
         "name"
       ],
       "properties": {
+        "attendees": {
+          "$ref": "#/definitions/AttendeesList"
+        },
         "id": {
-          "type": "integer",
-          "format": "int64",
+          "type": "string",
+          "format": "uuid",
           "readOnly": true
         },
         "name": {
