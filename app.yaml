@@ -5,4 +5,4 @@ main: ./cmd/attend-io-server
 handlers:
   - url: /docs
     http_headers:
-      Access-Control-Allow-Origin: *
+      Access-Control-Allow-Origin: http://attend-io-294107.uc.r.appspot.com
