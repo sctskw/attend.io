@@ -206,6 +206,12 @@ definitions:
       name:
         type: string
         minLength: 1
+      date_time_start:
+        type: string
+        format: date-time
+      date_time_end:
+        type: string
+        format: date-time
       ref_talk:
         $ref: "#/definitions/Talk"
       ref_attendees:

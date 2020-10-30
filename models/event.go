@@ -17,6 +17,14 @@ import (
 // swagger:model Event
 type Event struct {
 
+	// date time end
+	// Format: date-time
+	DateTimeEnd strfmt.DateTime `json:"date_time_end,omitempty"`
+
+	// date time start
+	// Format: date-time
+	DateTimeStart strfmt.DateTime `json:"date_time_start,omitempty"`
+
 	// id
 	// Read Only: true
 	ID string `json:"id,omitempty"`
@@ -37,6 +45,14 @@ type Event struct {
 func (m *Event) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateDateTimeEnd(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDateTimeStart(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateName(formats); err != nil {
 		res = append(res, err)
 	}
@@ -52,6 +68,32 @@ func (m *Event) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Event) validateDateTimeEnd(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DateTimeEnd) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("date_time_end", "body", "date-time", m.DateTimeEnd.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Event) validateDateTimeStart(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DateTimeStart) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("date_time_start", "body", "date-time", m.DateTimeStart.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

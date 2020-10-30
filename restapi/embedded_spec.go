@@ -286,6 +286,14 @@ func init() {
         "name"
       ],
       "properties": {
+        "date_time_end": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "date_time_start": {
+          "type": "string",
+          "format": "date-time"
+        },
         "id": {
           "type": "string",
           "readOnly": true
@@ -625,6 +633,14 @@ func init() {
         "name"
       ],
       "properties": {
+        "date_time_end": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "date_time_start": {
+          "type": "string",
+          "format": "date-time"
+        },
         "id": {
           "type": "string",
           "readOnly": true

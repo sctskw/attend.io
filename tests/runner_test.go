@@ -39,7 +39,7 @@ func TestExampleTestSuite(t *testing.T) {
 
 func (s *ApiTestSuite) SetupSuite() {
 
-	creds, _ := filepath.Abs("../creds.json")
+	creds, _ := filepath.Abs("../.gcloud/attend-io.creds.json")
 	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", creds)
 
 	s.server = GetHttpServer()
