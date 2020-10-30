@@ -13,3 +13,9 @@ func NewEvent(name string, talk strfmt.UUID, attendees []*Attendee) *Event {
 		Talk: talk,
 	}
 }
+
+func NewEventList(e ...*Event) EventList {
+	events := EventList{}
+	events = append(events, e...)
+	return events
+}

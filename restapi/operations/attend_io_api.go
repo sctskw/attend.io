@@ -62,6 +62,9 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 		AttendeesGetAttendeesByEventIDHandler: attendees.GetAttendeesByEventIDHandlerFunc(func(params attendees.GetAttendeesByEventIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation attendees.GetAttendeesByEventID has not yet been implemented")
 		}),
+		EventsGetEventByIDHandler: events.GetEventByIDHandlerFunc(func(params events.GetEventByIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation events.GetEventByID has not yet been implemented")
+		}),
 	}
 }
 
@@ -106,6 +109,8 @@ type AttendIoAPI struct {
 	AttendeesGetAttendeeByFieldHandler attendees.GetAttendeeByFieldHandler
 	// AttendeesGetAttendeesByEventIDHandler sets the operation handler for the get attendees by event Id operation
 	AttendeesGetAttendeesByEventIDHandler attendees.GetAttendeesByEventIDHandler
+	// EventsGetEventByIDHandler sets the operation handler for the get event by Id operation
+	EventsGetEventByIDHandler events.GetEventByIDHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -196,6 +201,9 @@ func (o *AttendIoAPI) Validate() error {
 	}
 	if o.AttendeesGetAttendeesByEventIDHandler == nil {
 		unregistered = append(unregistered, "attendees.GetAttendeesByEventIDHandler")
+	}
+	if o.EventsGetEventByIDHandler == nil {
+		unregistered = append(unregistered, "events.GetEventByIDHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -305,6 +313,10 @@ func (o *AttendIoAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/attendees/{eventId}"] = attendees.NewGetAttendeesByEventID(o.context, o.AttendeesGetAttendeesByEventIDHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/events/{id}"] = events.NewGetEventByID(o.context, o.EventsGetEventByIDHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

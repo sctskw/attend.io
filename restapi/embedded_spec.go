@@ -135,10 +135,39 @@ func init() {
           "200": {
             "description": "list the events",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Event"
-              }
+              "$ref": "#/definitions/EventList"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "operationId": "getEventById",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Event ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the requested Event",
+            "schema": {
+              "$ref": "#/definitions/Event"
             }
           },
           "default": {
@@ -159,10 +188,7 @@ func init() {
           "200": {
             "description": "list the talks",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Talk"
-              }
+              "$ref": "#/definitions/TalkList"
             }
           },
           "default": {
@@ -248,6 +274,12 @@ func init() {
         }
       }
     },
+    "EventList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Event"
+      }
+    },
     "SystemStatus": {
       "type": "object",
       "required": [
@@ -281,6 +313,12 @@ func init() {
           "type": "string",
           "minLength": 1
         }
+      }
+    },
+    "TalkList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Talk"
       }
     }
   }
@@ -403,10 +441,39 @@ func init() {
           "200": {
             "description": "list the events",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Event"
-              }
+              "$ref": "#/definitions/EventList"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "operationId": "getEventById",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Event ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the requested Event",
+            "schema": {
+              "$ref": "#/definitions/Event"
             }
           },
           "default": {
@@ -427,10 +494,7 @@ func init() {
           "200": {
             "description": "list the talks",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Talk"
-              }
+              "$ref": "#/definitions/TalkList"
             }
           },
           "default": {
@@ -516,6 +580,12 @@ func init() {
         }
       }
     },
+    "EventList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Event"
+      }
+    },
     "SystemStatus": {
       "type": "object",
       "required": [
@@ -549,6 +619,12 @@ func init() {
           "type": "string",
           "minLength": 1
         }
+      }
+    },
+    "TalkList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Talk"
       }
     }
   }

@@ -6,14 +6,13 @@ import (
 	"github.com/sctskw/attend.io/models"
 )
 
-func GetAllEvents() []*models.Event {
-	//TODO: models.NewEventList
-	return []*models.Event{
+func GetAllEvents() models.EventList {
+	return models.EventList{
 		models.NewEvent("Event 1", strfmt.UUID(uuid.New().String()), nil),
 		models.NewEvent("Event 2", strfmt.UUID(uuid.New().String()), nil),
 	}
 }
 
-func GetEventById(id string) *models.Event {
+func GetEventById(id strfmt.UUID) *models.Event {
 	return models.NewEvent("Event 3", strfmt.UUID(uuid.New().String()), nil)
 }

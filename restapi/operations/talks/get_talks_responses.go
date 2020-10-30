@@ -25,7 +25,7 @@ type GetTalksOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []*models.Talk `json:"body,omitempty"`
+	Payload models.TalkList `json:"body,omitempty"`
 }
 
 // NewGetTalksOK creates GetTalksOK with default headers values
@@ -35,13 +35,13 @@ func NewGetTalksOK() *GetTalksOK {
 }
 
 // WithPayload adds the payload to the get talks o k response
-func (o *GetTalksOK) WithPayload(payload []*models.Talk) *GetTalksOK {
+func (o *GetTalksOK) WithPayload(payload models.TalkList) *GetTalksOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get talks o k response
-func (o *GetTalksOK) SetPayload(payload []*models.Talk) {
+func (o *GetTalksOK) SetPayload(payload models.TalkList) {
 	o.Payload = payload
 }
 
@@ -52,7 +52,7 @@ func (o *GetTalksOK) WriteResponse(rw http.ResponseWriter, producer runtime.Prod
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = make([]*models.Talk, 0, 50)
+		payload = models.TalkList{}
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

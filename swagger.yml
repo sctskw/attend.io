@@ -33,9 +33,7 @@ paths:
         200:
           description: list the talks
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Talk"
+            $ref: "#/definitions/TalkList"
         default:
           description: generic error response
           schema:
@@ -49,9 +47,29 @@ paths:
         200:
           description: list the events
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Event"
+            $ref: "#/definitions/EventList"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/Error"
+
+  /events/{id}:
+    get:
+      tags:
+        - events
+      operationId: getEventById
+      parameters:
+        - name: id
+          in: path
+          description: Event ID
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: the requested Event
+          schema:
+            $ref: "#/definitions/Event"
         default:
           description: generic error response
           schema:
@@ -106,6 +124,7 @@ paths:
             $ref: "#/definitions/Error"
 
 definitions:
+
   Talk:
     type: object
     required:
@@ -121,6 +140,11 @@ definitions:
 
       attendees:
         $ref: "#/definitions/AttendeesList"
+
+  TalkList:
+    type: array
+    items:
+      $ref: "#/definitions/Talk"
 
   Attendee:
     type: object
@@ -165,6 +189,11 @@ definitions:
       talk:
         type: string
         format: uuid
+
+  EventList:
+    type: array
+    items:
+      $ref: "#/definitions/Event"
 
   Error:
     type: object

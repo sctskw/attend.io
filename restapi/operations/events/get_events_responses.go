@@ -25,7 +25,7 @@ type GetEventsOK struct {
 	/*
 	  In: Body
 	*/
-	Payload []*models.Event `json:"body,omitempty"`
+	Payload models.EventList `json:"body,omitempty"`
 }
 
 // NewGetEventsOK creates GetEventsOK with default headers values
@@ -35,13 +35,13 @@ func NewGetEventsOK() *GetEventsOK {
 }
 
 // WithPayload adds the payload to the get events o k response
-func (o *GetEventsOK) WithPayload(payload []*models.Event) *GetEventsOK {
+func (o *GetEventsOK) WithPayload(payload models.EventList) *GetEventsOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get events o k response
-func (o *GetEventsOK) SetPayload(payload []*models.Event) {
+func (o *GetEventsOK) SetPayload(payload models.EventList) {
 	o.Payload = payload
 }
 
@@ -52,7 +52,7 @@ func (o *GetEventsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Pro
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = make([]*models.Event, 0, 50)
+		payload = models.EventList{}
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {
