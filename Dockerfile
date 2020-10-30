@@ -19,6 +19,7 @@ WORKDIR $DIR/
 
 COPY go.mod go.sum $DIR/
 RUN go mod download
+RUN go mod vendor
 COPY . .
 RUN CGO_ENABLED=0 go build -a -installsuffix cgo -o /app cmd/attend-io-server/main.go
 
