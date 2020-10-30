@@ -1,8 +1,15 @@
 package db
 
 type DatabaseClient interface {
+	Connect()
+	Ping()
+	FetchTalksById(id string)
 }
 
 func NewClient() DatabaseClient {
-	return nil
+	return NewFirestoreClient()
+}
+
+func NewMockClient() DatabaseClient {
+	return NewMemoryClient()
 }

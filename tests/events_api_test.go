@@ -21,3 +21,11 @@ func (s *ApiTestSuite) TestEventsAPI_GetEventById() {
 	s.Assert().Equal("Event 3", *event.Name)
 
 }
+
+func (s *ApiTestSuite) TestEventsAPI_GetEventAttendees() {
+
+	attendees := models.NewAttendeeList()
+
+	s.Fetch("/events/b4f896ea-1a74-11eb-adc1-0242ac120002/attendees", &attendees)
+	s.Assert().Len(attendees, 2, "returns total number of attendees")
+}

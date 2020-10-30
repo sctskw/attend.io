@@ -8,12 +8,7 @@ import (
 )
 
 func AttachAttendeesHandlers(api *operations.AttendIoAPI) {
-	api.AttendeesGetAttendeesByEventIDHandler = attendees.GetAttendeesByEventIDHandlerFunc(GetAttendeesByEventId)
 	api.AttendeesGetAttendeeByFieldHandler = attendees.GetAttendeeByFieldHandlerFunc(GetAttendeeByField)
-}
-
-func GetAttendeesByEventId(params attendees.GetAttendeesByEventIDParams) middleware.Responder {
-	return attendees.NewGetAttendeesByEventIDOK().WithPayload(services.Attendees().GetByEventId(params.EventID))
 }
 
 func GetAttendeeByField(params attendees.GetAttendeeByFieldParams) middleware.Responder {

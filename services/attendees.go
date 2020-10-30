@@ -7,7 +7,6 @@ import (
 )
 
 type AttendeeService interface {
-	GetByEventId(eventId strfmt.UUID) models.AttendeesList
 	GetById(id strfmt.UUID) *models.Attendee
 	GetByEmail(email strfmt.Email) *models.Attendee
 }
@@ -18,17 +17,6 @@ type attendeeService struct {
 
 func NewAttendeeService(client db.DatabaseClient) AttendeeService {
 	return &attendeeService{db: client}
-}
-
-func (s *attendeeService) GetName() string {
-	return "Attendees"
-}
-
-func (s *attendeeService) GetByEventId(eventId strfmt.UUID) models.AttendeesList {
-	return models.NewAttendeeList(
-		models.NewAttendee("John", "Smith", "john.smith@test.com"),
-		models.NewAttendee("Jane", "Doe", "jane.doe@test.com"),
-	)
 }
 
 func (s *attendeeService) GetById(id strfmt.UUID) *models.Attendee {

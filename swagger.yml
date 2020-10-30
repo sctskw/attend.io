@@ -98,7 +98,29 @@ paths:
           schema:
             $ref: "#/definitions/Error"
 
-  /attendee:
+  /events/{id}/attendees:
+    get:
+      tags:
+        - events
+      operationId: getEventAttendees
+      parameters:
+        - name: id
+          in: path
+          description: Event ID
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: the list of attendees from the event
+          schema:
+            $ref: "#/definitions/AttendeesList"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/Error"
+
+  /attendees:
     get:
       tags:
         - attendees
@@ -124,27 +146,6 @@ paths:
           schema:
             $ref: "#/definitions/Error"
 
-  /attendees/{eventId}:
-    get:
-      tags:
-        - attendees
-      operationId: getAttendeesByEventId
-      parameters:
-        - name: eventId
-          in: path
-          description: Event ID
-          type: string
-          format: uuid
-          required: true
-      responses:
-        200:
-          description: list the attendees per event
-          schema:
-            $ref: "#/definitions/AttendeesList"
-        default:
-          description: generic error response
-          schema:
-            $ref: "#/definitions/Error"
 
 definitions:
 
@@ -212,6 +213,8 @@ definitions:
       talk:
         type: string
         format: uuid
+      attendees:
+        $ref: "#/definitions/AttendeesList"
 
   EventList:
     type: array

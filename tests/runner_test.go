@@ -8,6 +8,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/sctskw/attend.io/db"
+
+	"github.com/sctskw/attend.io/services"
+
 	"github.com/sctskw/attend.io/restapi"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
@@ -23,7 +27,9 @@ func GetHttpServer() *httptest.Server {
 
 type ApiTestSuite struct {
 	suite.Suite
-	server *httptest.Server
+	server   *httptest.Server
+	db       db.DatabaseClient
+	services services.ServiceRegistry
 }
 
 func TestExampleTestSuite(t *testing.T) {
@@ -32,6 +38,7 @@ func TestExampleTestSuite(t *testing.T) {
 
 func (s *ApiTestSuite) SetupSuite() {
 	s.server = GetHttpServer()
+	s.services = services.New()
 }
 
 func (s *ApiTestSuite) TearDownSuite() {

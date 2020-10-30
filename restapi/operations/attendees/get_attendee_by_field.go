@@ -29,7 +29,7 @@ func NewGetAttendeeByField(ctx *middleware.Context, handler GetAttendeeByFieldHa
 	return &GetAttendeeByField{Context: ctx, Handler: handler}
 }
 
-/*GetAttendeeByField swagger:route GET /attendee attendees getAttendeeByField
+/*GetAttendeeByField swagger:route GET /attendees attendees getAttendeeByField
 
 GetAttendeeByField get attendee by field API
 

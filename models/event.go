@@ -17,6 +17,9 @@ import (
 // swagger:model Event
 type Event struct {
 
+	// attendees
+	Attendees AttendeesList `json:"attendees,omitempty"`
+
 	// id
 	// Read Only: true
 	// Format: uuid
@@ -36,6 +39,10 @@ type Event struct {
 func (m *Event) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateAttendees(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateID(formats); err != nil {
 		res = append(res, err)
 	}
@@ -51,6 +58,22 @@ func (m *Event) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Event) validateAttendees(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Attendees) { // not required
+		return nil
+	}
+
+	if err := m.Attendees.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("attendees")
+		}
+		return err
+	}
+
 	return nil
 }
 

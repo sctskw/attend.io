@@ -10,6 +10,7 @@ import (
 func AttachEventsHandlers(api *operations.AttendIoAPI) {
 	api.EventsGetEventsHandler = events.GetEventsHandlerFunc(GetEvents)
 	api.EventsGetEventByIDHandler = events.GetEventByIDHandlerFunc(GetEventById)
+	api.EventsGetEventAttendeesHandler = events.GetEventAttendeesHandlerFunc(GetEventAttendees)
 }
 
 func GetEvents(params events.GetEventsParams) middleware.Responder {
@@ -18,4 +19,8 @@ func GetEvents(params events.GetEventsParams) middleware.Responder {
 
 func GetEventById(params events.GetEventByIDParams) middleware.Responder {
 	return events.NewGetEventByIDOK().WithPayload(services.Events().GetById(params.ID))
+}
+
+func GetEventAttendees(params events.GetEventAttendeesParams) middleware.Responder {
+	return events.NewGetEventAttendeesOK().WithPayload(services.Events().GetAttendees(params.ID))
 }

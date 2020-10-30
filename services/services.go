@@ -17,11 +17,17 @@ func New() ServiceRegistry {
 	return instance
 }
 
+//useful for testing
 func NewWithClient(client db.DatabaseClient) ServiceRegistry {
 	withOnce.Do(func() {
 		instance = NewServiceRegistry(client)
 	})
 	return instance
+}
+
+//TODO
+func NewMockRegistry() ServiceRegistry {
+	return nil
 }
 
 func Get() ServiceRegistry {

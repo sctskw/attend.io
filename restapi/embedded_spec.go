@@ -56,7 +56,7 @@ func init() {
         }
       }
     },
-    "/attendee": {
+    "/attendees": {
       "get": {
         "tags": [
           "attendees"
@@ -83,38 +83,6 @@ func init() {
             "description": "find an attendee by id",
             "schema": {
               "$ref": "#/definitions/Attendee"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/attendees/{eventId}": {
-      "get": {
-        "tags": [
-          "attendees"
-        ],
-        "operationId": "getAttendeesByEventId",
-        "parameters": [
-          {
-            "type": "string",
-            "format": "uuid",
-            "description": "Event ID",
-            "name": "eventId",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "list the attendees per event",
-            "schema": {
-              "$ref": "#/definitions/AttendeesList"
             }
           },
           "default": {
@@ -168,6 +136,38 @@ func init() {
             "description": "the requested Event",
             "schema": {
               "$ref": "#/definitions/Event"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}/attendees": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "operationId": "getEventAttendees",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Event ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the list of attendees from the event",
+            "schema": {
+              "$ref": "#/definitions/AttendeesList"
             }
           },
           "default": {
@@ -291,6 +291,9 @@ func init() {
         "name"
       ],
       "properties": {
+        "attendees": {
+          "$ref": "#/definitions/AttendeesList"
+        },
         "id": {
           "type": "string",
           "format": "uuid",
@@ -395,7 +398,7 @@ func init() {
         }
       }
     },
-    "/attendee": {
+    "/attendees": {
       "get": {
         "tags": [
           "attendees"
@@ -422,38 +425,6 @@ func init() {
             "description": "find an attendee by id",
             "schema": {
               "$ref": "#/definitions/Attendee"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/attendees/{eventId}": {
-      "get": {
-        "tags": [
-          "attendees"
-        ],
-        "operationId": "getAttendeesByEventId",
-        "parameters": [
-          {
-            "type": "string",
-            "format": "uuid",
-            "description": "Event ID",
-            "name": "eventId",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "list the attendees per event",
-            "schema": {
-              "$ref": "#/definitions/AttendeesList"
             }
           },
           "default": {
@@ -507,6 +478,38 @@ func init() {
             "description": "the requested Event",
             "schema": {
               "$ref": "#/definitions/Event"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}/attendees": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "operationId": "getEventAttendees",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Event ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the list of attendees from the event",
+            "schema": {
+              "$ref": "#/definitions/AttendeesList"
             }
           },
           "default": {
@@ -630,6 +633,9 @@ func init() {
         "name"
       ],
       "properties": {
+        "attendees": {
+          "$ref": "#/definitions/AttendeesList"
+        },
         "id": {
           "type": "string",
           "format": "uuid",
