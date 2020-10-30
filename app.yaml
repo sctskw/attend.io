@@ -1,5 +1,3 @@
 runtime: go114
 env: standard
 
-main: ./cmd/attend-io-server/main
-
