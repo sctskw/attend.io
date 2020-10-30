@@ -13,9 +13,9 @@ func AttachTalksHandlers(api *operations.AttendIoAPI) {
 }
 
 func GetTalks(params talks.GetTalksParams) middleware.Responder {
-	return talks.NewGetTalksOK().WithPayload(services.GetTalks())
+	return talks.NewGetTalksOK().WithPayload(services.Talks().GetAll())
 }
 
 func GetTalkById(params talks.GetTalkByIDParams) middleware.Responder {
-	return talks.NewGetTalkByIDOK().WithPayload(services.GetTalkById(params.ID))
+	return talks.NewGetTalkByIDOK().WithPayload(services.Talks().GetById(params.ID))
 }
