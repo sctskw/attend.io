@@ -16,6 +16,9 @@ docs:
 serve:
 	@go run ./cmd/attend-io-server/main.go
 
+test:
+	@gotestsum --format short-verbose ./tests/...
+
 clean:
 	-rm docs.md
 
