@@ -19,6 +19,9 @@ serve:
 test:
 	@gotestsum --format short-verbose ./tests/...
 
+test-watch:
+	@gotestsum --format short-verbose --watch ./tests/...
+
 clean:
 	-rm docs.md
 

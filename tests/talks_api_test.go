@@ -2,19 +2,17 @@ package tests
 
 import (
 	"github.com/sctskw/attend.io/models"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func (s *ApiTestSuite) TestTalksAPI_GetTalks() {
 
-	data := make([]*models.Talk, 2)
+	talks := make([]*models.Talk, 2)
 
-	s.Fetch("/talks", &data)
+	s.Fetch("/talks", &talks)
 
-	assert.Len(s.T(), data, 2)
+	s.Assert().Len(talks, 2, "returns total number of talks")
 
-	for _, m := range data {
-		assert.NotNil(s.T(), m.ID, "has an ID")
+	for _, talk := range talks {
+		s.Assert().NotNil(talk.ID, "has an ID")
 	}
 }
