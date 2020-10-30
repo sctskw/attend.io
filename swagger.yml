@@ -116,7 +116,7 @@ definitions:
     required:
       - name
     properties:
-      id:
+      ID:
         type: string
       name:
         type: string
@@ -149,7 +149,7 @@ definitions:
       - name_first
       - name_last
     properties:
-      id:
+      ID:
         type: string
       name_display:
         type: string

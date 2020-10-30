@@ -17,12 +17,12 @@ import (
 // swagger:model Attendee
 type Attendee struct {
 
+	// ID
+	ID string `json:"ID,omitempty"`
+
 	// email
 	// Format: email
 	Email strfmt.Email `json:"email,omitempty"`
-
-	// id
-	ID string `json:"id,omitempty"`
 
 	// name display
 	// Min Length: 1

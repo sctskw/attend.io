@@ -185,12 +185,12 @@ func init() {
         "name_last"
       ],
       "properties": {
+        "ID": {
+          "type": "string"
+        },
         "email": {
           "type": "string",
           "format": "email"
-        },
-        "id": {
-          "type": "string"
         },
         "name_display": {
           "type": "string",
@@ -248,6 +248,9 @@ func init() {
         "name"
       ],
       "properties": {
+        "ID": {
+          "type": "string"
+        },
         "date_time_end": {
           "type": "string",
           "format": "date-time"
@@ -259,9 +262,6 @@ func init() {
         "description": {
           "type": "string",
           "minLength": 1
-        },
-        "id": {
-          "type": "string"
         },
         "name": {
           "type": "string",
@@ -456,12 +456,12 @@ func init() {
         "name_last"
       ],
       "properties": {
+        "ID": {
+          "type": "string"
+        },
         "email": {
           "type": "string",
           "format": "email"
-        },
-        "id": {
-          "type": "string"
         },
         "name_display": {
           "type": "string",
@@ -519,6 +519,9 @@ func init() {
         "name"
       ],
       "properties": {
+        "ID": {
+          "type": "string"
+        },
         "date_time_end": {
           "type": "string",
           "format": "date-time"
@@ -530,9 +533,6 @@ func init() {
         "description": {
           "type": "string",
           "minLength": 1
-        },
-        "id": {
-          "type": "string"
         },
         "name": {
           "type": "string",
