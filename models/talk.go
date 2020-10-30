@@ -30,7 +30,6 @@ type Talk struct {
 	Description string `json:"description,omitempty"`
 
 	// id
-	// Read Only: true
 	ID string `json:"id,omitempty"`
 
 	// name

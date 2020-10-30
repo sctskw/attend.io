@@ -22,7 +22,6 @@ type Attendee struct {
 	Email strfmt.Email `json:"email,omitempty"`
 
 	// id
-	// Read Only: true
 	ID string `json:"id,omitempty"`
 
 	// name display

@@ -190,8 +190,7 @@ func init() {
           "format": "email"
         },
         "id": {
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "name_display": {
           "type": "string",
@@ -262,8 +261,7 @@ func init() {
           "minLength": 1
         },
         "id": {
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "name": {
           "type": "string",
@@ -463,8 +461,7 @@ func init() {
           "format": "email"
         },
         "id": {
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "name_display": {
           "type": "string",
@@ -535,8 +532,7 @@ func init() {
           "minLength": 1
         },
         "id": {
-          "type": "string",
-          "readOnly": true
+          "type": "string"
         },
         "name": {
           "type": "string",
