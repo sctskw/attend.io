@@ -18,19 +18,16 @@ import (
 type Talk struct {
 
 	// date time end
-	// Required: true
 	// Format: date-time
-	DateTimeEnd *strfmt.DateTime `json:"date_time_end"`
+	DateTimeEnd strfmt.DateTime `json:"date_time_end,omitempty"`
 
 	// date time start
-	// Required: true
 	// Format: date-time
-	DateTimeStart *strfmt.DateTime `json:"date_time_start"`
+	DateTimeStart strfmt.DateTime `json:"date_time_start,omitempty"`
 
 	// description
-	// Required: true
 	// Min Length: 1
-	Description *string `json:"description"`
+	Description string `json:"description,omitempty"`
 
 	// id
 	ID string `json:"id,omitempty"`
@@ -41,9 +38,8 @@ type Talk struct {
 	Name *string `json:"name"`
 
 	// presenter
-	// Required: true
 	// Min Length: 1
-	Presenter *string `json:"presenter"`
+	Presenter string `json:"presenter,omitempty"`
 
 	// ref attendees
 	RefAttendees AttendeesList `json:"ref_attendees,omitempty"`
@@ -92,8 +88,8 @@ func (m *Talk) Validate(formats strfmt.Registry) error {
 
 func (m *Talk) validateDateTimeEnd(formats strfmt.Registry) error {
 
-	if err := validate.Required("date_time_end", "body", m.DateTimeEnd); err != nil {
-		return err
+	if swag.IsZero(m.DateTimeEnd) { // not required
+		return nil
 	}
 
 	if err := validate.FormatOf("date_time_end", "body", "date-time", m.DateTimeEnd.String(), formats); err != nil {
@@ -105,8 +101,8 @@ func (m *Talk) validateDateTimeEnd(formats strfmt.Registry) error {
 
 func (m *Talk) validateDateTimeStart(formats strfmt.Registry) error {
 
-	if err := validate.Required("date_time_start", "body", m.DateTimeStart); err != nil {
-		return err
+	if swag.IsZero(m.DateTimeStart) { // not required
+		return nil
 	}
 
 	if err := validate.FormatOf("date_time_start", "body", "date-time", m.DateTimeStart.String(), formats); err != nil {
@@ -118,11 +114,11 @@ func (m *Talk) validateDateTimeStart(formats strfmt.Registry) error {
 
 func (m *Talk) validateDescription(formats strfmt.Registry) error {
 
-	if err := validate.Required("description", "body", m.Description); err != nil {
-		return err
+	if swag.IsZero(m.Description) { // not required
+		return nil
 	}
 
-	if err := validate.MinLength("description", "body", string(*m.Description), 1); err != nil {
+	if err := validate.MinLength("description", "body", string(m.Description), 1); err != nil {
 		return err
 	}
 
@@ -144,11 +140,11 @@ func (m *Talk) validateName(formats strfmt.Registry) error {
 
 func (m *Talk) validatePresenter(formats strfmt.Registry) error {
 
-	if err := validate.Required("presenter", "body", m.Presenter); err != nil {
-		return err
+	if swag.IsZero(m.Presenter) { // not required
+		return nil
 	}
 
-	if err := validate.MinLength("presenter", "body", string(*m.Presenter), 1); err != nil {
+	if err := validate.MinLength("presenter", "body", string(m.Presenter), 1); err != nil {
 		return err
 	}
 

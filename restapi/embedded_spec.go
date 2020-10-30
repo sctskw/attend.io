@@ -245,11 +245,7 @@ func init() {
     "Talk": {
       "type": "object",
       "required": [
-        "name",
-        "presenter",
-        "description",
-        "date_time_start",
-        "date_time_end"
+        "name"
       ],
       "properties": {
         "date_time_end": {
@@ -520,11 +516,7 @@ func init() {
     "Talk": {
       "type": "object",
       "required": [
-        "name",
-        "presenter",
-        "description",
-        "date_time_start",
-        "date_time_end"
+        "name"
       ],
       "properties": {
         "date_time_end": {
