@@ -6,4 +6,5 @@ handlers:
   - url: /docs
     static_dir: /docs
     http_headers:
-      Access-Control-Allow-Origin: http://attend-io-294107.uc.r.appspot.com
+      Access-Control-Allow-Origin: '*'
+
