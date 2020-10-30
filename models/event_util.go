@@ -1,14 +1,13 @@
 package models
 
 import (
-	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 	"github.com/google/uuid"
 )
 
-func NewEvent(name string, talk strfmt.UUID, attendees []*Attendee) *Event {
+func NewEvent(name string, talk string, attendees []*Attendee) *Event {
 	return &Event{
-		ID:   strfmt.UUID(uuid.New().String()),
+		ID:   uuid.New().String(),
 		Name: swag.String(name),
 		Talk: talk,
 	}

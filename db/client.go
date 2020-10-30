@@ -3,11 +3,17 @@ package db
 type DatabaseClient interface {
 	Connect()
 	Ping()
-	FetchTalksById(id string)
+	FetchAllTalks() FetchAllResponse
+	FetchTalkById(id string) FetchOneResponse
 }
 
+type FetchAllResponse = []FetchOneResponse
+type FetchOneResponse = []byte
+
 func NewClient() DatabaseClient {
-	return NewFirestoreClient()
+	c := NewFirestoreClient()
+	c.Connect()
+	return c
 }
 
 func NewMockClient() DatabaseClient {

@@ -8,7 +8,7 @@ import (
 
 func NewAttendee(nameFirst, nameLast, email string) *Attendee {
 	return &Attendee{
-		ID:        strfmt.UUID(uuid.New().String()),
+		ID:        uuid.New().String(),
 		NameFirst: swag.String(nameFirst),
 		NameLast:  swag.String(nameLast),
 		Email:     strfmt.Email(email),

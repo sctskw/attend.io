@@ -7,7 +7,7 @@ import (
 )
 
 type AttendeeService interface {
-	GetById(id strfmt.UUID) *models.Attendee
+	GetById(id string) *models.Attendee
 	GetByEmail(email strfmt.Email) *models.Attendee
 }
 
@@ -19,7 +19,7 @@ func NewAttendeeService(client db.DatabaseClient) AttendeeService {
 	return &attendeeService{db: client}
 }
 
-func (s *attendeeService) GetById(id strfmt.UUID) *models.Attendee {
+func (s *attendeeService) GetById(id string) *models.Attendee {
 	return models.NewAttendee("Bob", "Stevens", "bob@test.com")
 }
 

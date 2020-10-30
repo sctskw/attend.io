@@ -7,7 +7,7 @@ type MemoryClient interface {
 
 type memoryClient struct{}
 
-func NewMemoryClient() FirestoreClient {
+func NewMemoryClient() MemoryClient {
 	return &memoryClient{}
 }
 
@@ -19,6 +19,14 @@ func (c *memoryClient) Ping() {
 
 }
 
-func (c *memoryClient) FetchTalksById(id string) {
+func (c *memoryClient) FetchAllTalks() FetchAllResponse {
+	return nil
+}
+
+func (c *memoryClient) FetchTalkById(id string) FetchOneResponse {
+	return nil
+}
+
+func (c *memoryClient) LoadFromFile(path string) {
 
 }

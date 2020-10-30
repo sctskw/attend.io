@@ -38,7 +38,7 @@ type GetAttendeeByFieldParams struct {
 	/*Attendee ID
 	  In: query
 	*/
-	ID *strfmt.UUID
+	ID *string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -117,25 +117,7 @@ func (o *GetAttendeeByFieldParams) bindID(rawData []string, hasKey bool, formats
 		return nil
 	}
 
-	// Format: uuid
-	value, err := formats.Parse("uuid", raw)
-	if err != nil {
-		return errors.InvalidType("id", "query", "strfmt.UUID", raw)
-	}
-	o.ID = (value.(*strfmt.UUID))
+	o.ID = &raw
 
-	if err := o.validateID(formats); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// validateID carries on validations for parameter ID
-func (o *GetAttendeeByFieldParams) validateID(formats strfmt.Registry) error {
-
-	if err := validate.FormatOf("id", "query", "uuid", o.ID.String(), formats); err != nil {
-		return err
-	}
 	return nil
 }

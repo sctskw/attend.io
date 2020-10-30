@@ -1,31 +1,51 @@
 package services
 
 import (
-	"github.com/go-openapi/strfmt"
 	"github.com/sctskw/attend.io/db"
 	"github.com/sctskw/attend.io/models"
 )
 
 type TalkService interface {
 	GetAll() models.TalkList
-	GetById(id strfmt.UUID) *models.Talk
+	GetById(id string) *models.Talk
 }
 
 type talkService struct {
-	dbClient db.DatabaseClient
+	db db.DatabaseClient
 }
 
 func NewTalkService(client db.DatabaseClient) TalkService {
-	return &talkService{dbClient: client}
+	return &talkService{db: client}
 }
 
 func (s *talkService) GetAll() models.TalkList {
-	return models.NewTalkList(
-		models.NewTalk("Talk 1"),
-		models.NewTalk("Talk 2"),
-	)
+	raw := s.db.FetchAllTalks()
+	data := models.TalkList{}
+
+	for _, r := range raw {
+		t := &models.Talk{}
+		err := t.UnmarshalBinary(r)
+
+		//TODO: this could create data inconsistency
+		if err != nil {
+			panic(err)
+		}
+
+		data = append(data, t)
+	}
+
+	return data
 }
 
-func (s *talkService) GetById(id strfmt.UUID) *models.Talk {
-	return models.NewTalk("Talk 3")
+func (s *talkService) GetById(id string) *models.Talk {
+	raw := s.db.FetchTalkById(id)
+
+	t := &models.Talk{}
+	err := t.UnmarshalBinary(raw)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return t
 }

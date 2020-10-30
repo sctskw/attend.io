@@ -50,7 +50,6 @@ paths:
           in: path
           description: Talk ID
           type: string
-          format: uuid
           required: true
       responses:
         200:
@@ -86,7 +85,6 @@ paths:
           in: path
           description: Event ID
           type: string
-          format: uuid
           required: true
       responses:
         200:
@@ -108,7 +106,6 @@ paths:
           in: path
           description: Event ID
           type: string
-          format: uuid
           required: true
       responses:
         200:
@@ -135,7 +132,6 @@ paths:
           in: query
           description: Attendee ID
           type: string
-          format: uuid
       responses:
         200:
           description: find an attendee by id
@@ -156,14 +152,16 @@ definitions:
     properties:
       id:
         type: string
-        format: uuid
         readOnly: true
       name:
         type: string
         minLength: 1
-
-      attendees:
-        $ref: "#/definitions/AttendeesList"
+      description:
+        type: string
+        minLength: 1
+      presenter:
+        type: string
+        minLength: 1
 
   TalkList:
     type: array
@@ -178,7 +176,6 @@ definitions:
     properties:
       id:
         type: string
-        format: uuid
         readOnly: true
       name_display:
         type: string
@@ -205,14 +202,12 @@ definitions:
     properties:
       id:
         type: string
-        format: uuid
         readOnly: true
       name:
         type: string
         minLength: 1
       talk:
         type: string
-        format: uuid
       attendees:
         $ref: "#/definitions/AttendeesList"
 

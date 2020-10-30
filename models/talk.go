@@ -17,33 +17,37 @@ import (
 // swagger:model Talk
 type Talk struct {
 
-	// attendees
-	Attendees AttendeesList `json:"attendees,omitempty"`
+	// description
+	// Min Length: 1
+	Description string `json:"description,omitempty"`
 
 	// id
 	// Read Only: true
-	// Format: uuid
-	ID strfmt.UUID `json:"id,omitempty"`
+	ID string `json:"id,omitempty"`
 
 	// name
 	// Required: true
 	// Min Length: 1
 	Name *string `json:"name"`
+
+	// presenter
+	// Min Length: 1
+	Presenter string `json:"presenter,omitempty"`
 }
 
 // Validate validates this talk
 func (m *Talk) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAttendees(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateID(formats); err != nil {
+	if err := m.validateDescription(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if err := m.validateName(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validatePresenter(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -53,29 +57,13 @@ func (m *Talk) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Talk) validateAttendees(formats strfmt.Registry) error {
+func (m *Talk) validateDescription(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.Attendees) { // not required
+	if swag.IsZero(m.Description) { // not required
 		return nil
 	}
 
-	if err := m.Attendees.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("attendees")
-		}
-		return err
-	}
-
-	return nil
-}
-
-func (m *Talk) validateID(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ID) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("id", "body", "uuid", m.ID.String(), formats); err != nil {
+	if err := validate.MinLength("description", "body", string(m.Description), 1); err != nil {
 		return err
 	}
 
@@ -89,6 +77,19 @@ func (m *Talk) validateName(formats strfmt.Registry) error {
 	}
 
 	if err := validate.MinLength("name", "body", string(*m.Name), 1); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Talk) validatePresenter(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Presenter) { // not required
+		return nil
+	}
+
+	if err := validate.MinLength("presenter", "body", string(m.Presenter), 1); err != nil {
 		return err
 	}
 

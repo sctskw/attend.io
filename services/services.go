@@ -8,9 +8,9 @@ import (
 
 var newOnce sync.Once
 var withOnce sync.Once
-var instance ServiceRegistry
+var instance *ServiceRegistry
 
-func New() ServiceRegistry {
+func New() *ServiceRegistry {
 	newOnce.Do(func() {
 		instance = NewServiceRegistry(db.NewClient())
 	})
@@ -18,19 +18,14 @@ func New() ServiceRegistry {
 }
 
 //useful for testing
-func NewWithClient(client db.DatabaseClient) ServiceRegistry {
+func NewWithClient(client db.DatabaseClient) *ServiceRegistry {
 	withOnce.Do(func() {
 		instance = NewServiceRegistry(client)
 	})
 	return instance
 }
 
-//TODO
-func NewMockRegistry() ServiceRegistry {
-	return nil
-}
-
-func Get() ServiceRegistry {
+func Get() *ServiceRegistry {
 
 	if instance == nil {
 		panic("service registry has not been instantiated")

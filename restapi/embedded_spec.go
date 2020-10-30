@@ -72,7 +72,6 @@ func init() {
           },
           {
             "type": "string",
-            "format": "uuid",
             "description": "Attendee ID",
             "name": "id",
             "in": "query"
@@ -124,7 +123,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "format": "uuid",
             "description": "Event ID",
             "name": "id",
             "in": "path",
@@ -156,7 +154,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "format": "uuid",
             "description": "Event ID",
             "name": "id",
             "in": "path",
@@ -209,7 +206,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "format": "uuid",
             "description": "Talk ID",
             "name": "id",
             "in": "path",
@@ -247,7 +243,6 @@ func init() {
         },
         "id": {
           "type": "string",
-          "format": "uuid",
           "readOnly": true
         },
         "name_display": {
@@ -296,7 +291,6 @@ func init() {
         },
         "id": {
           "type": "string",
-          "format": "uuid",
           "readOnly": true
         },
         "name": {
@@ -304,8 +298,7 @@ func init() {
           "minLength": 1
         },
         "talk": {
-          "type": "string",
-          "format": "uuid"
+          "type": "string"
         }
       }
     },
@@ -336,15 +329,19 @@ func init() {
         "name"
       ],
       "properties": {
-        "attendees": {
-          "$ref": "#/definitions/AttendeesList"
+        "description": {
+          "type": "string",
+          "minLength": 1
         },
         "id": {
           "type": "string",
-          "format": "uuid",
           "readOnly": true
         },
         "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "presenter": {
           "type": "string",
           "minLength": 1
         }
@@ -414,7 +411,6 @@ func init() {
           },
           {
             "type": "string",
-            "format": "uuid",
             "description": "Attendee ID",
             "name": "id",
             "in": "query"
@@ -466,7 +462,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "format": "uuid",
             "description": "Event ID",
             "name": "id",
             "in": "path",
@@ -498,7 +493,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "format": "uuid",
             "description": "Event ID",
             "name": "id",
             "in": "path",
@@ -551,7 +545,6 @@ func init() {
         "parameters": [
           {
             "type": "string",
-            "format": "uuid",
             "description": "Talk ID",
             "name": "id",
             "in": "path",
@@ -589,7 +582,6 @@ func init() {
         },
         "id": {
           "type": "string",
-          "format": "uuid",
           "readOnly": true
         },
         "name_display": {
@@ -638,7 +630,6 @@ func init() {
         },
         "id": {
           "type": "string",
-          "format": "uuid",
           "readOnly": true
         },
         "name": {
@@ -646,8 +637,7 @@ func init() {
           "minLength": 1
         },
         "talk": {
-          "type": "string",
-          "format": "uuid"
+          "type": "string"
         }
       }
     },
@@ -678,15 +668,19 @@ func init() {
         "name"
       ],
       "properties": {
-        "attendees": {
-          "$ref": "#/definitions/AttendeesList"
+        "description": {
+          "type": "string",
+          "minLength": 1
         },
         "id": {
           "type": "string",
-          "format": "uuid",
           "readOnly": true
         },
         "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "presenter": {
           "type": "string",
           "minLength": 1
         }

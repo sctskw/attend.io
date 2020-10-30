@@ -16,7 +16,7 @@ import (
 // GetAttendeeByFieldURL generates an URL for the get attendee by field operation
 type GetAttendeeByFieldURL struct {
 	Email *strfmt.Email
-	ID    *strfmt.UUID
+	ID    *string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -59,7 +59,7 @@ func (o *GetAttendeeByFieldURL) Build() (*url.URL, error) {
 
 	var idQ string
 	if o.ID != nil {
-		idQ = o.ID.String()
+		idQ = *o.ID
 	}
 	if idQ != "" {
 		qs.Set("id", idQ)

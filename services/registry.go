@@ -4,50 +4,36 @@ import (
 	"github.com/sctskw/attend.io/db"
 )
 
-type ServiceRegistry interface {
-	Attendees() AttendeeService
-	Talks() TalkService
-	Events() EventService
-	System() SystemService
+type ServiceRegistry struct {
+	db        db.DatabaseClient
+	Attendees AttendeeService
+	Events    EventService
+	System    SystemService
+	Talks     TalkService
 }
 
-type servicesRegistry struct {
-	dbClient db.DatabaseClient
+func NewServiceRegistry(client db.DatabaseClient) *ServiceRegistry {
+	return &ServiceRegistry{
+		db:        client,
+		Attendees: NewAttendeeService(client),
+		Events:    NewEventService(client),
+		System:    NewSystemService(client),
+		Talks:     NewTalkService(client),
+	}
 }
 
-func NewServiceRegistry(dbClient db.DatabaseClient) ServiceRegistry {
-	return &servicesRegistry{dbClient: dbClient}
-}
-
-func (r *servicesRegistry) Attendees() AttendeeService {
-	return NewAttendeeService(r.dbClient)
-}
-
-func (r *servicesRegistry) Talks() TalkService {
-	return NewTalkService(r.dbClient)
-}
-
-func (r *servicesRegistry) Events() EventService {
-	return NewEventService(r.dbClient)
-}
-
-func (r *servicesRegistry) System() SystemService {
-	return NewSystemService(r.dbClient)
-}
-
-//shortcuts
 func Attendees() AttendeeService {
-	return Get().Attendees()
-}
-
-func Talks() TalkService {
-	return Get().Talks()
+	return Get().Attendees
 }
 
 func Events() EventService {
-	return Get().Events()
+	return Get().Events
 }
 
 func System() SystemService {
-	return Get().System()
+	return Get().System
+}
+
+func Talks() TalkService {
+	return Get().Talks
 }
