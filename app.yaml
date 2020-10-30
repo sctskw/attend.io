@@ -3,8 +3,8 @@ env: standard
 main: ./cmd/attend-io-server
 
 handlers:
-  - url: /docs
-    static_dir: /docs
-    http_headers:
-      Access-Control-Allow-Origin: '*'
+- url: /docs
+  static_dir: ./docs
+  http_headers:
+    Access-Control-Allow-Origin: '*'
 
