@@ -17,9 +17,6 @@ import (
 // swagger:model Event
 type Event struct {
 
-	// attendees
-	Attendees AttendeesList `json:"attendees,omitempty"`
-
 	// id
 	// Read Only: true
 	ID string `json:"id,omitempty"`
@@ -29,41 +26,32 @@ type Event struct {
 	// Min Length: 1
 	Name *string `json:"name"`
 
-	// talk
-	Talk string `json:"talk,omitempty"`
+	// ref attendees
+	RefAttendees AttendeesList `json:"ref_attendees,omitempty"`
+
+	// ref talk
+	RefTalk *Talk `json:"ref_talk,omitempty"`
 }
 
 // Validate validates this event
 func (m *Event) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateAttendees(formats); err != nil {
+	if err := m.validateName(formats); err != nil {
 		res = append(res, err)
 	}
 
-	if err := m.validateName(formats); err != nil {
+	if err := m.validateRefAttendees(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRefTalk(formats); err != nil {
 		res = append(res, err)
 	}
 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *Event) validateAttendees(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Attendees) { // not required
-		return nil
-	}
-
-	if err := m.Attendees.Validate(formats); err != nil {
-		if ve, ok := err.(*errors.Validation); ok {
-			return ve.ValidateName("attendees")
-		}
-		return err
-	}
-
 	return nil
 }
 
@@ -75,6 +63,40 @@ func (m *Event) validateName(formats strfmt.Registry) error {
 
 	if err := validate.MinLength("name", "body", string(*m.Name), 1); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *Event) validateRefAttendees(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.RefAttendees) { // not required
+		return nil
+	}
+
+	if err := m.RefAttendees.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("ref_attendees")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *Event) validateRefTalk(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.RefTalk) { // not required
+		return nil
+	}
+
+	if m.RefTalk != nil {
+		if err := m.RefTalk.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ref_talk")
+			}
+			return err
+		}
 	}
 
 	return nil

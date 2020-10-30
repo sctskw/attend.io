@@ -8,9 +8,9 @@ func (s *ApiTestSuite) TestAttendeesAPI_GetAttendeeById() {
 
 	attendee := models.Attendee{}
 
-	s.Fetch("/attendees?id=4dd1fae8-93ed-4a0d-a7d4-518e42488633", &attendee)
+	s.Fetch("/attendees?id=0YB7Cy6RC9fY5FMohK0p", &attendee)
 	s.Assert().NotNil(attendee, "returns an attendee")
-	s.Assert().Equal("bob@test.com", attendee.Email.String())
+	s.Assert().Equal("bob.smith@test.com", attendee.Email.String())
 
 }
 

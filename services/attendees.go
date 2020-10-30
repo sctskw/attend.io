@@ -7,22 +7,61 @@ import (
 )
 
 type AttendeeService interface {
+	GetAllById(ids ...string) models.AttendeesList
 	GetById(id string) *models.Attendee
 	GetByEmail(email strfmt.Email) *models.Attendee
 }
 
 type attendeeService struct {
-	db db.DatabaseClient
+	db   db.DatabaseClient
+	name string
 }
 
 func NewAttendeeService(client db.DatabaseClient) AttendeeService {
-	return &attendeeService{db: client}
+	return &attendeeService{db: client, name: "attendees"}
 }
 
 func (s *attendeeService) GetById(id string) *models.Attendee {
-	return models.NewAttendee("Bob", "Stevens", "bob@test.com")
+	raw := s.db.FetchById(s.name, id)
+
+	a := &models.Attendee{}
+	err := a.UnmarshalBinary(raw)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return a
+
 }
 
 func (s *attendeeService) GetByEmail(email strfmt.Email) *models.Attendee {
-	return models.NewAttendee("Sam", "Wise", "sam.wise@test.com")
+	raw := s.db.FetchByField(s.name, "email", email.String())
+
+	a := &models.Attendee{}
+	err := a.UnmarshalBinary(raw)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return a
+}
+
+func (s *attendeeService) GetAllById(ids ...string) (results models.AttendeesList) {
+
+	attendees := s.db.FetchAllById("attendees", ids...)
+
+	for _, raw := range attendees {
+		a := &models.Attendee{}
+		err := a.UnmarshalBinary(raw)
+
+		if err != nil {
+			continue
+		}
+
+		results = append(results, a)
+	}
+
+	return results
 }

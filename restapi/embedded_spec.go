@@ -286,9 +286,6 @@ func init() {
         "name"
       ],
       "properties": {
-        "attendees": {
-          "$ref": "#/definitions/AttendeesList"
-        },
         "id": {
           "type": "string",
           "readOnly": true
@@ -297,8 +294,11 @@ func init() {
           "type": "string",
           "minLength": 1
         },
-        "talk": {
-          "type": "string"
+        "ref_attendees": {
+          "$ref": "#/definitions/AttendeesList"
+        },
+        "ref_talk": {
+          "$ref": "#/definitions/Talk"
         }
       }
     },
@@ -625,9 +625,6 @@ func init() {
         "name"
       ],
       "properties": {
-        "attendees": {
-          "$ref": "#/definitions/AttendeesList"
-        },
         "id": {
           "type": "string",
           "readOnly": true
@@ -636,8 +633,11 @@ func init() {
           "type": "string",
           "minLength": 1
         },
-        "talk": {
-          "type": "string"
+        "ref_attendees": {
+          "$ref": "#/definitions/AttendeesList"
+        },
+        "ref_talk": {
+          "$ref": "#/definitions/Talk"
         }
       }
     },

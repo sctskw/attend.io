@@ -206,10 +206,12 @@ definitions:
       name:
         type: string
         minLength: 1
-      talk:
-        type: string
-      attendees:
+      ref_talk:
+        $ref: "#/definitions/Talk"
+      ref_attendees:
         $ref: "#/definitions/AttendeesList"
+
+
 
   EventList:
     type: array

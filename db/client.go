@@ -3,8 +3,10 @@ package db
 type DatabaseClient interface {
 	Connect()
 	Ping()
-	FetchAllTalks() FetchAllResponse
-	FetchTalkById(id string) FetchOneResponse
+	FetchAll(collection string) FetchAllResponse
+	FetchAllById(collection string, ids ...string) FetchAllResponse
+	FetchById(collection, id string) FetchOneResponse
+	FetchByField(collection, field, value string) FetchOneResponse
 }
 
 type FetchAllResponse = []FetchOneResponse

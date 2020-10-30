@@ -19,14 +19,22 @@ func (c *memoryClient) Ping() {
 
 }
 
-func (c *memoryClient) FetchAllTalks() FetchAllResponse {
-	return nil
-}
-
-func (c *memoryClient) FetchTalkById(id string) FetchOneResponse {
-	return nil
-}
-
 func (c *memoryClient) LoadFromFile(path string) {
 
+}
+
+func (c *memoryClient) FetchAll(collection string) FetchAllResponse {
+	return nil
+}
+
+func (c *memoryClient) FetchAllById(collection string, ids ...string) FetchAllResponse {
+	return nil
+}
+
+func (c *memoryClient) FetchById(collection, id string) FetchOneResponse {
+	return nil
+}
+
+func (c *memoryClient) FetchByField(collection, field, value string) FetchOneResponse {
+	return nil
 }

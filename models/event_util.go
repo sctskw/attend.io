@@ -7,9 +7,9 @@ import (
 
 func NewEvent(name string, talk string, attendees []*Attendee) *Event {
 	return &Event{
-		ID:   uuid.New().String(),
-		Name: swag.String(name),
-		Talk: talk,
+		ID:      uuid.New().String(),
+		Name:    swag.String(name),
+		RefTalk: NewTalk("Ref Talk 1"),
 	}
 }
 

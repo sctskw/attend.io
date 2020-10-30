@@ -19,7 +19,7 @@ func NewTalkService(client db.DatabaseClient) TalkService {
 }
 
 func (s *talkService) GetAll() models.TalkList {
-	raw := s.db.FetchAllTalks()
+	raw := s.db.FetchAll("talks")
 	data := models.TalkList{}
 
 	for _, r := range raw {
@@ -38,7 +38,7 @@ func (s *talkService) GetAll() models.TalkList {
 }
 
 func (s *talkService) GetById(id string) *models.Talk {
-	raw := s.db.FetchTalkById(id)
+	raw := s.db.FetchById("talks", id)
 
 	t := &models.Talk{}
 	err := t.UnmarshalBinary(raw)
