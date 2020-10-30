@@ -13,11 +13,11 @@ type EventService interface {
 }
 
 type eventService struct {
-	dbClient db.DatabaseClient
+	db db.DatabaseClient
 }
 
 func NewEventService(client db.DatabaseClient) EventService {
-	return &eventService{dbClient: client}
+	return &eventService{db: client}
 }
 
 func (s *eventService) GetAll() models.EventList {

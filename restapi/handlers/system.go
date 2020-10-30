@@ -12,5 +12,5 @@ func AttachSystemHandlers(api *operations.AttendIoAPI) {
 }
 
 func GetSystemStatus(params system.GetParams) middleware.Responder {
-	return system.NewGetOK().WithPayload(services.GetSystemStatus())
+	return system.NewGetOK().WithPayload(services.System().GetStatus())
 }

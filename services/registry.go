@@ -8,6 +8,7 @@ type ServiceRegistry interface {
 	Attendees() AttendeeService
 	Talks() TalkService
 	Events() EventService
+	System() SystemService
 }
 
 type servicesRegistry struct {
@@ -30,6 +31,10 @@ func (r *servicesRegistry) Events() EventService {
 	return NewEventService(r.dbClient)
 }
 
+func (r *servicesRegistry) System() SystemService {
+	return NewSystemService(r.dbClient)
+}
+
 //shortcuts
 func Attendees() AttendeeService {
 	return Get().Attendees()
@@ -41,4 +46,8 @@ func Talks() TalkService {
 
 func Events() EventService {
 	return Get().Events()
+}
+
+func System() SystemService {
+	return Get().System()
 }

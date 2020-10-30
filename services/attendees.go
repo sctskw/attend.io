@@ -13,13 +13,11 @@ type AttendeeService interface {
 }
 
 type attendeeService struct {
-	dbClient db.DatabaseClient
+	db db.DatabaseClient
 }
 
-func NewAttendeeService(dbClient db.DatabaseClient) AttendeeService {
-	return &attendeeService{
-		dbClient: dbClient,
-	}
+func NewAttendeeService(client db.DatabaseClient) AttendeeService {
+	return &attendeeService{db: client}
 }
 
 func (s *attendeeService) GetName() string {
