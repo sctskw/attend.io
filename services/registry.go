@@ -7,7 +7,6 @@ import (
 type ServiceRegistry struct {
 	db        db.DatabaseClient
 	Attendees AttendeeService
-	Events    EventService
 	System    SystemService
 	Talks     TalkService
 }
@@ -16,7 +15,6 @@ func NewServiceRegistry(client db.DatabaseClient) *ServiceRegistry {
 	return &ServiceRegistry{
 		db:        client,
 		Attendees: NewAttendeeService(client),
-		Events:    NewEventService(client),
 		System:    NewSystemService(client),
 		Talks:     NewTalkService(client),
 	}
@@ -24,10 +22,6 @@ func NewServiceRegistry(client db.DatabaseClient) *ServiceRegistry {
 
 func Attendees() AttendeeService {
 	return Get().Attendees
-}
-
-func Events() EventService {
-	return Get().Events
 }
 
 func System() SystemService {

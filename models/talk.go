@@ -17,6 +17,14 @@ import (
 // swagger:model Talk
 type Talk struct {
 
+	// date time end
+	// Format: date-time
+	DateTimeEnd strfmt.DateTime `json:"date_time_end,omitempty"`
+
+	// date time start
+	// Format: date-time
+	DateTimeStart strfmt.DateTime `json:"date_time_start,omitempty"`
+
 	// description
 	// Min Length: 1
 	Description string `json:"description,omitempty"`
@@ -33,11 +41,25 @@ type Talk struct {
 	// presenter
 	// Min Length: 1
 	Presenter string `json:"presenter,omitempty"`
+
+	// ref attendees
+	RefAttendees AttendeesList `json:"ref_attendees,omitempty"`
+
+	// ref talk
+	RefTalk *Talk `json:"ref_talk,omitempty"`
 }
 
 // Validate validates this talk
 func (m *Talk) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validateDateTimeEnd(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDateTimeStart(formats); err != nil {
+		res = append(res, err)
+	}
 
 	if err := m.validateDescription(formats); err != nil {
 		res = append(res, err)
@@ -51,9 +73,43 @@ func (m *Talk) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateRefAttendees(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRefTalk(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Talk) validateDateTimeEnd(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DateTimeEnd) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("date_time_end", "body", "date-time", m.DateTimeEnd.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Talk) validateDateTimeStart(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DateTimeStart) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("date_time_start", "body", "date-time", m.DateTimeStart.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -91,6 +147,40 @@ func (m *Talk) validatePresenter(formats strfmt.Registry) error {
 
 	if err := validate.MinLength("presenter", "body", string(m.Presenter), 1); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *Talk) validateRefAttendees(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.RefAttendees) { // not required
+		return nil
+	}
+
+	if err := m.RefAttendees.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("ref_attendees")
+		}
+		return err
+	}
+
+	return nil
+}
+
+func (m *Talk) validateRefTalk(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.RefTalk) { // not required
+		return nil
+	}
+
+	if m.RefTalk != nil {
+		if err := m.RefTalk.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("ref_talk")
+			}
+			return err
+		}
 	}
 
 	return nil

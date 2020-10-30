@@ -22,6 +22,19 @@ func (s *ApiTestSuite) TestTalksAPI_GetTalks() {
 func (s *ApiTestSuite) TestTalksAPI_GetTalkByID() {
 
 	talk := &models.Talk{}
-	s.Fetch("/talks/OAUthvWOMLX1uOIvA41c", talk)
-	s.Assert().Equal("Talk 1", *talk.Name)
+	s.Fetch("/talks/HclaPWsc4TNfmTbVYNRy", talk)
+	s.Assert().Equal("Talk 2", *talk.Name)
+}
+
+func (s *ApiTestSuite) TestTalksAPI_GetTalkAttendees() {
+
+	attendees := models.NewAttendeeList()
+	s.Fetch("/talks/HclaPWsc4TNfmTbVYNRy/attendees", &attendees)
+	s.Assert().Len(attendees, 3, "returns total number of attendees")
+
+	for _, a := range attendees {
+		s.Assert().NotEmpty(a.Email)
+		s.Assert().NotEmpty(a.NameFirst)
+		s.Assert().NotEmpty(a.NameLast)
+	}
 }

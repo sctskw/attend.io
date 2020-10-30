@@ -93,89 +93,6 @@ func init() {
         }
       }
     },
-    "/events": {
-      "get": {
-        "tags": [
-          "events"
-        ],
-        "responses": {
-          "200": {
-            "description": "list the events",
-            "schema": {
-              "$ref": "#/definitions/EventList"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/events/{id}": {
-      "get": {
-        "tags": [
-          "events"
-        ],
-        "operationId": "getEventById",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Event ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "the requested Event",
-            "schema": {
-              "$ref": "#/definitions/Event"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/events/{id}/attendees": {
-      "get": {
-        "tags": [
-          "events"
-        ],
-        "operationId": "getEventAttendees",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Event ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "the list of attendees from the event",
-            "schema": {
-              "$ref": "#/definitions/AttendeesList"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
     "/talks": {
       "get": {
         "tags": [
@@ -217,6 +134,37 @@ func init() {
             "description": "the requested talk",
             "schema": {
               "$ref": "#/definitions/Talk"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/talks/{id}/attendees": {
+      "get": {
+        "tags": [
+          "talks"
+        ],
+        "operationId": "getTalkAttendees",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the list of attendees from the event",
+            "schema": {
+              "$ref": "#/definitions/AttendeesList"
             }
           },
           "default": {
@@ -280,42 +228,6 @@ func init() {
         }
       }
     },
-    "Event": {
-      "type": "object",
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "date_time_end": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "date_time_start": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "id": {
-          "type": "string",
-          "readOnly": true
-        },
-        "name": {
-          "type": "string",
-          "minLength": 1
-        },
-        "ref_attendees": {
-          "$ref": "#/definitions/AttendeesList"
-        },
-        "ref_talk": {
-          "$ref": "#/definitions/Talk"
-        }
-      }
-    },
-    "EventList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Event"
-      }
-    },
     "SystemStatus": {
       "type": "object",
       "required": [
@@ -337,6 +249,14 @@ func init() {
         "name"
       ],
       "properties": {
+        "date_time_end": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "date_time_start": {
+          "type": "string",
+          "format": "date-time"
+        },
         "description": {
           "type": "string",
           "minLength": 1
@@ -352,6 +272,12 @@ func init() {
         "presenter": {
           "type": "string",
           "minLength": 1
+        },
+        "ref_attendees": {
+          "$ref": "#/definitions/AttendeesList"
+        },
+        "ref_talk": {
+          "$ref": "#/definitions/Talk"
         }
       }
     },
@@ -440,89 +366,6 @@ func init() {
         }
       }
     },
-    "/events": {
-      "get": {
-        "tags": [
-          "events"
-        ],
-        "responses": {
-          "200": {
-            "description": "list the events",
-            "schema": {
-              "$ref": "#/definitions/EventList"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/events/{id}": {
-      "get": {
-        "tags": [
-          "events"
-        ],
-        "operationId": "getEventById",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Event ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "the requested Event",
-            "schema": {
-              "$ref": "#/definitions/Event"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/events/{id}/attendees": {
-      "get": {
-        "tags": [
-          "events"
-        ],
-        "operationId": "getEventAttendees",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Event ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "the list of attendees from the event",
-            "schema": {
-              "$ref": "#/definitions/AttendeesList"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
     "/talks": {
       "get": {
         "tags": [
@@ -564,6 +407,37 @@ func init() {
             "description": "the requested talk",
             "schema": {
               "$ref": "#/definitions/Talk"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/talks/{id}/attendees": {
+      "get": {
+        "tags": [
+          "talks"
+        ],
+        "operationId": "getTalkAttendees",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the list of attendees from the event",
+            "schema": {
+              "$ref": "#/definitions/AttendeesList"
             }
           },
           "default": {
@@ -627,42 +501,6 @@ func init() {
         }
       }
     },
-    "Event": {
-      "type": "object",
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "date_time_end": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "date_time_start": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "id": {
-          "type": "string",
-          "readOnly": true
-        },
-        "name": {
-          "type": "string",
-          "minLength": 1
-        },
-        "ref_attendees": {
-          "$ref": "#/definitions/AttendeesList"
-        },
-        "ref_talk": {
-          "$ref": "#/definitions/Talk"
-        }
-      }
-    },
-    "EventList": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/Event"
-      }
-    },
     "SystemStatus": {
       "type": "object",
       "required": [
@@ -684,6 +522,14 @@ func init() {
         "name"
       ],
       "properties": {
+        "date_time_end": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "date_time_start": {
+          "type": "string",
+          "format": "date-time"
+        },
         "description": {
           "type": "string",
           "minLength": 1
@@ -699,6 +545,12 @@ func init() {
         "presenter": {
           "type": "string",
           "minLength": 1
+        },
+        "ref_attendees": {
+          "$ref": "#/definitions/AttendeesList"
+        },
+        "ref_talk": {
+          "$ref": "#/definitions/Talk"
         }
       }
     },

@@ -20,7 +20,6 @@ import (
 	"github.com/go-openapi/swag"
 
 	"github.com/sctskw/attend.io/restapi/operations/attendees"
-	"github.com/sctskw/attend.io/restapi/operations/events"
 	"github.com/sctskw/attend.io/restapi/operations/system"
 	"github.com/sctskw/attend.io/restapi/operations/talks"
 )
@@ -50,20 +49,14 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 		SystemGetHandler: system.GetHandlerFunc(func(params system.GetParams) middleware.Responder {
 			return middleware.NotImplemented("operation system.Get has not yet been implemented")
 		}),
-		EventsGetEventsHandler: events.GetEventsHandlerFunc(func(params events.GetEventsParams) middleware.Responder {
-			return middleware.NotImplemented("operation events.GetEvents has not yet been implemented")
-		}),
 		TalksGetTalksHandler: talks.GetTalksHandlerFunc(func(params talks.GetTalksParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.GetTalks has not yet been implemented")
 		}),
 		AttendeesGetAttendeeByFieldHandler: attendees.GetAttendeeByFieldHandlerFunc(func(params attendees.GetAttendeeByFieldParams) middleware.Responder {
 			return middleware.NotImplemented("operation attendees.GetAttendeeByField has not yet been implemented")
 		}),
-		EventsGetEventAttendeesHandler: events.GetEventAttendeesHandlerFunc(func(params events.GetEventAttendeesParams) middleware.Responder {
-			return middleware.NotImplemented("operation events.GetEventAttendees has not yet been implemented")
-		}),
-		EventsGetEventByIDHandler: events.GetEventByIDHandlerFunc(func(params events.GetEventByIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation events.GetEventByID has not yet been implemented")
+		TalksGetTalkAttendeesHandler: talks.GetTalkAttendeesHandlerFunc(func(params talks.GetTalkAttendeesParams) middleware.Responder {
+			return middleware.NotImplemented("operation talks.GetTalkAttendees has not yet been implemented")
 		}),
 		TalksGetTalkByIDHandler: talks.GetTalkByIDHandlerFunc(func(params talks.GetTalkByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.GetTalkByID has not yet been implemented")
@@ -104,16 +97,12 @@ type AttendIoAPI struct {
 
 	// SystemGetHandler sets the operation handler for the get operation
 	SystemGetHandler system.GetHandler
-	// EventsGetEventsHandler sets the operation handler for the get events operation
-	EventsGetEventsHandler events.GetEventsHandler
 	// TalksGetTalksHandler sets the operation handler for the get talks operation
 	TalksGetTalksHandler talks.GetTalksHandler
 	// AttendeesGetAttendeeByFieldHandler sets the operation handler for the get attendee by field operation
 	AttendeesGetAttendeeByFieldHandler attendees.GetAttendeeByFieldHandler
-	// EventsGetEventAttendeesHandler sets the operation handler for the get event attendees operation
-	EventsGetEventAttendeesHandler events.GetEventAttendeesHandler
-	// EventsGetEventByIDHandler sets the operation handler for the get event by Id operation
-	EventsGetEventByIDHandler events.GetEventByIDHandler
+	// TalksGetTalkAttendeesHandler sets the operation handler for the get talk attendees operation
+	TalksGetTalkAttendeesHandler talks.GetTalkAttendeesHandler
 	// TalksGetTalkByIDHandler sets the operation handler for the get talk by Id operation
 	TalksGetTalkByIDHandler talks.GetTalkByIDHandler
 	// ServeError is called when an error is received, there is a default handler
@@ -195,20 +184,14 @@ func (o *AttendIoAPI) Validate() error {
 	if o.SystemGetHandler == nil {
 		unregistered = append(unregistered, "system.GetHandler")
 	}
-	if o.EventsGetEventsHandler == nil {
-		unregistered = append(unregistered, "events.GetEventsHandler")
-	}
 	if o.TalksGetTalksHandler == nil {
 		unregistered = append(unregistered, "talks.GetTalksHandler")
 	}
 	if o.AttendeesGetAttendeeByFieldHandler == nil {
 		unregistered = append(unregistered, "attendees.GetAttendeeByFieldHandler")
 	}
-	if o.EventsGetEventAttendeesHandler == nil {
-		unregistered = append(unregistered, "events.GetEventAttendeesHandler")
-	}
-	if o.EventsGetEventByIDHandler == nil {
-		unregistered = append(unregistered, "events.GetEventByIDHandler")
+	if o.TalksGetTalkAttendeesHandler == nil {
+		unregistered = append(unregistered, "talks.GetTalkAttendeesHandler")
 	}
 	if o.TalksGetTalkByIDHandler == nil {
 		unregistered = append(unregistered, "talks.GetTalkByIDHandler")
@@ -308,10 +291,6 @@ func (o *AttendIoAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/events"] = events.NewGetEvents(o.context, o.EventsGetEventsHandler)
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
 	o.handlers["GET"]["/talks"] = talks.NewGetTalks(o.context, o.TalksGetTalksHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -320,11 +299,7 @@ func (o *AttendIoAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/events/{id}/attendees"] = events.NewGetEventAttendees(o.context, o.EventsGetEventAttendeesHandler)
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/events/{id}"] = events.NewGetEventByID(o.context, o.EventsGetEventByIDHandler)
+	o.handlers["GET"]["/talks/{id}/attendees"] = talks.NewGetTalkAttendees(o.context, o.TalksGetTalkAttendeesHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

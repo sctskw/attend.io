@@ -8,6 +8,7 @@ import (
 type TalkService interface {
 	GetAll() models.TalkList
 	GetById(id string) *models.Talk
+	GetAttendees(id string) models.AttendeesList
 }
 
 type talkService struct {
@@ -48,4 +49,16 @@ func (s *talkService) GetById(id string) *models.Talk {
 	}
 
 	return t
+}
+
+func (s *talkService) GetAttendees(id string) models.AttendeesList {
+	ids := make([]string, 0)
+
+	talk := s.GetById(id)
+
+	for _, ref := range talk.RefAttendees {
+		ids = append(ids, ref.ID)
+	}
+
+	return Attendees().GetAllById(ids...)
 }

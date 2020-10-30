@@ -61,50 +61,16 @@ paths:
           schema:
             $ref: "#/definitions/Error"
 
-  /events:
-    get:
-      tags:
-        - events
-      responses:
-        200:
-          description: list the events
-          schema:
-            $ref: "#/definitions/EventList"
-        default:
-          description: generic error response
-          schema:
-            $ref: "#/definitions/Error"
 
-  /events/{id}:
+  /talks/{id}/attendees:
     get:
       tags:
-        - events
-      operationId: getEventById
+        - talks
+      operationId: getTalkAttendees
       parameters:
         - name: id
           in: path
-          description: Event ID
-          type: string
-          required: true
-      responses:
-        200:
-          description: the requested Event
-          schema:
-            $ref: "#/definitions/Event"
-        default:
-          description: generic error response
-          schema:
-            $ref: "#/definitions/Error"
-
-  /events/{id}/attendees:
-    get:
-      tags:
-        - events
-      operationId: getEventAttendees
-      parameters:
-        - name: id
-          in: path
-          description: Event ID
+          description: Talk ID
           type: string
           required: true
       responses:
@@ -156,12 +122,22 @@ definitions:
       name:
         type: string
         minLength: 1
-      description:
-        type: string
-        minLength: 1
       presenter:
         type: string
         minLength: 1
+      description:
+        type: string
+        minLength: 1
+      date_time_start:
+        type: string
+        format: date-time
+      date_time_end:
+        type: string
+        format: date-time
+      ref_talk:
+        $ref: "#/definitions/Talk"
+      ref_attendees:
+        $ref: "#/definitions/AttendeesList"
 
   TalkList:
     type: array
@@ -194,35 +170,6 @@ definitions:
     type: array
     items:
       $ref: "#/definitions/Attendee"
-
-  Event:
-    type: object
-    required:
-      - name
-    properties:
-      id:
-        type: string
-        readOnly: true
-      name:
-        type: string
-        minLength: 1
-      date_time_start:
-        type: string
-        format: date-time
-      date_time_end:
-        type: string
-        format: date-time
-      ref_talk:
-        $ref: "#/definitions/Talk"
-      ref_attendees:
-        $ref: "#/definitions/AttendeesList"
-
-
-
-  EventList:
-    type: array
-    items:
-      $ref: "#/definitions/Event"
 
   Error:
     type: object
