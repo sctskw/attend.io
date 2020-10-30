@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/sctskw/attend.io/services"
@@ -36,8 +38,11 @@ func TestExampleTestSuite(t *testing.T) {
 }
 
 func (s *ApiTestSuite) SetupSuite() {
+
+	creds, _ := filepath.Abs("../creds.json")
+	os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", creds)
+
 	s.server = GetHttpServer()
-	//s.db = db.NewMockClient()
 	s.db = db.NewClient()
 	s.services = services.NewWithClient(s.db)
 }

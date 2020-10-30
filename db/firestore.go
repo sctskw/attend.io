@@ -4,11 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"os"
-	"path/filepath"
 
 	"cloud.google.com/go/firestore"
-	"google.golang.org/api/option"
 )
 
 type FirestoreClient interface {
@@ -24,17 +21,8 @@ func NewFirestoreClient() FirestoreClient {
 }
 
 func (f *firestoreClient) Connect() {
-
-	d, _ := os.Getwd()
-	creds, err := filepath.Abs(filepath.Join(d, "../creds.json"))
-
-	if err != nil {
-		panic(err)
-	}
-
 	ctx := context.Background()
-	opts := option.WithCredentialsFile(creds)
-	client, err := firestore.NewClient(ctx, "attend-io-294107", opts)
+	client, err := firestore.NewClient(ctx, "attend-io-294107")
 	if err != nil {
 		panic(fmt.Sprintf("couldn't connect to firestore db: %s", err.Error()))
 	}

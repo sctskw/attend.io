@@ -16,10 +16,10 @@ docs:
 serve:
 	@go run ./cmd/attend-io-server/main.go
 
-test:
+test: export GOOGLE_APPLICATION_CREDENTIALS=./creds.json
 	@gotestsum --format short-verbose ./tests/...
 
-test-watch:
+test-watch: export GOOGLE_APPLICATION_CREDENTIALS=./creds.json
 	@gotestsum --format short-verbose --watch ./tests/...
 
 clean:
