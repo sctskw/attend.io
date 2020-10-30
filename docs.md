@@ -20,6 +20,10 @@ headingLevel: 2
 
 A simple talk attendance API
 
+Base URLs:
+
+* <a href="http://attend-io-294107.uc.r.appspot.com">http://attend-io-294107.uc.r.appspot.com</a>
+
 <h1 id="attend-io-system">system</h1>
 
 ## get__
@@ -28,7 +32,7 @@ A simple talk attendance API
 
 ```shell
 # You can also use wget
-curl -X GET / \
+curl -X GET http://attend-io-294107.uc.r.appspot.com/ \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
@@ -65,7 +69,7 @@ This operation does not require authentication
 
 ```shell
 # You can also use wget
-curl -X GET /talks \
+curl -X GET http://attend-io-294107.uc.r.appspot.com/talks \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
@@ -113,7 +117,7 @@ This operation does not require authentication
 
 ```shell
 # You can also use wget
-curl -X GET /talks/{id} \
+curl -X GET http://attend-io-294107.uc.r.appspot.com/talks/{id} \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
@@ -165,7 +169,7 @@ This operation does not require authentication
 
 ```shell
 # You can also use wget
-curl -X GET /events \
+curl -X GET http://attend-io-294107.uc.r.appspot.com/events \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
@@ -205,7 +209,7 @@ This operation does not require authentication
 
 ```shell
 # You can also use wget
-curl -X GET /events/{id} \
+curl -X GET http://attend-io-294107.uc.r.appspot.com/events/{id} \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
@@ -251,7 +255,7 @@ This operation does not require authentication
 
 ```shell
 # You can also use wget
-curl -X GET /attendee \
+curl -X GET http://attend-io-294107.uc.r.appspot.com/attendee \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
@@ -298,7 +302,7 @@ This operation does not require authentication
 
 ```shell
 # You can also use wget
-curl -X GET /attendees/{eventId} \
+curl -X GET http://attend-io-294107.uc.r.appspot.com/attendees/{eventId} \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```

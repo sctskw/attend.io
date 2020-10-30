@@ -5,7 +5,7 @@ info:
   title: attend.io
   version: 1.0.0
 consumes:
-- application/github.com/sctskw/attend.io.v1+json
+  - application/github.com/sctskw/attend.io.v1+json
 produces:
   - application/github.com/sctskw/attend.io.v1+json
 schemes:
