@@ -15,8 +15,8 @@ func NewAttendee(nameFirst, nameLast, email string) *Attendee {
 	}
 }
 
-func NewAttendeeList(attendees ...*Attendee) *AttendeesList {
+func NewAttendeeList(attendees ...*Attendee) AttendeesList {
 	l := AttendeesList{}
 	l = append(l, attendees...)
-	return &l
+	return l
 }

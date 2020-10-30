@@ -56,6 +56,100 @@ func init() {
         }
       }
     },
+    "/attendee": {
+      "get": {
+        "tags": [
+          "attendees"
+        ],
+        "operationId": "getAttendeeByField",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "email",
+            "description": "Attendee Email",
+            "name": "email",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Attendee ID",
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "find an attendee by id",
+            "schema": {
+              "$ref": "#/definitions/Attendee"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/attendees/{eventId}": {
+      "get": {
+        "tags": [
+          "attendees"
+        ],
+        "operationId": "getAttendeesByEventId",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Event ID",
+            "name": "eventId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list the attendees per event",
+            "schema": {
+              "$ref": "#/definitions/AttendeesList"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "responses": {
+          "200": {
+            "description": "list the events",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Event"
+              }
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/talks": {
       "get": {
         "tags": [
@@ -219,6 +313,100 @@ func init() {
             "schema": {
               "type": "object",
               "$ref": "#/definitions/SystemStatus"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/attendee": {
+      "get": {
+        "tags": [
+          "attendees"
+        ],
+        "operationId": "getAttendeeByField",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "email",
+            "description": "Attendee Email",
+            "name": "email",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Attendee ID",
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "find an attendee by id",
+            "schema": {
+              "$ref": "#/definitions/Attendee"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/attendees/{eventId}": {
+      "get": {
+        "tags": [
+          "attendees"
+        ],
+        "operationId": "getAttendeesByEventId",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Event ID",
+            "name": "eventId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list the attendees per event",
+            "schema": {
+              "$ref": "#/definitions/AttendeesList"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "tags": [
+          "events"
+        ],
+        "responses": {
+          "200": {
+            "description": "list the events",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Event"
+              }
             }
           },
           "default": {

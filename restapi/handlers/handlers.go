@@ -5,6 +5,7 @@ import (
 )
 
 func AttachHandlers(api *operations.AttendIoAPI) {
-	AttachTalksHandlers(api)
 	AttachSystemHandlers(api)
+	AttachTalksHandlers(api)
+	AttachAttendeesHandlers(api)
 }

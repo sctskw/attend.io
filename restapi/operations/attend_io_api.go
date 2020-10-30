@@ -19,6 +19,8 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
+	"github.com/sctskw/attend.io/restapi/operations/attendees"
+	"github.com/sctskw/attend.io/restapi/operations/events"
 	"github.com/sctskw/attend.io/restapi/operations/system"
 	"github.com/sctskw/attend.io/restapi/operations/talks"
 )
@@ -48,8 +50,17 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 		SystemGetHandler: system.GetHandlerFunc(func(params system.GetParams) middleware.Responder {
 			return middleware.NotImplemented("operation system.Get has not yet been implemented")
 		}),
+		EventsGetEventsHandler: events.GetEventsHandlerFunc(func(params events.GetEventsParams) middleware.Responder {
+			return middleware.NotImplemented("operation events.GetEvents has not yet been implemented")
+		}),
 		TalksGetTalksHandler: talks.GetTalksHandlerFunc(func(params talks.GetTalksParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.GetTalks has not yet been implemented")
+		}),
+		AttendeesGetAttendeeByFieldHandler: attendees.GetAttendeeByFieldHandlerFunc(func(params attendees.GetAttendeeByFieldParams) middleware.Responder {
+			return middleware.NotImplemented("operation attendees.GetAttendeeByField has not yet been implemented")
+		}),
+		AttendeesGetAttendeesByEventIDHandler: attendees.GetAttendeesByEventIDHandlerFunc(func(params attendees.GetAttendeesByEventIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation attendees.GetAttendeesByEventID has not yet been implemented")
 		}),
 	}
 }
@@ -87,8 +98,14 @@ type AttendIoAPI struct {
 
 	// SystemGetHandler sets the operation handler for the get operation
 	SystemGetHandler system.GetHandler
+	// EventsGetEventsHandler sets the operation handler for the get events operation
+	EventsGetEventsHandler events.GetEventsHandler
 	// TalksGetTalksHandler sets the operation handler for the get talks operation
 	TalksGetTalksHandler talks.GetTalksHandler
+	// AttendeesGetAttendeeByFieldHandler sets the operation handler for the get attendee by field operation
+	AttendeesGetAttendeeByFieldHandler attendees.GetAttendeeByFieldHandler
+	// AttendeesGetAttendeesByEventIDHandler sets the operation handler for the get attendees by event Id operation
+	AttendeesGetAttendeesByEventIDHandler attendees.GetAttendeesByEventIDHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -168,8 +185,17 @@ func (o *AttendIoAPI) Validate() error {
 	if o.SystemGetHandler == nil {
 		unregistered = append(unregistered, "system.GetHandler")
 	}
+	if o.EventsGetEventsHandler == nil {
+		unregistered = append(unregistered, "events.GetEventsHandler")
+	}
 	if o.TalksGetTalksHandler == nil {
 		unregistered = append(unregistered, "talks.GetTalksHandler")
+	}
+	if o.AttendeesGetAttendeeByFieldHandler == nil {
+		unregistered = append(unregistered, "attendees.GetAttendeeByFieldHandler")
+	}
+	if o.AttendeesGetAttendeesByEventIDHandler == nil {
+		unregistered = append(unregistered, "attendees.GetAttendeesByEventIDHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -266,7 +292,19 @@ func (o *AttendIoAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/events"] = events.NewGetEvents(o.context, o.EventsGetEventsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/talks"] = talks.NewGetTalks(o.context, o.TalksGetTalksHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/attendee"] = attendees.NewGetAttendeeByField(o.context, o.AttendeesGetAttendeeByFieldHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/attendees/{eventId}"] = attendees.NewGetAttendeesByEventID(o.context, o.AttendeesGetAttendeesByEventIDHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP
