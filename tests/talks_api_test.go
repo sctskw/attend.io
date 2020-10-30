@@ -21,5 +21,4 @@ func (s *ApiTestSuite) TestTalksAPI_GetTalkByID() {
 
 	s.Fetch("/talks/d0e7a628-1a7b-11eb-adc1-0242ac120002", &talk)
 	s.Assert().Equal("Talk 3", *talk.Name)
-
 }
