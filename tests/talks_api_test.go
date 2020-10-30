@@ -13,6 +13,7 @@ func (s *ApiTestSuite) TestTalksAPI_GetTalks() {
 
 	for _, talk := range talks {
 		s.Assert().NotNil(talk.ID, "has an ID")
+		s.Assert().NotEqual("", talk.ID, "has an valid ID")
 		s.Assert().NotNil(talk.Name, "has a name")
 		s.Assert().Contains(talk.Presenter, "Presenter")
 		s.Assert().NotNil(talk.Description, "has a description")
@@ -23,6 +24,7 @@ func (s *ApiTestSuite) TestTalksAPI_GetTalkByID() {
 
 	talk := &models.Talk{}
 	s.Fetch("/talks/HclaPWsc4TNfmTbVYNRy", talk)
+	s.Assert().NotEqual("", talk.ID, "has an valid ID")
 	s.Assert().Equal("Talk 2", *talk.Name)
 }
 
@@ -33,6 +35,7 @@ func (s *ApiTestSuite) TestTalksAPI_GetTalkAttendees() {
 	s.Assert().Len(attendees, 3, "returns total number of attendees")
 
 	for _, a := range attendees {
+		s.Assert().NotEqual("", a.ID, "has an valid ID")
 		s.Assert().NotEmpty(a.Email)
 		s.Assert().NotEmpty(a.NameFirst)
 		s.Assert().NotEmpty(a.NameLast)

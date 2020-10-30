@@ -43,8 +43,12 @@ func (f *firestoreClient) FetchAll(collection string) (results FetchAllResponse)
 	}
 
 	for _, doc := range docs {
+		d := doc.Data()
+		d["id"] = doc.Ref.ID //copy the id
+
 		//convert to bytes
-		b, _ := json.Marshal(doc.Data())
+		b, _ := json.Marshal(d)
+
 		results = append(results, b)
 	}
 
@@ -69,8 +73,11 @@ func (f *firestoreClient) FetchById(collection, id string) FetchOneResponse {
 		return nil
 	}
 
+	d := doc.Data()
+	d["id"] = doc.Ref.ID //copy the id
+
 	//convert to bytes
-	b, err := json.Marshal(doc.Data())
+	b, err := json.Marshal(d)
 
 	if err != nil {
 		panic(err)
@@ -91,8 +98,11 @@ func (f *firestoreClient) FetchByField(collection, field, value string) FetchOne
 		return nil
 	}
 
+	d := doc.Data()
+	d["id"] = doc.Ref.ID //copy the id
+
 	//convert to bytes
-	b, err := json.Marshal(doc.Data())
+	b, err := json.Marshal(d)
 
 	if err != nil {
 		panic(err)
