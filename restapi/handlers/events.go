@@ -13,9 +13,9 @@ func AttachEventsHandlers(api *operations.AttendIoAPI) {
 }
 
 func GetEvents(params events.GetEventsParams) middleware.Responder {
-	return events.NewGetEventsOK().WithPayload(services.GetAllEvents())
+	return events.NewGetEventsOK().WithPayload(services.Events().GetAll())
 }
 
 func GetEventById(params events.GetEventByIDParams) middleware.Responder {
-	return events.NewGetEventByIDOK().WithPayload(services.GetEventById(params.ID))
+	return events.NewGetEventByIDOK().WithPayload(services.Events().GetById(params.ID))
 }
