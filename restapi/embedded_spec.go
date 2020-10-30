@@ -199,6 +199,38 @@ func init() {
           }
         }
       }
+    },
+    "/talks/{id}": {
+      "get": {
+        "tags": [
+          "talks"
+        ],
+        "operationId": "getTalkById",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the requested talk",
+            "schema": {
+              "$ref": "#/definitions/Talk"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -495,6 +527,38 @@ func init() {
             "description": "list the talks",
             "schema": {
               "$ref": "#/definitions/TalkList"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/talks/{id}": {
+      "get": {
+        "tags": [
+          "talks"
+        ],
+        "operationId": "getTalkById",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "the requested talk",
+            "schema": {
+              "$ref": "#/definitions/Talk"
             }
           },
           "default": {

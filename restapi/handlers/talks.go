@@ -9,8 +9,13 @@ import (
 
 func AttachTalksHandlers(api *operations.AttendIoAPI) {
 	api.TalksGetTalksHandler = talks.GetTalksHandlerFunc(GetTalks)
+	api.TalksGetTalkByIDHandler = talks.GetTalkByIDHandlerFunc(GetTalkById)
 }
 
 func GetTalks(params talks.GetTalksParams) middleware.Responder {
 	return talks.NewGetTalksOK().WithPayload(services.GetTalks())
+}
+
+func GetTalkById(params talks.GetTalkByIDParams) middleware.Responder {
+	return talks.NewGetTalkByIDOK().WithPayload(services.GetTalkById(params.ID))
 }

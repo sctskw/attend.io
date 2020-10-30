@@ -17,3 +17,9 @@ func (m *Talk) AddAttendee(a ...*Attendee) *Talk {
 	m.Attendees = append(m.Attendees, a...)
 	return m
 }
+
+func NewTalkList(t ...*Talk) TalkList {
+	list := TalkList{}
+	list = append(list, t...)
+	return list
+}

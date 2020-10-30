@@ -39,6 +39,28 @@ paths:
           schema:
             $ref: "#/definitions/Error"
 
+  /talks/{id}:
+    get:
+      tags:
+        - talks
+      operationId: getTalkById
+      parameters:
+        - name: id
+          in: path
+          description: Talk ID
+          type: string
+          format: uuid
+          required: true
+      responses:
+        200:
+          description: the requested talk
+          schema:
+            $ref: "#/definitions/Talk"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/Error"
+
   /events:
     get:
       tags:

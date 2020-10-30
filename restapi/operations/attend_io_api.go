@@ -65,6 +65,9 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 		EventsGetEventByIDHandler: events.GetEventByIDHandlerFunc(func(params events.GetEventByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation events.GetEventByID has not yet been implemented")
 		}),
+		TalksGetTalkByIDHandler: talks.GetTalkByIDHandlerFunc(func(params talks.GetTalkByIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation talks.GetTalkByID has not yet been implemented")
+		}),
 	}
 }
 
@@ -111,6 +114,8 @@ type AttendIoAPI struct {
 	AttendeesGetAttendeesByEventIDHandler attendees.GetAttendeesByEventIDHandler
 	// EventsGetEventByIDHandler sets the operation handler for the get event by Id operation
 	EventsGetEventByIDHandler events.GetEventByIDHandler
+	// TalksGetTalkByIDHandler sets the operation handler for the get talk by Id operation
+	TalksGetTalkByIDHandler talks.GetTalkByIDHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -204,6 +209,9 @@ func (o *AttendIoAPI) Validate() error {
 	}
 	if o.EventsGetEventByIDHandler == nil {
 		unregistered = append(unregistered, "events.GetEventByIDHandler")
+	}
+	if o.TalksGetTalkByIDHandler == nil {
+		unregistered = append(unregistered, "talks.GetTalkByIDHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -317,6 +325,10 @@ func (o *AttendIoAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/events/{id}"] = events.NewGetEventByID(o.context, o.EventsGetEventByIDHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/talks/{id}"] = talks.NewGetTalkByID(o.context, o.TalksGetTalkByIDHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP
