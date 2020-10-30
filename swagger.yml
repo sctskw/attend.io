@@ -1,4 +1,5 @@
 ---
+x-google-allow: all
 swagger: "2.0"
 info:
   description: A simple talk attendance API

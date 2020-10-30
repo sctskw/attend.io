@@ -353,7 +353,8 @@ func init() {
         "$ref": "#/definitions/Talk"
       }
     }
-  }
+  },
+  "x-google-allow": "all"
 }`))
 	FlatSwaggerJSON = json.RawMessage([]byte(`{
   "consumes": [
@@ -691,6 +692,7 @@ func init() {
         "$ref": "#/definitions/Talk"
       }
     }
-  }
+  },
+  "x-google-allow": "all"
 }`))
 }
