@@ -2,6 +2,7 @@ package tests
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/sctskw/attend.io/models"
@@ -59,6 +60,21 @@ func (s *ApiTestSuite) TestTalksAPI() {
 		s.Assert().Nil(err)
 		s.Assert().Equal(200, res.StatusCode)
 		s.Assert().Len(talk.RefAttendees, 1)
+	})
+
+	s.Run("remove an Attendee from a Talk", func() {
+
+		var res *http.Response
+
+		//update the TalkList
+		res = s.Delete(fmt.Sprintf("/talks/%s/attendees/%s", talk.ID, attendee.ID))
+		s.Assert().Equal(204, res.StatusCode)
+
+		t := models.Talk{}
+		res = s.Fetch("/talks/"+talk.ID, &t)
+		s.Assert().Equal(200, res.StatusCode)
+		s.Assert().Len(t.RefAttendees, 0)
+
 	})
 
 	s.Run("delete a Talk", func() {

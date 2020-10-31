@@ -173,7 +173,8 @@ func (s *talkService) RemoveAttendee(id, aid string) error {
 		return err
 	}
 
-	//drop Attendee
+	//remove the Attendee
+	//TODO: this isn't actually efficient, could make this a routine or a totally async background job
 	updated := models.AttendeeList{}
 	for _, ref := range talk.RefAttendees {
 		if ref.ID != aid {
