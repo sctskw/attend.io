@@ -4,6 +4,8 @@ A Talk Attendance API
 
 version: `0.0.1`
 
+link: https://github.com/sctskw/attend.io
+
 ---
 
 ##### Looking for API Docs? Please visit the [Live Documentation](https://attend-io-294107.uc.r.appspot.com/docs)
