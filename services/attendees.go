@@ -12,6 +12,7 @@ type AttendeeService interface {
 	GetById(id string) (*models.Attendee, error)
 	GetByEmail(email strfmt.Email) (*models.Attendee, error)
 	Create(m *models.Attendee) (*models.Attendee, error)
+	DeleteById(id string) error
 }
 
 type attendeeService struct {
@@ -116,4 +117,9 @@ func (s *attendeeService) Create(m *models.Attendee) (*models.Attendee, error) {
 	}
 
 	return s.GetById(a.ID)
+}
+
+func (s *attendeeService) DeleteById(id string) error {
+	s.db.DeleteById("attendees", id)
+	return nil
 }

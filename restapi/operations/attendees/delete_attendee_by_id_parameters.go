@@ -13,18 +13,18 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDeleteAttendeeParams creates a new DeleteAttendeeParams object
+// NewDeleteAttendeeByIDParams creates a new DeleteAttendeeByIDParams object
 // no default values defined in spec.
-func NewDeleteAttendeeParams() DeleteAttendeeParams {
+func NewDeleteAttendeeByIDParams() DeleteAttendeeByIDParams {
 
-	return DeleteAttendeeParams{}
+	return DeleteAttendeeByIDParams{}
 }
 
-// DeleteAttendeeParams contains all the bound params for the delete attendee operation
+// DeleteAttendeeByIDParams contains all the bound params for the delete attendee by Id operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters deleteAttendee
-type DeleteAttendeeParams struct {
+// swagger:parameters deleteAttendeeById
+type DeleteAttendeeByIDParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -39,8 +39,8 @@ type DeleteAttendeeParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewDeleteAttendeeParams() beforehand.
-func (o *DeleteAttendeeParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewDeleteAttendeeByIDParams() beforehand.
+func (o *DeleteAttendeeByIDParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
@@ -57,7 +57,7 @@ func (o *DeleteAttendeeParams) BindRequest(r *http.Request, route *middleware.Ma
 }
 
 // bindID binds and validates parameter ID from path.
-func (o *DeleteAttendeeParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *DeleteAttendeeByIDParams) bindID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]

@@ -46,9 +46,6 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		DeleteTalksIDHandler: DeleteTalksIDHandlerFunc(func(params DeleteTalksIDParams) middleware.Responder {
-			return middleware.NotImplemented("operation DeleteTalksID has not yet been implemented")
-		}),
 		SystemGetHandler: system.GetHandlerFunc(func(params system.GetParams) middleware.Responder {
 			return middleware.NotImplemented("operation system.Get has not yet been implemented")
 		}),
@@ -64,11 +61,14 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 		TalksAddAttendeeToTalkHandler: talks.AddAttendeeToTalkHandlerFunc(func(params talks.AddAttendeeToTalkParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.AddAttendeeToTalk has not yet been implemented")
 		}),
-		AttendeesDeleteAttendeeHandler: attendees.DeleteAttendeeHandlerFunc(func(params attendees.DeleteAttendeeParams) middleware.Responder {
-			return middleware.NotImplemented("operation attendees.DeleteAttendee has not yet been implemented")
+		AttendeesDeleteAttendeeByIDHandler: attendees.DeleteAttendeeByIDHandlerFunc(func(params attendees.DeleteAttendeeByIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation attendees.DeleteAttendeeByID has not yet been implemented")
 		}),
 		TalksDeleteAttendeeFromTalkHandler: talks.DeleteAttendeeFromTalkHandlerFunc(func(params talks.DeleteAttendeeFromTalkParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.DeleteAttendeeFromTalk has not yet been implemented")
+		}),
+		TalksDeleteTalkByIDHandler: talks.DeleteTalkByIDHandlerFunc(func(params talks.DeleteTalkByIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation talks.DeleteTalkByID has not yet been implemented")
 		}),
 		AttendeesGetAttendeeByFieldHandler: attendees.GetAttendeeByFieldHandlerFunc(func(params attendees.GetAttendeeByFieldParams) middleware.Responder {
 			return middleware.NotImplemented("operation attendees.GetAttendeeByField has not yet been implemented")
@@ -114,8 +114,6 @@ type AttendIoAPI struct {
 	//   - application/github.com/sctskw/attend.io.v1+json
 	JSONProducer runtime.Producer
 
-	// DeleteTalksIDHandler sets the operation handler for the delete talks ID operation
-	DeleteTalksIDHandler DeleteTalksIDHandler
 	// SystemGetHandler sets the operation handler for the get operation
 	SystemGetHandler system.GetHandler
 	// TalksGetTalksHandler sets the operation handler for the get talks operation
@@ -126,10 +124,12 @@ type AttendIoAPI struct {
 	TalksPostTalksHandler talks.PostTalksHandler
 	// TalksAddAttendeeToTalkHandler sets the operation handler for the add attendee to talk operation
 	TalksAddAttendeeToTalkHandler talks.AddAttendeeToTalkHandler
-	// AttendeesDeleteAttendeeHandler sets the operation handler for the delete attendee operation
-	AttendeesDeleteAttendeeHandler attendees.DeleteAttendeeHandler
+	// AttendeesDeleteAttendeeByIDHandler sets the operation handler for the delete attendee by Id operation
+	AttendeesDeleteAttendeeByIDHandler attendees.DeleteAttendeeByIDHandler
 	// TalksDeleteAttendeeFromTalkHandler sets the operation handler for the delete attendee from talk operation
 	TalksDeleteAttendeeFromTalkHandler talks.DeleteAttendeeFromTalkHandler
+	// TalksDeleteTalkByIDHandler sets the operation handler for the delete talk by Id operation
+	TalksDeleteTalkByIDHandler talks.DeleteTalkByIDHandler
 	// AttendeesGetAttendeeByFieldHandler sets the operation handler for the get attendee by field operation
 	AttendeesGetAttendeeByFieldHandler attendees.GetAttendeeByFieldHandler
 	// TalksGetTalkAttendeesHandler sets the operation handler for the get talk attendees operation
@@ -212,9 +212,6 @@ func (o *AttendIoAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.DeleteTalksIDHandler == nil {
-		unregistered = append(unregistered, "DeleteTalksIDHandler")
-	}
 	if o.SystemGetHandler == nil {
 		unregistered = append(unregistered, "system.GetHandler")
 	}
@@ -230,11 +227,14 @@ func (o *AttendIoAPI) Validate() error {
 	if o.TalksAddAttendeeToTalkHandler == nil {
 		unregistered = append(unregistered, "talks.AddAttendeeToTalkHandler")
 	}
-	if o.AttendeesDeleteAttendeeHandler == nil {
-		unregistered = append(unregistered, "attendees.DeleteAttendeeHandler")
+	if o.AttendeesDeleteAttendeeByIDHandler == nil {
+		unregistered = append(unregistered, "attendees.DeleteAttendeeByIDHandler")
 	}
 	if o.TalksDeleteAttendeeFromTalkHandler == nil {
 		unregistered = append(unregistered, "talks.DeleteAttendeeFromTalkHandler")
+	}
+	if o.TalksDeleteTalkByIDHandler == nil {
+		unregistered = append(unregistered, "talks.DeleteTalkByIDHandler")
 	}
 	if o.AttendeesGetAttendeeByFieldHandler == nil {
 		unregistered = append(unregistered, "attendees.GetAttendeeByFieldHandler")
@@ -335,10 +335,6 @@ func (o *AttendIoAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/talks/{id}"] = NewDeleteTalksID(o.context, o.DeleteTalksIDHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -362,11 +358,15 @@ func (o *AttendIoAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/attendees/{id}"] = attendees.NewDeleteAttendee(o.context, o.AttendeesDeleteAttendeeHandler)
+	o.handlers["DELETE"]["/attendees/{id}"] = attendees.NewDeleteAttendeeByID(o.context, o.AttendeesDeleteAttendeeByIDHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/talks/{id}/attendees/{aid}"] = talks.NewDeleteAttendeeFromTalk(o.context, o.TalksDeleteAttendeeFromTalkHandler)
+	o.handlers["DELETE"]["/talks/{id}/attendees/{attendeeId}"] = talks.NewDeleteAttendeeFromTalk(o.context, o.TalksDeleteAttendeeFromTalkHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/talks/{id}"] = talks.NewDeleteTalkByID(o.context, o.TalksDeleteTalkByIDHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

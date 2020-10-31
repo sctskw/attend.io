@@ -122,10 +122,6 @@ func (f *firestoreClient) FetchByField(collection, field, value string) (FetchOn
 	return b, nil
 }
 
-func (f *firestoreClient) DeleteById(collection, id string) EmptyResponse {
-	return nil
-}
-
 func (f *firestoreClient) Insert(collection string, b []byte) (FetchOneResponse, error) {
 
 	data := make(map[string]interface{}, 0)
@@ -167,4 +163,10 @@ func (f *firestoreClient) Update(collection, id string, b []byte) (FetchOneRespo
 	}
 
 	return f.FetchById(collection, id)
+}
+
+func (f *firestoreClient) DeleteById(collection, id string) EmptyResponse {
+	doc := f.client.Collection(collection).Doc(id)
+	_, _ = doc.Delete(context.Background())
+	return nil
 }

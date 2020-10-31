@@ -29,7 +29,7 @@ func NewDeleteAttendeeFromTalk(ctx *middleware.Context, handler DeleteAttendeeFr
 	return &DeleteAttendeeFromTalk{Context: ctx, Handler: handler}
 }
 
-/*DeleteAttendeeFromTalk swagger:route DELETE /talks/{id}/attendees/{aid} talks deleteAttendeeFromTalk
+/*DeleteAttendeeFromTalk swagger:route DELETE /talks/{id}/attendees/{attendeeId} talks deleteAttendeeFromTalk
 
 Deletes a Talk with specific ID
 

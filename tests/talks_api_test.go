@@ -1,78 +1,46 @@
 package tests
 
 import (
+	"time"
+
 	"github.com/sctskw/attend.io/models"
 )
 
-func (s *ApiTestSuite) TestTalksAPI_GetTalks() {
+func (s *ApiTestSuite) TestTalksAPI() {
 
-	talks := make(models.TalkList, 0)
+	t := models.NewTalk(
+		"Storm Chasers",
+		"Helen Hunt",
+		"its a twister",
+		time.Now(),
+		time.Now(),
+	)
+	talk := models.Talk{}
+	talks := models.TalkList{}
 
-	s.Fetch("/talks", &talks)
-	//s.Assert().Len(talks, 2, "returns total number of talks")
+	s.Run("create a Talk", func() {
+		res := s.Create("/talks", t, &talk)
+		s.Assert().Equal(200, res.StatusCode)
+		s.Assert().Empty(t.ID)
+		s.Assert().NotEmpty(talk.ID)
+		s.Assert().Equal(t.Name, talk.Name)
+		s.Assert().Equal(t.Presenter, talk.Presenter)
+		s.Assert().Equal(t.Description, talk.Description)
+	})
 
-	for _, talk := range talks {
-		s.Assert().NotNil(talk.ID, "has an ID")
-		s.Assert().NotEqual("", talk.ID, "has an valid ID")
-		s.Assert().NotNil(talk.Name, "has a name")
-		s.Assert().NotNil(talk.Presenter, "Presenter")
-		s.Assert().NotNil(talk.Description, "has a description")
-	}
-}
+	s.Run("fetch all Talks", func() {
+		res := s.Fetch("/talks", &talks)
+		s.Assert().Equal(200, res.StatusCode)
+		s.Assert().Len(talks, 1)
+	})
 
-func (s *ApiTestSuite) TestTalksAPI_GetTalkByID() {
+	s.Run("fetch Talk by ID", func() {
+		res := s.Fetch("/talks/"+talk.ID, &talk)
+		s.Assert().Equal(200, res.StatusCode)
+	})
 
-	talk := &models.Talk{}
-	s.Fetch("/talks/HclaPWsc4TNfmTbVYNRy", talk)
-	s.Assert().NotEqual("", talk.ID, "has an valid ID")
-	s.Assert().Equal("Talk 2", *talk.Name)
-}
-
-func (s *ApiTestSuite) TestTalksAPI_GetTalkAttendees() {
-
-	attendees := models.NewAttendeeList()
-	s.Fetch("/talks/HclaPWsc4TNfmTbVYNRy/attendees", &attendees)
-	//s.Assert().Len(attendees, 3, "returns total number of attendees")
-
-	for _, a := range attendees {
-		s.Assert().NotEqual("", a.ID, "has an valid ID")
-		s.Assert().NotEmpty(a.Email)
-		s.Assert().NotEmpty(a.NameFirst)
-		s.Assert().NotEmpty(a.NameLast)
-	}
-}
-
-func (s *ApiTestSuite) TestTalksAPI_AddAttendee() {
-
-	original := models.Talk{}
-	s.Fetch("/talks/HclaPWsc4TNfmTbVYNRy", &original)
-
-	ids := []string{"FC2Nfg0KsMKZZBhWenZ8", "GMngxrZB9J0C35I88rk1"}
-	updated := models.Talk{}
-	res, _ := s.Update("/talks/HclaPWsc4TNfmTbVYNRy/attendees", ids, &updated)
-
-	s.Assert().Equal(200, res.StatusCode)
-	s.Assert().Len(updated.RefAttendees, len(original.RefAttendees)+2)
+	s.Run("delete a Talk", func() {
+		s.Delete("/talks/" + talk.ID)
+	})
 
 }
-
-//func (s *ApiTestSuite) TestTalksAPI_CreateTalk() {
-//
-//	t := models.NewTalk(
-//		"TestTalkX",
-//		"Helen Hunt",
-//		"its a twister",
-//		time.Now(),
-//		time.Now(),
-//	)
-//
-//	talk := models.Talk{}
-//	res := s.Create("/talks", t, &talk)
-//
-//	s.Assert().Equal(200, res.StatusCode)
-//	s.Assert().Empty(t.ID)
-//	s.Assert().NotEmpty(talk.ID)
-//	s.Assert().Equal(t.Name, talk.Name)
-//	s.Assert().Equal(t.Presenter, talk.Presenter)
-//	s.Assert().Equal(t.Description, talk.Description)
-//}

@@ -52,7 +52,7 @@ func (s *ApiTestSuite) TearDownSuite() {
 	s.server.Close()
 }
 
-func (s *ApiTestSuite) Fetch(path string, d interface{}) {
+func (s *ApiTestSuite) Fetch(path string, d interface{}) (resp *http.Response) {
 
 	res, err := http.Get(s.server.URL + path)
 
@@ -80,6 +80,8 @@ func (s *ApiTestSuite) Fetch(path string, d interface{}) {
 	if err != nil {
 		assert.FailNow(s.T(), "cannot parse response body")
 	}
+
+	return res
 
 }
 
@@ -157,4 +159,26 @@ func (s *ApiTestSuite) Update(path string, d interface{}, r interface{}) (resp *
 	}
 
 	return res, nil
+}
+
+func (s *ApiTestSuite) Delete(path string) (resp *http.Response) {
+
+	client := &http.Client{}
+	req, err := http.NewRequest(http.MethodDelete, s.server.URL+path, nil)
+
+	if err != nil {
+		assert.FailNow(s.T(), err.Error())
+	}
+
+	res, err := client.Do(req)
+
+	if res == nil || res.Body == nil {
+		assert.FailNow(s.T(), "invalid response body")
+	}
+
+	if res.StatusCode != 200 && res.StatusCode != 204 {
+		assert.FailNow(s.T(), fmt.Sprintf("response status: %d", res.StatusCode))
+	}
+
+	return res
 }

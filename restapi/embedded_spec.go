@@ -132,7 +132,7 @@ func init() {
           "attendees"
         ],
         "summary": "Deletes an Attendee with specific ID",
-        "operationId": "deleteAttendee",
+        "operationId": "deleteAttendeeById",
         "parameters": [
           {
             "type": "string",
@@ -240,7 +240,11 @@ func init() {
         }
       },
       "delete": {
+        "tags": [
+          "talks"
+        ],
         "summary": "Deletes a Talk with specific ID",
+        "operationId": "deleteTalkById",
         "parameters": [
           {
             "type": "string",
@@ -253,6 +257,12 @@ func init() {
         "responses": {
           "204": {
             "description": "Talk was deleted."
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -331,7 +341,7 @@ func init() {
         }
       }
     },
-    "/talks/{id}/attendees/{aid}": {
+    "/talks/{id}/attendees/{attendeeId}": {
       "delete": {
         "tags": [
           "talks"
@@ -349,7 +359,7 @@ func init() {
           {
             "type": "string",
             "description": "Attendee ID",
-            "name": "aid",
+            "name": "attendeeId",
             "in": "path",
             "required": true
           }
@@ -597,7 +607,7 @@ func init() {
           "attendees"
         ],
         "summary": "Deletes an Attendee with specific ID",
-        "operationId": "deleteAttendee",
+        "operationId": "deleteAttendeeById",
         "parameters": [
           {
             "type": "string",
@@ -705,7 +715,11 @@ func init() {
         }
       },
       "delete": {
+        "tags": [
+          "talks"
+        ],
         "summary": "Deletes a Talk with specific ID",
+        "operationId": "deleteTalkById",
         "parameters": [
           {
             "type": "string",
@@ -718,6 +732,12 @@ func init() {
         "responses": {
           "204": {
             "description": "Talk was deleted."
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           }
         }
       }
@@ -796,7 +816,7 @@ func init() {
         }
       }
     },
-    "/talks/{id}/attendees/{aid}": {
+    "/talks/{id}/attendees/{attendeeId}": {
       "delete": {
         "tags": [
           "talks"
@@ -814,7 +834,7 @@ func init() {
           {
             "type": "string",
             "description": "Attendee ID",
-            "name": "aid",
+            "name": "attendeeId",
             "in": "path",
             "required": true
           }

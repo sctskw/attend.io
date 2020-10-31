@@ -11,7 +11,8 @@ type TalkService interface {
 	GetAttendees(id string) (models.AttendeeList, error)
 	Create(m *models.Talk) (*models.Talk, error)
 	AddAttendee(id string, attendees []string) (*models.Talk, error)
-	Delete(id string)
+	RemoveAttendee(id, attendee string) error
+	Delete(id string) error
 }
 
 type talkService struct {
@@ -92,8 +93,9 @@ func (s *talkService) Create(m *models.Talk) (*models.Talk, error) {
 	return s.GetById(t.ID)
 }
 
-func (s *talkService) Delete(id string) {
-
+func (s *talkService) Delete(id string) error {
+	s.db.DeleteById("talks", id)
+	return nil
 }
 
 func (s *talkService) AddAttendee(id string, attendees []string) (*models.Talk, error) {
@@ -123,4 +125,26 @@ func (s *talkService) AddAttendee(id string, attendees []string) (*models.Talk, 
 
 	return t, nil
 
+}
+
+func (s *talkService) RemoveAttendee(id, aid string) error {
+
+	talk, err := s.GetById(id)
+
+	if err != nil {
+		return err
+	}
+
+	//eliminate
+	for _, ref := range talk.RefAttendees {
+		if ref.ID != aid {
+			talk.RefAttendees = append(talk.RefAttendees, ref)
+		}
+	}
+
+	b, _ := talk.MarshalBinary()
+
+	_, err = s.db.Update("talks", id, b)
+
+	return err
 }

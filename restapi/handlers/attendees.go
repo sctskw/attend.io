@@ -10,6 +10,7 @@ import (
 func AttachAttendeesHandlers(api *operations.AttendIoAPI) {
 	api.AttendeesGetAttendeeByFieldHandler = attendees.GetAttendeeByFieldHandlerFunc(GetAttendeeByField)
 	api.AttendeesPostAttendeesHandler = attendees.PostAttendeesHandlerFunc(CreateAttendee)
+	api.AttendeesDeleteAttendeeByIDHandler = attendees.DeleteAttendeeByIDHandlerFunc(DeleteAttendee)
 }
 
 func GetAttendeeByField(params attendees.GetAttendeeByFieldParams) middleware.Responder {
@@ -46,4 +47,14 @@ func CreateAttendee(params attendees.PostAttendeesParams) middleware.Responder {
 	}
 
 	return attendees.NewPostAttendeesOK().WithPayload(result)
+}
+
+func DeleteAttendee(params attendees.DeleteAttendeeByIDParams) middleware.Responder {
+	err := services.Attendees().DeleteById(params.ID)
+
+	if err != nil {
+		return attendees.NewDeleteAttendeeByIDDefault(500)
+	}
+
+	return attendees.NewDeleteAttendeeByIDNoContent()
 }

@@ -14,8 +14,8 @@ import (
 
 // DeleteAttendeeFromTalkURL generates an URL for the delete attendee from talk operation
 type DeleteAttendeeFromTalkURL struct {
-	Aid string
-	ID  string
+	AttendeeID string
+	ID         string
 
 	_basePath string
 	// avoid unkeyed usage
@@ -41,13 +41,13 @@ func (o *DeleteAttendeeFromTalkURL) SetBasePath(bp string) {
 func (o *DeleteAttendeeFromTalkURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/talks/{id}/attendees/{aid}"
+	var _path = "/talks/{id}/attendees/{attendeeId}"
 
-	aid := o.Aid
-	if aid != "" {
-		_path = strings.Replace(_path, "{aid}", aid, -1)
+	attendeeID := o.AttendeeID
+	if attendeeID != "" {
+		_path = strings.Replace(_path, "{attendeeId}", attendeeID, -1)
 	} else {
-		return nil, errors.New("aid is required on DeleteAttendeeFromTalkURL")
+		return nil, errors.New("attendeeId is required on DeleteAttendeeFromTalkURL")
 	}
 
 	id := o.ID

@@ -1,44 +1,41 @@
 package tests
 
-import (
-	"github.com/sctskw/attend.io/models"
-)
+import "github.com/sctskw/attend.io/models"
 
-func (s *ApiTestSuite) TestAttendeesAPI_GetAttendeeById() {
+func (s *ApiTestSuite) TestAttendeesAPI_CreateAttendee() {
 
-	attendee := models.Attendee{}
-
-	s.Fetch("/attendees?id=azyFLMKTudmRfoBJjH5c", &attendee)
-	s.Assert().NotNil(attendee, "returns an attendee")
-	s.Assert().Equal("bob.smith@test.com", attendee.Email.String())
-}
-
-func (s *ApiTestSuite) TestAttendeesAPI_GetAttendeeByEmail() {
+	a := models.NewAttendee(
+		"Bob",
+		"Smith",
+		"bob.smith@test.com",
+	)
 
 	attendee := models.Attendee{}
 
-	s.Fetch("/attendees?email=sam.wise@test.com", &attendee)
+	s.Run("create an Attendee", func() {
+		res := s.Create("/attendees", a, &attendee)
 
-	s.Assert().NotNil(attendee, "returns an attendee")
-	s.Assert().Equal("sam.wise@test.com", attendee.Email.String())
+		s.Assert().Equal(200, res.StatusCode)
+		s.Assert().Empty(a.ID)
+		s.Assert().NotEmpty(attendee.ID)
+		s.Assert().Equal(a.NameFirst, attendee.NameFirst)
+		s.Assert().Equal(a.NameLast, attendee.NameLast)
+		s.Assert().Equal(a.Email, attendee.Email)
+	})
+
+	s.Run("get Attendee by ID", func() {
+		res := s.Fetch("/attendees?id="+attendee.ID, &attendee)
+		s.Assert().Equal(200, res.StatusCode)
+	})
+
+	s.Run("get Attendee by Email", func() {
+		res := s.Fetch("/attendees?email="+attendee.Email.String(), &attendee)
+		s.Assert().Equal(200, res.StatusCode)
+	})
+
+	s.Run("delete an Attendee", func() {
+		res := s.Delete("/attendees/" + attendee.ID)
+		s.Assert().Equal(204, res.StatusCode)
+	})
+
 }
-
-//func (s *ApiTestSuite) TestAttendeesAPI_CreateAttendee() {
-//
-//	a := models.NewAttendee(
-//		"Bob",
-//		"Saget",
-//		"bob.saget@test.com",
-//	)
-//
-//	attendee := models.Attendee{}
-//	res := s.Create("/attendees", a, &attendee)
-//
-//	s.Assert().Equal(200, res.StatusCode)
-//	s.Assert().Empty(a.ID)
-//	s.Assert().NotEmpty(attendee.ID)
-//	s.Assert().Equal(a.NameFirst, attendee.NameFirst)
-//	s.Assert().Equal(a.NameLast, attendee.NameLast)
-//	s.Assert().Equal(a.Email, attendee.Email)
-//
-//}

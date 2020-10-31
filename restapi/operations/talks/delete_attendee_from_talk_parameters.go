@@ -33,7 +33,7 @@ type DeleteAttendeeFromTalkParams struct {
 	  Required: true
 	  In: path
 	*/
-	Aid string
+	AttendeeID string
 	/*Talk ID
 	  Required: true
 	  In: path
@@ -50,8 +50,8 @@ func (o *DeleteAttendeeFromTalkParams) BindRequest(r *http.Request, route *middl
 
 	o.HTTPRequest = r
 
-	rAid, rhkAid, _ := route.Params.GetOK("aid")
-	if err := o.bindAid(rAid, rhkAid, route.Formats); err != nil {
+	rAttendeeID, rhkAttendeeID, _ := route.Params.GetOK("attendeeId")
+	if err := o.bindAttendeeID(rAttendeeID, rhkAttendeeID, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -66,8 +66,8 @@ func (o *DeleteAttendeeFromTalkParams) BindRequest(r *http.Request, route *middl
 	return nil
 }
 
-// bindAid binds and validates parameter Aid from path.
-func (o *DeleteAttendeeFromTalkParams) bindAid(rawData []string, hasKey bool, formats strfmt.Registry) error {
+// bindAttendeeID binds and validates parameter AttendeeID from path.
+func (o *DeleteAttendeeFromTalkParams) bindAttendeeID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
@@ -76,7 +76,7 @@ func (o *DeleteAttendeeFromTalkParams) bindAid(rawData []string, hasKey bool, fo
 	// Required: true
 	// Parameter is provided by construction from the route
 
-	o.Aid = raw
+	o.AttendeeID = raw
 
 	return nil
 }

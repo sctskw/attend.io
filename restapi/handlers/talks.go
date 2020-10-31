@@ -13,6 +13,8 @@ func AttachTalksHandlers(api *operations.AttendIoAPI) {
 	api.TalksGetTalkAttendeesHandler = talks.GetTalkAttendeesHandlerFunc(GetTalkAttendees)
 	api.TalksPostTalksHandler = talks.PostTalksHandlerFunc(CreateTalk)
 	api.TalksAddAttendeeToTalkHandler = talks.AddAttendeeToTalkHandlerFunc(AddAttendeeToTalk)
+	api.TalksDeleteAttendeeFromTalkHandler = talks.DeleteAttendeeFromTalkHandlerFunc(RemoveAttendeeFromTalk)
+	api.TalksDeleteTalkByIDHandler = talks.DeleteTalkByIDHandlerFunc(DeleteTalk)
 }
 
 func GetTalks(params talks.GetTalksParams) middleware.Responder {
@@ -50,6 +52,17 @@ func CreateTalk(params talks.PostTalksParams) middleware.Responder {
 	return talks.NewPostTalksOK().WithPayload(result)
 }
 
+func DeleteTalk(params talks.DeleteTalkByIDParams) middleware.Responder {
+
+	err := services.Talks().Delete(params.ID)
+
+	if err != nil {
+		return talks.NewGetTalkByIDDefault(500)
+	}
+
+	return talks.NewPostTalksDefault(204)
+}
+
 func AddAttendeeToTalk(params talks.AddAttendeeToTalkParams) middleware.Responder {
 
 	result, err := services.Talks().AddAttendee(params.ID, params.Attendees)
@@ -59,4 +72,15 @@ func AddAttendeeToTalk(params talks.AddAttendeeToTalkParams) middleware.Responde
 	}
 
 	return talks.NewPostTalksOK().WithPayload(result)
+}
+
+func RemoveAttendeeFromTalk(params talks.DeleteAttendeeFromTalkParams) middleware.Responder {
+
+	err := services.Talks().RemoveAttendee(params.ID, params.AttendeeID)
+
+	if err != nil {
+		return talks.NewGetTalkByIDDefault(500)
+	}
+
+	return talks.NewPostTalksDefault(204)
 }
