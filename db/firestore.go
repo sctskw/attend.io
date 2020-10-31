@@ -115,6 +115,28 @@ func (f *firestoreClient) DeleteById(collection, id string) EmptyResponse {
 	return nil
 }
 
-func (f *firestoreClient) Insert(collection string, d interface{}) FetchOneResponse {
-	return nil
+func (f *firestoreClient) Insert(collection string, b []byte) FetchOneResponse {
+
+	data := make(map[string]interface{}, 0)
+	err := json.Unmarshal(b, &data)
+
+	if err != nil {
+		return nil
+	}
+
+	if _, exists := data["id"]; exists {
+		delete(data, "id")
+	}
+
+	if _, exists := data["ID"]; exists {
+		delete(data, "ID")
+	}
+
+	ref, _, err := f.client.Collection(collection).Add(context.Background(), data)
+
+	if err != nil {
+		return nil
+	}
+
+	return f.FetchById(collection, ref.ID)
 }

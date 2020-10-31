@@ -7,7 +7,7 @@ type DatabaseClient interface {
 	FetchAllById(collection string, ids ...string) FetchAllResponse
 	FetchById(collection, id string) FetchOneResponse
 	FetchByField(collection, field, value string) FetchOneResponse
-	Insert(collection string, d interface{}) FetchOneResponse
+	Insert(collection string, b []byte) FetchOneResponse
 	DeleteById(collection, id string) EmptyResponse
 }
 

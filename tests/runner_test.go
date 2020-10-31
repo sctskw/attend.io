@@ -79,10 +79,10 @@ func (s *ApiTestSuite) Fetch(path string, d interface{}) {
 
 }
 
-func (s *ApiTestSuite) Create(path string, d interface{}) (resp *http.Response, result map[string]interface{}) {
+func (s *ApiTestSuite) Create(path string, d interface{}, r interface{}) (resp *http.Response) {
 
 	b, _ := json.Marshal(d)
-	res, err := http.Post(s.server.URL+path, "", bytes.NewBuffer(b))
+	res, err := http.Post(s.server.URL+path, "application/json", bytes.NewBuffer(b))
 
 	if err != nil {
 		assert.FailNow(s.T(), err.Error())
@@ -95,16 +95,20 @@ func (s *ApiTestSuite) Create(path string, d interface{}) (resp *http.Response, 
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 
+	if res.StatusCode != 200 {
+		assert.FailNow(s.T(), string(body))
+	}
+
 	if err != nil {
 		assert.FailNow(s.T(), err.Error())
 	}
 
-	err = json.Unmarshal(body, &result)
+	err = json.Unmarshal(body, &r)
 
 	if err != nil {
-		assert.FailNow(s.T(), "cannot parse response body")
+		assert.FailNow(s.T(), fmt.Sprintf("cannot parse response body: %s", err))
 	}
 
-	return res, result
+	return res
 
 }

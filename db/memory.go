@@ -43,6 +43,6 @@ func (c *memoryClient) DeleteById(collection, id string) EmptyResponse {
 	return nil
 }
 
-func (c *memoryClient) Insert(collection string, d interface{}) FetchOneResponse {
+func (c *memoryClient) Insert(collection string, b []byte) FetchOneResponse {
 	return nil
 }

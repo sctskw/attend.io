@@ -66,8 +66,25 @@ func (s *talkService) GetAttendees(id string) models.AttendeesList {
 }
 
 func (s *talkService) Create(m *models.Talk) *models.Talk {
-	_ = s.db.Insert("talks", m)
-	return nil
+
+	//ensure this field is created
+	m.RefAttendees = models.AttendeesList{}
+	data, _ := m.MarshalBinary()
+	res := s.db.Insert("talks", data)
+
+	//TODO
+	if res == nil {
+		return nil
+	}
+
+	t := &models.Talk{}
+	err := t.UnmarshalBinary(res)
+
+	if err != nil {
+		return nil
+	}
+
+	return s.GetById(t.ID)
 }
 
 func (s *talkService) Delete(id string) {
