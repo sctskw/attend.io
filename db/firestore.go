@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"cloud.google.com/go/firestore"
 )
@@ -20,7 +22,19 @@ func NewFirestoreClient() FirestoreClient {
 	return &firestoreClient{}
 }
 
+func SetCredentialsPath(path string) {
+	f, _ := filepath.Abs(path)
+	info, err := os.Stat(f)
+
+	if err == nil && !info.IsDir() {
+		os.Setenv("GOOGLE_APPLICATION_CREDENTIALS", f)
+	}
+}
+
 func (f *firestoreClient) Connect() {
+	//TODO: make this a config
+	SetCredentialsPath(".gcloud/attend-io.creds.json")
+
 	ctx := context.Background()
 	client, err := firestore.NewClient(ctx, "attend-io-294107")
 	if err != nil {

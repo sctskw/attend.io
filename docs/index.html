@@ -716,6 +716,9 @@
     "email" : {
       "type" : "string",
       "format" : "email"
+    },
+    "ref_talks" : {
+      "$ref" : "#/components/schemas/TalkList"
     }
   }
 };
@@ -755,7 +758,7 @@
   "required" : [ "name" ],
   "type" : "object",
   "properties" : {
-    "ID" : {
+    "id" : {
       "type" : "string",
       "readOnly" : true
     },
@@ -2258,7 +2261,7 @@ public class TalksApiExample {
         String id = id_example; // String | Talk ID
         array[String] body = ; // array[String] | 
         try {
-            Attendee result = apiInstance.addAttendeeToTalk(id, body);
+            Talk result = apiInstance.addAttendeeToTalk(id, body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling TalksApi#addAttendeeToTalk");
@@ -2278,7 +2281,7 @@ public class TalksApiExample {
         String id = id_example; // String | Talk ID
         array[String] body = ; // array[String] | 
         try {
-            Attendee result = apiInstance.addAttendeeToTalk(id, body);
+            Talk result = apiInstance.addAttendeeToTalk(id, body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling TalksApi#addAttendeeToTalk");
@@ -2300,7 +2303,7 @@ TalksApi *apiInstance = [[TalksApi alloc] init];
 // Add an Attendee to a Talk
 [apiInstance addAttendeeToTalkWith:id
     body:body
-              completionHandler: ^(Attendee output, NSError* error) {
+              completionHandler: ^(Talk output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2354,7 +2357,7 @@ namespace Example
             try
             {
                 // Add an Attendee to a Talk
-                Attendee result = apiInstance.addAttendeeToTalk(id, body);
+                Talk result = apiInstance.addAttendeeToTalk(id, body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2506,7 +2509,7 @@ except ApiException as e:
 
 
                           <h2>Responses</h2>
-                            <h3> Status: 200 - Attendee was created </h3>
+                            <h3> Status: 200 - Attendee was Added </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
@@ -2521,11 +2524,11 @@ except ApiException as e:
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Attendee was created",
+  "description" : "Attendee was Added",
   "content" : {
     "application/github.com/sctskw/attend.io.v1+json" : {
       "schema" : {
-        "$ref" : "#/components/schemas/Attendee"
+        "$ref" : "#/components/schemas/Talk"
       }
     }
   }
