@@ -31,7 +31,7 @@ func NewPostTalks(ctx *middleware.Context, handler PostTalksHandler) *PostTalks 
 
 /*PostTalks swagger:route POST /talks talks postTalks
 
-create a talk
+create a Talk
 
 */
 type PostTalks struct {

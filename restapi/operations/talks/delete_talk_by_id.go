@@ -31,7 +31,7 @@ func NewDeleteTalkByID(ctx *middleware.Context, handler DeleteTalkByIDHandler) *
 
 /*DeleteTalkByID swagger:route DELETE /talks/{id} talks deleteTalkById
 
-Deletes a Talk with specific ID
+Deletes a Talk by ID
 
 */
 type DeleteTalkByID struct {

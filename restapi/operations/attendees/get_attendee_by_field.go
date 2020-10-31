@@ -31,7 +31,7 @@ func NewGetAttendeeByField(ctx *middleware.Context, handler GetAttendeeByFieldHa
 
 /*GetAttendeeByField swagger:route GET /attendees attendees getAttendeeByField
 
-GetAttendeeByField get attendee by field API
+retrieve an Attendee by its fields
 
 */
 type GetAttendeeByField struct {

@@ -39,6 +39,7 @@ func init() {
         "tags": [
           "system"
         ],
+        "summary": "retrieve the system status",
         "responses": {
           "200": {
             "description": "api status",
@@ -61,6 +62,7 @@ func init() {
         "tags": [
           "attendees"
         ],
+        "summary": "retrieve an Attendee by its fields",
         "operationId": "getAttendeeByField",
         "parameters": [
           {
@@ -131,7 +133,7 @@ func init() {
         "tags": [
           "attendees"
         ],
-        "summary": "Deletes an Attendee with specific ID",
+        "summary": "Deletes an Attendee by ID",
         "operationId": "deleteAttendeeById",
         "parameters": [
           {
@@ -160,6 +162,7 @@ func init() {
         "tags": [
           "talks"
         ],
+        "summary": "retrieve all Talks",
         "responses": {
           "200": {
             "description": "list the talks",
@@ -182,7 +185,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "create a talk",
+        "summary": "create a Talk",
         "parameters": [
           {
             "description": "the Talk to create",
@@ -214,6 +217,7 @@ func init() {
         "tags": [
           "talks"
         ],
+        "summary": "retrieve a Talk by ID",
         "operationId": "getTalkById",
         "parameters": [
           {
@@ -243,7 +247,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "Deletes a Talk with specific ID",
+        "summary": "Deletes a Talk by ID",
         "operationId": "deleteTalkById",
         "parameters": [
           {
@@ -272,6 +276,7 @@ func init() {
         "tags": [
           "talks"
         ],
+        "summary": "Retrieve the Attendees for a Talk",
         "operationId": "getTalkAttendees",
         "parameters": [
           {
@@ -514,6 +519,7 @@ func init() {
         "tags": [
           "system"
         ],
+        "summary": "retrieve the system status",
         "responses": {
           "200": {
             "description": "api status",
@@ -536,6 +542,7 @@ func init() {
         "tags": [
           "attendees"
         ],
+        "summary": "retrieve an Attendee by its fields",
         "operationId": "getAttendeeByField",
         "parameters": [
           {
@@ -606,7 +613,7 @@ func init() {
         "tags": [
           "attendees"
         ],
-        "summary": "Deletes an Attendee with specific ID",
+        "summary": "Deletes an Attendee by ID",
         "operationId": "deleteAttendeeById",
         "parameters": [
           {
@@ -635,6 +642,7 @@ func init() {
         "tags": [
           "talks"
         ],
+        "summary": "retrieve all Talks",
         "responses": {
           "200": {
             "description": "list the talks",
@@ -657,7 +665,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "create a talk",
+        "summary": "create a Talk",
         "parameters": [
           {
             "description": "the Talk to create",
@@ -689,6 +697,7 @@ func init() {
         "tags": [
           "talks"
         ],
+        "summary": "retrieve a Talk by ID",
         "operationId": "getTalkById",
         "parameters": [
           {
@@ -718,7 +727,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "Deletes a Talk with specific ID",
+        "summary": "Deletes a Talk by ID",
         "operationId": "deleteTalkById",
         "parameters": [
           {
@@ -747,6 +756,7 @@ func init() {
         "tags": [
           "talks"
         ],
+        "summary": "Retrieve the Attendees for a Talk",
         "operationId": "getTalkAttendees",
         "parameters": [
           {

@@ -31,7 +31,7 @@ func NewGetTalks(ctx *middleware.Context, handler GetTalksHandler) *GetTalks {
 
 /*GetTalks swagger:route GET /talks talks getTalks
 
-GetTalks get talks API
+retrieve all Talks
 
 */
 type GetTalks struct {

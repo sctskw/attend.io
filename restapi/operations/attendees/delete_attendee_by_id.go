@@ -31,7 +31,7 @@ func NewDeleteAttendeeByID(ctx *middleware.Context, handler DeleteAttendeeByIDHa
 
 /*DeleteAttendeeByID swagger:route DELETE /attendees/{id} attendees deleteAttendeeById
 
-Deletes an Attendee with specific ID
+Deletes an Attendee by ID
 
 */
 type DeleteAttendeeByID struct {

@@ -31,7 +31,7 @@ func NewGetTalkAttendees(ctx *middleware.Context, handler GetTalkAttendeesHandle
 
 /*GetTalkAttendees swagger:route GET /talks/{id}/attendees talks getTalkAttendees
 
-GetTalkAttendees get talk attendees API
+Retrieve the Attendees for a Talk
 
 */
 type GetTalkAttendees struct {

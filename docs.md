@@ -35,6 +35,8 @@ curl -X GET / \
 
 `GET /`
 
+*retrieve the system status*
+
 > Example responses
 
 > 200 Response
@@ -71,6 +73,8 @@ curl -X GET /talks \
 ```
 
 `GET /talks`
+
+*retrieve all Talks*
 
 > Example responses
 
@@ -124,7 +128,7 @@ curl -X POST /talks \
 
 `POST /talks`
 
-*create a talk*
+*create a Talk*
 
 > Body parameter
 
@@ -203,6 +207,8 @@ curl -X GET /talks/{id} \
 
 `GET /talks/{id}`
 
+*retrieve a Talk by ID*
+
 <h3 id="gettalkbyid-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -260,7 +266,7 @@ curl -X DELETE /talks/{id} \
 
 `DELETE /talks/{id}`
 
-*Deletes a Talk with specific ID*
+*Deletes a Talk by ID*
 
 <h3 id="deletetalkbyid-parameters">Parameters</h3>
 
@@ -304,6 +310,8 @@ curl -X GET /talks/{id}/attendees \
 ```
 
 `GET /talks/{id}/attendees`
+
+*Retrieve the Attendees for a Talk*
 
 <h3 id="gettalkattendees-parameters">Parameters</h3>
 
@@ -461,6 +469,8 @@ curl -X GET /attendees \
 
 `GET /attendees`
 
+*retrieve an Attendee by its fields*
+
 <h3 id="getattendeebyfield-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
@@ -568,7 +578,7 @@ curl -X DELETE /attendees/{id} \
 
 `DELETE /attendees/{id}`
 
-*Deletes an Attendee with specific ID*
+*Deletes an Attendee by ID*
 
 <h3 id="deleteattendeebyid-parameters">Parameters</h3>
 

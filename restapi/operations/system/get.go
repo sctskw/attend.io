@@ -31,7 +31,7 @@ func NewGet(ctx *middleware.Context, handler GetHandler) *Get {
 
 /*Get swagger:route GET / system get
 
-Get get API
+retrieve the system status
 
 */
 type Get struct {

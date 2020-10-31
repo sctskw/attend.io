@@ -31,7 +31,7 @@ func NewGetTalkByID(ctx *middleware.Context, handler GetTalkByIDHandler) *GetTal
 
 /*GetTalkByID swagger:route GET /talks/{id} talks getTalkById
 
-GetTalkByID get talk by Id API
+retrieve a Talk by ID
 
 */
 type GetTalkByID struct {

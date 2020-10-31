@@ -1228,7 +1228,7 @@ except ApiException as e:
                       <article id="api-Attendees-deleteAttendeeById-0" data-group="User" data-name="deleteAttendeeById" data-version="0">
                         <div class="pull-left">
                           <h1>deleteAttendeeById</h1>
-                          <p>Deletes an Attendee with specific ID</p>
+                          <p>Deletes an Attendee by ID</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -1311,7 +1311,7 @@ public class AttendeesApiExample {
 
 AttendeesApi *apiInstance = [[AttendeesApi alloc] init];
 
-// Deletes an Attendee with specific ID
+// Deletes an Attendee by ID
 [apiInstance deleteAttendeeByIdWith:id
               completionHandler: ^(NSError* error) {
                             if (error) {
@@ -1360,7 +1360,7 @@ namespace Example
 
             try
             {
-                // Deletes an Attendee with specific ID
+                // Deletes an Attendee by ID
                 apiInstance.deleteAttendeeById(id);
             }
             catch (Exception e)
@@ -1416,7 +1416,7 @@ api_instance = swagger_client.AttendeesApi()
 id = id_example # String | Attendee ID
 
 try: 
-    # Deletes an Attendee with specific ID
+    # Deletes an Attendee by ID
     api_instance.delete_attendee_by_id(id)
 except ApiException as e:
     print("Exception when calling AttendeesApi->deleteAttendeeById: %s\n" % e)</code></pre>
@@ -1523,7 +1523,7 @@ except ApiException as e:
                       <article id="api-Attendees-getAttendeeByField-0" data-group="User" data-name="getAttendeeByField" data-version="0">
                         <div class="pull-left">
                           <h1>getAttendeeByField</h1>
-                          <p></p>
+                          <p>retrieve an Attendee by its fields</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -1611,6 +1611,7 @@ String *id = id_example; // Attendee ID (optional)
 
 AttendeesApi *apiInstance = [[AttendeesApi alloc] init];
 
+// retrieve an Attendee by its fields
 [apiInstance getAttendeeByFieldWith:email
     id:id
               completionHandler: ^(Attendee output, NSError* error) {
@@ -1666,6 +1667,7 @@ namespace Example
 
             try
             {
+                // retrieve an Attendee by its fields
                 Attendee result = apiInstance.getAttendeeByField(email, id);
                 Debug.WriteLine(result);
             }
@@ -1727,6 +1729,7 @@ email = email_example # String | Attendee Email (optional)
 id = id_example # String | Attendee ID (optional)
 
 try: 
+    # retrieve an Attendee by its fields
     api_response = api_instance.get_attendee_by_field(email=email, id=id)
     pprint(api_response)
 except ApiException as e:
@@ -1896,7 +1899,7 @@ except ApiException as e:
                       <article id="api-System-rootGet-0" data-group="User" data-name="rootGet" data-version="0">
                         <div class="pull-left">
                           <h1>rootGet</h1>
-                          <p></p>
+                          <p>retrieve the system status</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -1978,6 +1981,7 @@ public class SystemApiExample {
                               <pre class="prettyprint"><code class="language-cpp">
 SystemApi *apiInstance = [[SystemApi alloc] init];
 
+// retrieve the system status
 [apiInstance rootGetWithCompletionHandler: 
               ^(SystemStatus output, NSError* error) {
                             if (output) {
@@ -2026,6 +2030,7 @@ namespace Example
 
             try
             {
+                // retrieve the system status
                 SystemStatus result = apiInstance.rootGet();
                 Debug.WriteLine(result);
             }
@@ -2081,6 +2086,7 @@ from pprint import pprint
 api_instance = swagger_client.SystemApi()
 
 try: 
+    # retrieve the system status
     api_response = api_instance.root_get()
     pprint(api_response)
 except ApiException as e:
@@ -2929,7 +2935,7 @@ except ApiException as e:
                       <article id="api-Talks-deleteTalkById-0" data-group="User" data-name="deleteTalkById" data-version="0">
                         <div class="pull-left">
                           <h1>deleteTalkById</h1>
-                          <p>Deletes a Talk with specific ID</p>
+                          <p>Deletes a Talk by ID</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -3012,7 +3018,7 @@ public class TalksApiExample {
 
 TalksApi *apiInstance = [[TalksApi alloc] init];
 
-// Deletes a Talk with specific ID
+// Deletes a Talk by ID
 [apiInstance deleteTalkByIdWith:id
               completionHandler: ^(NSError* error) {
                             if (error) {
@@ -3061,7 +3067,7 @@ namespace Example
 
             try
             {
-                // Deletes a Talk with specific ID
+                // Deletes a Talk by ID
                 apiInstance.deleteTalkById(id);
             }
             catch (Exception e)
@@ -3117,7 +3123,7 @@ api_instance = swagger_client.TalksApi()
 id = id_example # String | Talk ID
 
 try: 
-    # Deletes a Talk with specific ID
+    # Deletes a Talk by ID
     api_instance.delete_talk_by_id(id)
 except ApiException as e:
     print("Exception when calling TalksApi->deleteTalkById: %s\n" % e)</code></pre>
@@ -3224,7 +3230,7 @@ except ApiException as e:
                       <article id="api-Talks-getTalkAttendees-0" data-group="User" data-name="getTalkAttendees" data-version="0">
                         <div class="pull-left">
                           <h1>getTalkAttendees</h1>
-                          <p></p>
+                          <p>Retrieve the Attendees for a Talk</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -3309,6 +3315,7 @@ public class TalksApiExample {
 
 TalksApi *apiInstance = [[TalksApi alloc] init];
 
+// Retrieve the Attendees for a Talk
 [apiInstance getTalkAttendeesWith:id
               completionHandler: ^(AttendeeList output, NSError* error) {
                             if (output) {
@@ -3360,6 +3367,7 @@ namespace Example
 
             try
             {
+                // Retrieve the Attendees for a Talk
                 AttendeeList result = apiInstance.getTalkAttendees(id);
                 Debug.WriteLine(result);
             }
@@ -3418,6 +3426,7 @@ api_instance = swagger_client.TalksApi()
 id = id_example # String | Talk ID
 
 try: 
+    # Retrieve the Attendees for a Talk
     api_response = api_instance.get_talk_attendees(id)
     pprint(api_response)
 except ApiException as e:
@@ -3565,7 +3574,7 @@ except ApiException as e:
                       <article id="api-Talks-getTalkById-0" data-group="User" data-name="getTalkById" data-version="0">
                         <div class="pull-left">
                           <h1>getTalkById</h1>
-                          <p></p>
+                          <p>retrieve a Talk by ID</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -3650,6 +3659,7 @@ public class TalksApiExample {
 
 TalksApi *apiInstance = [[TalksApi alloc] init];
 
+// retrieve a Talk by ID
 [apiInstance getTalkByIdWith:id
               completionHandler: ^(Talk output, NSError* error) {
                             if (output) {
@@ -3701,6 +3711,7 @@ namespace Example
 
             try
             {
+                // retrieve a Talk by ID
                 Talk result = apiInstance.getTalkById(id);
                 Debug.WriteLine(result);
             }
@@ -3759,6 +3770,7 @@ api_instance = swagger_client.TalksApi()
 id = id_example # String | Talk ID
 
 try: 
+    # retrieve a Talk by ID
     api_response = api_instance.get_talk_by_id(id)
     pprint(api_response)
 except ApiException as e:
@@ -3906,7 +3918,7 @@ except ApiException as e:
                       <article id="api-Talks-talksGet-0" data-group="User" data-name="talksGet" data-version="0">
                         <div class="pull-left">
                           <h1>talksGet</h1>
-                          <p></p>
+                          <p>retrieve all Talks</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -3988,6 +4000,7 @@ public class TalksApiExample {
                               <pre class="prettyprint"><code class="language-cpp">
 TalksApi *apiInstance = [[TalksApi alloc] init];
 
+// retrieve all Talks
 [apiInstance talksGetWithCompletionHandler: 
               ^(TalkList output, NSError* error) {
                             if (output) {
@@ -4036,6 +4049,7 @@ namespace Example
 
             try
             {
+                // retrieve all Talks
                 TalkList result = apiInstance.talksGet();
                 Debug.WriteLine(result);
             }
@@ -4091,6 +4105,7 @@ from pprint import pprint
 api_instance = swagger_client.TalksApi()
 
 try: 
+    # retrieve all Talks
     api_response = api_instance.talks_get()
     pprint(api_response)
 except ApiException as e:
@@ -4209,7 +4224,7 @@ except ApiException as e:
                       <article id="api-Talks-talksPost-0" data-group="User" data-name="talksPost" data-version="0">
                         <div class="pull-left">
                           <h1>talksPost</h1>
-                          <p>create a talk</p>
+                          <p>create a Talk</p>
                         </div>
                         <div class="pull-right"></div>
                         <div class="clearfix"></div>
@@ -4295,7 +4310,7 @@ public class TalksApiExample {
 
 TalksApi *apiInstance = [[TalksApi alloc] init];
 
-// create a talk
+// create a Talk
 [apiInstance talksPostWith:body
               completionHandler: ^(Talk output, NSError* error) {
                             if (output) {
@@ -4348,7 +4363,7 @@ namespace Example
 
             try
             {
-                // create a talk
+                // create a Talk
                 Talk result = apiInstance.talksPost(body);
                 Debug.WriteLine(result);
             }
@@ -4407,7 +4422,7 @@ api_instance = swagger_client.TalksApi()
 body =  # Talk | the Talk to create (optional)
 
 try: 
-    # create a talk
+    # create a Talk
     api_response = api_instance.talks_post(body=body)
     pprint(api_response)
 except ApiException as e:
