@@ -58,6 +58,15 @@ PASS tests (cached)
 EMPTY services
 ```
 
+#### Generate Server
+
+When you make changes to `swagger.yml` you'll need to run the following
+
+```
+make build
+```
+
+
 #### Generate API Docs
 ```
 make docs
@@ -112,8 +121,8 @@ curl -X GET https://attend-io-294107.uc.r.appspot.com/talks \
     "name": "string",
     "presenter": "string",
     "description": "string",
-    "date_time_start": "2019-08-24T14:15:22Z",
-    "date_time_end": "2019-08-24T14:15:22Z",
+    "date_time_start": "2019-08-24T14:30",
+    "date_time_end": "2019-08-24T15:00",
     "ref_attendees": [
       {
         "id": "string",
@@ -147,8 +156,8 @@ curl -X POST https://attend-io-294107.uc.r.appspot.com/talks \
   "name": "string",
   "presenter": "string",
   "description": "string",
-  "date_time_start": "2019-08-24T14:15:22Z",
-  "date_time_end": "2019-08-24T14:15:22Z"
+  "date_time_start": "2019-08-24T14:15",
+  "date_time_end": "2019-08-24T14:20"
 }
 ```
 
@@ -159,8 +168,8 @@ curl -X POST https://attend-io-294107.uc.r.appspot.com/talks \
   "name": "string",
   "presenter": "string",
   "description": "string",
-  "date_time_start": "2019-08-24T14:15:22Z",
-  "date_time_end": "2019-08-24T14:15:22Z",
+  "date_time_start": "2019-08-24T14:15",
+  "date_time_end": "2019-08-24T14:20",
   "ref_attendees": [
     {
       "id": "string",
@@ -192,8 +201,8 @@ curl -X GET https://attend-io-294107.uc.r.appspot.com/talks/{id} \
   "name": "string",
   "presenter": "string",
   "description": "string",
-  "date_time_start": "2019-08-24T14:15:22Z",
-  "date_time_end": "2019-08-24T14:15:22Z",
+  "date_time_start": "2019-08-24T14:00",
+  "date_time_end": "2019-08-24T14:20",
   "ref_attendees": [
     {
       "id": "string",
