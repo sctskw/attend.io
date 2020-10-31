@@ -13,13 +13,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// AttendeesList attendees list
+// AttendeeList attendee list
 //
-// swagger:model AttendeesList
-type AttendeesList []*Attendee
+// swagger:model AttendeeList
+type AttendeeList []*Attendee
 
-// Validate validates this attendees list
-func (m AttendeesList) Validate(formats strfmt.Registry) error {
+// Validate validates this attendee list
+func (m AttendeeList) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	for i := 0; i < len(m); i++ {

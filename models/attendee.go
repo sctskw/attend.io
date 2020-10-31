@@ -17,13 +17,13 @@ import (
 // swagger:model Attendee
 type Attendee struct {
 
-	// ID
-	// Read Only: true
-	ID string `json:"ID,omitempty"`
-
 	// email
 	// Format: email
 	Email strfmt.Email `json:"email,omitempty"`
+
+	// id
+	// Read Only: true
+	ID string `json:"id,omitempty"`
 
 	// name display
 	// Min Length: 1
@@ -38,6 +38,10 @@ type Attendee struct {
 	// Required: true
 	// Min Length: 1
 	NameLast *string `json:"name_last"`
+
+	// ref
+	// Read Only: true
+	Ref string `json:"ref,omitempty"`
 }
 
 // Validate validates this attendee

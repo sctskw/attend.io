@@ -34,17 +34,18 @@ func (f *firestoreClient) Ping() {
 
 }
 
-func (f *firestoreClient) FetchAll(collection string) (results FetchAllResponse) {
+func (f *firestoreClient) FetchAll(collection string) (results FetchAllResponse, err error) {
 	talks := f.client.Collection(collection)
 	docs, err := talks.Documents(context.Background()).GetAll()
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	for _, doc := range docs {
 		d := doc.Data()
 		d["id"] = doc.Ref.ID //copy the id
+		d["ref"] = doc.Ref.Path
 
 		//convert to bytes
 		b, _ := json.Marshal(d)
@@ -52,41 +53,50 @@ func (f *firestoreClient) FetchAll(collection string) (results FetchAllResponse)
 		results = append(results, b)
 	}
 
-	return results
+	return results, nil
 }
 
-func (f *firestoreClient) FetchAllById(collection string, ids ...string) (results FetchAllResponse) {
+func (f *firestoreClient) FetchAllById(collection string, ids ...string) (results FetchAllResponse, err error) {
 
 	//NOTE: not great, but Firestore is limited to 10 logical OR operators so we have to do this in code
 	for _, id := range ids {
-		results = append(results, f.FetchById(collection, id))
+
+		item, err := f.FetchById(collection, id)
+
+		if err != nil {
+			continue
+		}
+
+		results = append(results, item)
 	}
 
-	return results
+	return results, nil
 }
 
-func (f *firestoreClient) FetchById(collection, id string) FetchOneResponse {
+func (f *firestoreClient) FetchById(collection, id string) (FetchOneResponse, error) {
 
-	doc, err := f.client.Collection(collection).Doc(id).Get(context.Background())
+	doc := f.client.Collection(collection).Doc(id)
+	item, err := doc.Get(context.Background())
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
-	d := doc.Data()
-	d["id"] = doc.Ref.ID //copy the id
+	d := item.Data()
+	d["id"] = item.Ref.ID //copy the id
+	d["ref"] = item.Ref.Path
 
 	//convert to bytes
 	b, err := json.Marshal(d)
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
-	return b
+	return b, nil
 }
 
-func (f *firestoreClient) FetchByField(collection, field, value string) FetchOneResponse {
+func (f *firestoreClient) FetchByField(collection, field, value string) (FetchOneResponse, error) {
 
 	doc, err := f.client.Collection(collection).
 		Where(field, "==", value).
@@ -95,33 +105,34 @@ func (f *firestoreClient) FetchByField(collection, field, value string) FetchOne
 		Next()
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	d := doc.Data()
 	d["id"] = doc.Ref.ID //copy the id
+	d["ref"] = doc.Ref.Path
 
 	//convert to bytes
 	b, err := json.Marshal(d)
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
-	return b
+	return b, nil
 }
 
 func (f *firestoreClient) DeleteById(collection, id string) EmptyResponse {
 	return nil
 }
 
-func (f *firestoreClient) Insert(collection string, b []byte) FetchOneResponse {
+func (f *firestoreClient) Insert(collection string, b []byte) (FetchOneResponse, error) {
 
 	data := make(map[string]interface{}, 0)
 	err := json.Unmarshal(b, &data)
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	if _, exists := data["id"]; exists {
@@ -135,8 +146,25 @@ func (f *firestoreClient) Insert(collection string, b []byte) FetchOneResponse {
 	ref, _, err := f.client.Collection(collection).Add(context.Background(), data)
 
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	return f.FetchById(collection, ref.ID)
+}
+
+func (f *firestoreClient) Update(collection, id string, b []byte) (FetchOneResponse, error) {
+
+	ctx := context.Background()
+	doc := f.client.Collection(collection).Doc(id)
+
+	data := make(map[string]interface{}, 0)
+	_ = json.Unmarshal(b, &data)
+
+	_, err := doc.Set(ctx, data)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return f.FetchById(collection, id)
 }

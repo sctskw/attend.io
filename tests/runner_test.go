@@ -66,6 +66,10 @@ func (s *ApiTestSuite) Fetch(path string, d interface{}) {
 		assert.FailNow(s.T(), "invalid response body")
 	}
 
+	if res.StatusCode != 200 {
+		assert.FailNow(s.T(), fmt.Sprintf("response status %d: %+v", res.StatusCode, res.Body))
+	}
+
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
 
@@ -110,5 +114,47 @@ func (s *ApiTestSuite) Create(path string, d interface{}, r interface{}) (resp *
 	}
 
 	return res
+}
 
+func (s *ApiTestSuite) Update(path string, d interface{}, r interface{}) (resp *http.Response, err error) {
+
+	b, _ := json.Marshal(d)
+
+	client := &http.Client{}
+	req, err := http.NewRequest(http.MethodPatch, s.server.URL+path, bytes.NewBuffer(b))
+
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-type", "application/json")
+
+	res, err := client.Do(req)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if res == nil || res.Body == nil {
+		assert.FailNow(s.T(), "invalid response body")
+	}
+
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+
+	if res.StatusCode != 200 {
+		assert.FailNow(s.T(), string(body))
+	}
+
+	if err != nil {
+		assert.FailNow(s.T(), err.Error())
+	}
+
+	err = json.Unmarshal(body, &r)
+
+	if err != nil {
+		assert.FailNow(s.T(), fmt.Sprintf("cannot parse response body: %s", err))
+	}
+
+	return res, nil
 }

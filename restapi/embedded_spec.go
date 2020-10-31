@@ -276,7 +276,50 @@ func init() {
           "200": {
             "description": "the list of attendees from the event",
             "schema": {
-              "$ref": "#/definitions/AttendeesList"
+              "$ref": "#/definitions/AttendeeList"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "talks"
+        ],
+        "summary": "add an Attendee to a Talk",
+        "operationId": "addAttendeeToTalk",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "attendees",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendee was created",
+            "schema": {
+              "$ref": "#/definitions/Attendee"
             }
           },
           "default": {
@@ -333,13 +376,13 @@ func init() {
         "name_last"
       ],
       "properties": {
-        "ID": {
-          "type": "string",
-          "readOnly": true
-        },
         "email": {
           "type": "string",
           "format": "email"
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
         },
         "name_display": {
           "type": "string",
@@ -352,10 +395,14 @@ func init() {
         "name_last": {
           "type": "string",
           "minLength": 1
+        },
+        "ref": {
+          "type": "string",
+          "readOnly": true
         }
       }
     },
-    "AttendeesList": {
+    "AttendeeList": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/Attendee"
@@ -422,10 +469,7 @@ func init() {
           "minLength": 1
         },
         "ref_attendees": {
-          "$ref": "#/definitions/AttendeesList"
-        },
-        "ref_talk": {
-          "$ref": "#/definitions/Talk"
+          "$ref": "#/definitions/AttendeeList"
         }
       }
     },
@@ -697,7 +741,50 @@ func init() {
           "200": {
             "description": "the list of attendees from the event",
             "schema": {
-              "$ref": "#/definitions/AttendeesList"
+              "$ref": "#/definitions/AttendeeList"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "talks"
+        ],
+        "summary": "add an Attendee to a Talk",
+        "operationId": "addAttendeeToTalk",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "attendees",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendee was created",
+            "schema": {
+              "$ref": "#/definitions/Attendee"
             }
           },
           "default": {
@@ -754,13 +841,13 @@ func init() {
         "name_last"
       ],
       "properties": {
-        "ID": {
-          "type": "string",
-          "readOnly": true
-        },
         "email": {
           "type": "string",
           "format": "email"
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
         },
         "name_display": {
           "type": "string",
@@ -773,10 +860,14 @@ func init() {
         "name_last": {
           "type": "string",
           "minLength": 1
+        },
+        "ref": {
+          "type": "string",
+          "readOnly": true
         }
       }
     },
-    "AttendeesList": {
+    "AttendeeList": {
       "type": "array",
       "items": {
         "$ref": "#/definitions/Attendee"
@@ -843,10 +934,7 @@ func init() {
           "minLength": 1
         },
         "ref_attendees": {
-          "$ref": "#/definitions/AttendeesList"
-        },
-        "ref_talk": {
-          "$ref": "#/definitions/Talk"
+          "$ref": "#/definitions/AttendeeList"
         }
       }
     },

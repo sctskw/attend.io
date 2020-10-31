@@ -23,26 +23,30 @@ func (c *memoryClient) LoadFromFile(path string) {
 
 }
 
-func (c *memoryClient) FetchAll(collection string) FetchAllResponse {
-	return nil
+func (c *memoryClient) FetchAll(collection string) (FetchAllResponse, error) {
+	return nil, nil
 }
 
-func (c *memoryClient) FetchAllById(collection string, ids ...string) FetchAllResponse {
-	return nil
+func (c *memoryClient) FetchAllById(collection string, ids ...string) (FetchAllResponse, error) {
+	return nil, nil
 }
 
-func (c *memoryClient) FetchById(collection, id string) FetchOneResponse {
-	return nil
+func (c *memoryClient) FetchById(collection, id string) (FetchOneResponse, error) {
+	return nil, nil
 }
 
-func (c *memoryClient) FetchByField(collection, field, value string) FetchOneResponse {
-	return nil
+func (c *memoryClient) FetchByField(collection, field, value string) (FetchOneResponse, error) {
+	return nil, nil
+}
+
+func (c *memoryClient) Insert(collection string, b []byte) (FetchOneResponse, error) {
+	return nil, nil
+}
+
+func (c *memoryClient) Update(collection, id string, b []byte) (FetchOneResponse, error) {
+	return nil, nil
 }
 
 func (c *memoryClient) DeleteById(collection, id string) EmptyResponse {
-	return nil
-}
-
-func (c *memoryClient) Insert(collection string, b []byte) FetchOneResponse {
 	return nil
 }

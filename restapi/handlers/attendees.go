@@ -13,17 +13,37 @@ func AttachAttendeesHandlers(api *operations.AttendIoAPI) {
 }
 
 func GetAttendeeByField(params attendees.GetAttendeeByFieldParams) middleware.Responder {
+
 	if params.Email != nil {
-		return attendees.NewGetAttendeeByFieldOK().WithPayload(services.Attendees().GetByEmail(*params.Email))
+
+		result, err := services.Attendees().GetByEmail(*params.Email)
+
+		if err != nil {
+			return attendees.NewGetAttendeeByFieldDefault(500)
+		}
+
+		return attendees.NewGetAttendeeByFieldOK().WithPayload(result)
 	}
 
 	if params.ID != nil {
-		return attendees.NewGetAttendeeByFieldOK().WithPayload(services.Attendees().GetById(*params.ID))
+		result, err := services.Attendees().GetById(*params.ID)
+
+		if err != nil {
+			return attendees.NewGetAttendeeByFieldDefault(500)
+		}
+
+		return attendees.NewGetAttendeeByFieldOK().WithPayload(result)
 	}
 
-	return attendees.NewGetAttendeeByFieldDefault(404) //NOT FOUND
+	return attendees.NewGetAttendeeByFieldDefault(400) //BAD REQUEST
 }
 
 func CreateAttendee(params attendees.PostAttendeesParams) middleware.Responder {
-	return attendees.NewPostAttendeesOK().WithPayload(services.Attendees().Create(params.Attendee))
+	result, err := services.Attendees().Create(params.Attendee)
+
+	if err != nil {
+		return attendees.NewGetAttendeeByFieldDefault(500)
+	}
+
+	return attendees.NewPostAttendeesOK().WithPayload(result)
 }

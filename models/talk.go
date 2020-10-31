@@ -43,10 +43,7 @@ type Talk struct {
 	Presenter string `json:"presenter,omitempty"`
 
 	// ref attendees
-	RefAttendees AttendeesList `json:"ref_attendees,omitempty"`
-
-	// ref talk
-	RefTalk *Talk `json:"ref_talk,omitempty"`
+	RefAttendees AttendeeList `json:"ref_attendees,omitempty"`
 }
 
 // Validate validates this talk
@@ -74,10 +71,6 @@ func (m *Talk) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateRefAttendees(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRefTalk(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -163,24 +156,6 @@ func (m *Talk) validateRefAttendees(formats strfmt.Registry) error {
 			return ve.ValidateName("ref_attendees")
 		}
 		return err
-	}
-
-	return nil
-}
-
-func (m *Talk) validateRefTalk(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.RefTalk) { // not required
-		return nil
-	}
-
-	if m.RefTalk != nil {
-		if err := m.RefTalk.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("ref_talk")
-			}
-			return err
-		}
 	}
 
 	return nil

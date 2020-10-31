@@ -14,8 +14,16 @@ func NewAttendee(nameFirst, nameLast, email string) *Attendee {
 	}
 }
 
-func NewAttendeeList(attendees ...*Attendee) AttendeesList {
-	l := AttendeesList{}
+func NewAttendeeList(attendees ...*Attendee) AttendeeList {
+	l := AttendeeList{}
 	l = append(l, attendees...)
+	return l
+}
+
+func NewAttendeesListFromIds(ids ...string) AttendeeList {
+	l := AttendeeList{}
+	for _, id := range ids {
+		l = append(l, &Attendee{ID: id})
+	}
 	return l
 }

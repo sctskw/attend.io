@@ -25,7 +25,7 @@ type GetTalkAttendeesOK struct {
 	/*
 	  In: Body
 	*/
-	Payload models.AttendeesList `json:"body,omitempty"`
+	Payload models.AttendeeList `json:"body,omitempty"`
 }
 
 // NewGetTalkAttendeesOK creates GetTalkAttendeesOK with default headers values
@@ -35,13 +35,13 @@ func NewGetTalkAttendeesOK() *GetTalkAttendeesOK {
 }
 
 // WithPayload adds the payload to the get talk attendees o k response
-func (o *GetTalkAttendeesOK) WithPayload(payload models.AttendeesList) *GetTalkAttendeesOK {
+func (o *GetTalkAttendeesOK) WithPayload(payload models.AttendeeList) *GetTalkAttendeesOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the get talk attendees o k response
-func (o *GetTalkAttendeesOK) SetPayload(payload models.AttendeesList) {
+func (o *GetTalkAttendeesOK) SetPayload(payload models.AttendeeList) {
 	o.Payload = payload
 }
 
@@ -52,7 +52,7 @@ func (o *GetTalkAttendeesOK) WriteResponse(rw http.ResponseWriter, producer runt
 	payload := o.Payload
 	if payload == nil {
 		// return empty array
-		payload = models.AttendeesList{}
+		payload = models.AttendeeList{}
 	}
 
 	if err := producer.Produce(rw, payload); err != nil {

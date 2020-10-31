@@ -61,6 +61,9 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 		TalksPostTalksHandler: talks.PostTalksHandlerFunc(func(params talks.PostTalksParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.PostTalks has not yet been implemented")
 		}),
+		TalksAddAttendeeToTalkHandler: talks.AddAttendeeToTalkHandlerFunc(func(params talks.AddAttendeeToTalkParams) middleware.Responder {
+			return middleware.NotImplemented("operation talks.AddAttendeeToTalk has not yet been implemented")
+		}),
 		AttendeesDeleteAttendeeHandler: attendees.DeleteAttendeeHandlerFunc(func(params attendees.DeleteAttendeeParams) middleware.Responder {
 			return middleware.NotImplemented("operation attendees.DeleteAttendee has not yet been implemented")
 		}),
@@ -121,6 +124,8 @@ type AttendIoAPI struct {
 	AttendeesPostAttendeesHandler attendees.PostAttendeesHandler
 	// TalksPostTalksHandler sets the operation handler for the post talks operation
 	TalksPostTalksHandler talks.PostTalksHandler
+	// TalksAddAttendeeToTalkHandler sets the operation handler for the add attendee to talk operation
+	TalksAddAttendeeToTalkHandler talks.AddAttendeeToTalkHandler
 	// AttendeesDeleteAttendeeHandler sets the operation handler for the delete attendee operation
 	AttendeesDeleteAttendeeHandler attendees.DeleteAttendeeHandler
 	// TalksDeleteAttendeeFromTalkHandler sets the operation handler for the delete attendee from talk operation
@@ -221,6 +226,9 @@ func (o *AttendIoAPI) Validate() error {
 	}
 	if o.TalksPostTalksHandler == nil {
 		unregistered = append(unregistered, "talks.PostTalksHandler")
+	}
+	if o.TalksAddAttendeeToTalkHandler == nil {
+		unregistered = append(unregistered, "talks.AddAttendeeToTalkHandler")
 	}
 	if o.AttendeesDeleteAttendeeHandler == nil {
 		unregistered = append(unregistered, "attendees.DeleteAttendeeHandler")
@@ -347,6 +355,10 @@ func (o *AttendIoAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/talks"] = talks.NewPostTalks(o.context, o.TalksPostTalksHandler)
+	if o.handlers["PATCH"] == nil {
+		o.handlers["PATCH"] = make(map[string]http.Handler)
+	}
+	o.handlers["PATCH"]["/talks/{id}/attendees"] = talks.NewAddAttendeeToTalk(o.context, o.TalksAddAttendeeToTalkHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}

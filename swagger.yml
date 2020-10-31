@@ -110,11 +110,41 @@ paths:
         200:
           description: the list of attendees from the event
           schema:
-            $ref: "#/definitions/AttendeesList"
+            $ref: "#/definitions/AttendeeList"
         default:
           description: generic error response
           schema:
             $ref: "#/definitions/Error"
+
+    patch:
+      summary: add an Attendee to a Talk
+      tags:
+        - talks
+      operationId: addAttendeeToTalk
+      consumes:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: Talk ID
+          type: string
+          required: true
+        - in: body
+          name: attendees
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        200:
+          description: Attendee was created
+          schema:
+            $ref: "#/definitions/Attendee"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/Error"
+
 
   /talks/{id}/attendees/{aid}:
     delete:
@@ -234,10 +264,8 @@ definitions:
       date_time_end:
         type: string
         format: date-time
-      ref_talk:
-        $ref: "#/definitions/Talk"
       ref_attendees:
-        $ref: "#/definitions/AttendeesList"
+        $ref: "#/definitions/AttendeeList"
 
   TalkList:
     type: array
@@ -250,7 +278,10 @@ definitions:
       - name_first
       - name_last
     properties:
-      ID:
+      id:
+        type: string
+        readOnly: true
+      ref:
         type: string
         readOnly: true
       name_display:
@@ -266,7 +297,7 @@ definitions:
         type: string
         format: email
 
-  AttendeesList:
+  AttendeeList:
     type: array
     items:
       $ref: "#/definitions/Attendee"
