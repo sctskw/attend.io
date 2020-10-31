@@ -10,6 +10,7 @@ import (
 type TalkService interface {
 	GetAll() models.TalkList
 	GetById(id string) (*models.Talk, error)
+	GetAllById(ids ...string) (results models.TalkList)
 	GetAttendees(id string) (models.AttendeeList, error)
 	Create(m *models.Talk) (*models.Talk, error)
 	AddAttendee(id string, attendees []string) (*models.Talk, error)
@@ -63,6 +64,28 @@ func (s *talkService) GetById(id string) (*models.Talk, error) {
 	}
 
 	return t, nil
+}
+
+func (s *talkService) GetAllById(ids ...string) (results models.TalkList) {
+
+	talks, err := s.db.FetchAllById("talks", ids...)
+
+	if err != nil {
+		return results
+	}
+
+	for _, raw := range talks {
+		t := &models.Talk{}
+		err := t.UnmarshalBinary(raw)
+
+		if err != nil {
+			continue
+		}
+
+		results = append(results, t)
+	}
+
+	return results
 }
 
 func (s *talkService) GetAttendees(id string) (models.AttendeeList, error) {
@@ -121,6 +144,16 @@ func (s *talkService) AddAttendee(id string, attendees []string) (*models.Talk, 
 		return nil, err
 	}
 
+	//associate the Talk to the Attendee
+	for _, a := range refs {
+		_, err := Attendees().JoinTalk(a.ID, id)
+
+		//TODO: handle this
+		if err != nil {
+			continue
+		}
+	}
+
 	t := &models.Talk{}
 	err = t.UnmarshalBinary(res)
 
@@ -140,12 +173,14 @@ func (s *talkService) RemoveAttendee(id, aid string) error {
 		return err
 	}
 
-	//eliminate
+	//drop Attendee
+	updated := models.AttendeeList{}
 	for _, ref := range talk.RefAttendees {
 		if ref.ID != aid {
-			talk.RefAttendees = append(talk.RefAttendees, ref)
+			updated = append(updated, ref)
 		}
 	}
+	talk.RefAttendees = updated //update the list
 
 	b, _ := talk.MarshalBinary()
 

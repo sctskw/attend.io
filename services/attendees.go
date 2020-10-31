@@ -1,18 +1,20 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/strfmt"
 	"github.com/sctskw/attend.io/db"
 	"github.com/sctskw/attend.io/models"
 )
 
 type AttendeeService interface {
-	GetAllRefsById(ids ...string) []string
 	GetAllById(ids ...string) models.AttendeeList
 	GetById(id string) (*models.Attendee, error)
 	GetByEmail(email strfmt.Email) (*models.Attendee, error)
 	Create(m *models.Attendee) (*models.Attendee, error)
 	DeleteById(id string) error
+	JoinTalk(id string, talks ...string) (*models.Attendee, error)
 }
 
 type attendeeService struct {
@@ -53,28 +55,6 @@ func (s *attendeeService) GetByEmail(email strfmt.Email) (*models.Attendee, erro
 	}
 
 	return a, nil
-}
-
-func (s *attendeeService) GetAllRefsById(ids ...string) (results []string) {
-
-	attendees, err := s.db.FetchAllById("attendees", ids...)
-
-	if err != nil {
-		return results
-	}
-
-	for _, raw := range attendees {
-		a := &models.Attendee{}
-		err := a.UnmarshalBinary(raw)
-
-		if err != nil {
-			continue
-		}
-
-		results = append(results, a.Ref)
-	}
-
-	return results
 }
 
 func (s *attendeeService) GetAllById(ids ...string) (results models.AttendeeList) {
@@ -120,6 +100,60 @@ func (s *attendeeService) Create(m *models.Attendee) (*models.Attendee, error) {
 }
 
 func (s *attendeeService) DeleteById(id string) error {
+
+	a, err := s.GetById(id)
+
+	if err != nil {
+		return err
+	}
+
+	//TODO:  check success before updating Talks
 	s.db.DeleteById("attendees", id)
+
+	//update the Talks
+	for _, t := range a.GetTalkIds() {
+		fmt.Println(fmt.Sprintf("%s DeJoining Talk: %s", id, t))
+		err = Talks().RemoveAttendee(t, id)
+
+		if err != nil {
+			fmt.Errorf("could not dejoin: %s", err)
+		}
+	}
+
 	return nil
+}
+
+func (s *attendeeService) JoinTalk(id string, talks ...string) (*models.Attendee, error) {
+
+	attendee, err := s.GetById(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	refs := Talks().GetAllById(talks...)
+
+	//sanitize
+	for _, r := range refs {
+		r.RefAttendees = nil //clean these up so we 're not overloading documents.
+		attendee.RefTalks = append(attendee.RefTalks, r)
+	}
+
+	b, _ := attendee.MarshalBinary()
+
+	res, err := s.db.Update("attendees", id, b)
+
+	if err != nil {
+		return nil, err
+	}
+
+	a := &models.Attendee{}
+	err = a.UnmarshalBinary(res)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return a, nil
+
 }

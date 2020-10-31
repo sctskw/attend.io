@@ -59,7 +59,6 @@ func (s *ApiTestSuite) TestTalksAPI() {
 		s.Assert().Nil(err)
 		s.Assert().Equal(200, res.StatusCode)
 		s.Assert().Len(talk.RefAttendees, 1)
-
 	})
 
 	s.Run("delete a Talk", func() {

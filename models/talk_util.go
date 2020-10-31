@@ -17,8 +17,9 @@ func NewTalk(name, presenter, description string, start, end time.Time) *Talk {
 	}
 }
 
-func NewTalkList(t ...*Talk) TalkList {
-	list := TalkList{}
-	list = append(list, t...)
-	return list
+func (m *Talk) GetAttendeeIds() (ids []string) {
+	for _, a := range m.RefAttendees {
+		ids = append(ids, a.ID)
+	}
+	return ids
 }
