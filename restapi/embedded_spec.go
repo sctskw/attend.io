@@ -31,32 +31,9 @@ func init() {
   "info": {
     "description": "A simple talk attendance API",
     "title": "attend.io",
-    "version": "1.0.0"
+    "version": "0.0.1"
   },
   "paths": {
-    "/": {
-      "get": {
-        "tags": [
-          "system"
-        ],
-        "summary": "Retrieve the System Status",
-        "responses": {
-          "200": {
-            "description": "API is operating normally",
-            "schema": {
-              "type": "object",
-              "$ref": "#/definitions/SystemStatus"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
     "/attendees": {
       "get": {
         "tags": [
@@ -147,6 +124,29 @@ func init() {
         "responses": {
           "204": {
             "description": "Attendee was deleted."
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/status": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Retrieve the System Status",
+        "responses": {
+          "200": {
+            "description": "API is operating normally",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/SystemStatus"
+            }
           },
           "default": {
             "description": "generic error response",
@@ -511,32 +511,9 @@ func init() {
   "info": {
     "description": "A simple talk attendance API",
     "title": "attend.io",
-    "version": "1.0.0"
+    "version": "0.0.1"
   },
   "paths": {
-    "/": {
-      "get": {
-        "tags": [
-          "system"
-        ],
-        "summary": "Retrieve the System Status",
-        "responses": {
-          "200": {
-            "description": "API is operating normally",
-            "schema": {
-              "type": "object",
-              "$ref": "#/definitions/SystemStatus"
-            }
-          },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
     "/attendees": {
       "get": {
         "tags": [
@@ -627,6 +604,29 @@ func init() {
         "responses": {
           "204": {
             "description": "Attendee was deleted."
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/status": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Retrieve the System Status",
+        "responses": {
+          "200": {
+            "description": "API is operating normally",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/SystemStatus"
+            }
           },
           "default": {
             "description": "generic error response",

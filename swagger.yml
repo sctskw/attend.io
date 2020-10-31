@@ -4,7 +4,7 @@ swagger: "2.0"
 info:
   description: A simple talk attendance API
   title: attend.io
-  version: 1.0.0
+  version: 0.0.1
 consumes:
   - application/github.com/sctskw/attend.io.v1+json
 produces:
@@ -12,21 +12,6 @@ produces:
 schemes:
   - http
 paths:
-  /:
-    get:
-      summary: Retrieve the System Status
-      tags:
-        - system
-      responses:
-        200:
-          description: API is operating normally
-          schema:
-            type: object
-            $ref: "#/definitions/SystemStatus"
-        default:
-          description: generic error response
-          schema:
-            $ref: "#/definitions/Error"
 
   /talks:
     get:
@@ -251,6 +236,21 @@ paths:
           schema:
             $ref: "#/definitions/Error"
 
+  /status:
+    get:
+      summary: Retrieve the System Status
+      tags:
+        - system
+      responses:
+        200:
+          description: API is operating normally
+          schema:
+            type: object
+            $ref: "#/definitions/SystemStatus"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/Error"
 
 definitions:
 

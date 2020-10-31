@@ -7,7 +7,7 @@
 //    http
 //  Host: localhost
 //  BasePath: /
-//  Version: 1.0.0
+//  Version: 0.0.1
 //
 //  Consumes:
 //    - application/github.com/sctskw/attend.io.v1+json

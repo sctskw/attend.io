@@ -46,8 +46,8 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		SystemGetHandler: system.GetHandlerFunc(func(params system.GetParams) middleware.Responder {
-			return middleware.NotImplemented("operation system.Get has not yet been implemented")
+		SystemGetStatusHandler: system.GetStatusHandlerFunc(func(params system.GetStatusParams) middleware.Responder {
+			return middleware.NotImplemented("operation system.GetStatus has not yet been implemented")
 		}),
 		TalksGetTalksHandler: talks.GetTalksHandlerFunc(func(params talks.GetTalksParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.GetTalks has not yet been implemented")
@@ -114,8 +114,8 @@ type AttendIoAPI struct {
 	//   - application/github.com/sctskw/attend.io.v1+json
 	JSONProducer runtime.Producer
 
-	// SystemGetHandler sets the operation handler for the get operation
-	SystemGetHandler system.GetHandler
+	// SystemGetStatusHandler sets the operation handler for the get status operation
+	SystemGetStatusHandler system.GetStatusHandler
 	// TalksGetTalksHandler sets the operation handler for the get talks operation
 	TalksGetTalksHandler talks.GetTalksHandler
 	// AttendeesPostAttendeesHandler sets the operation handler for the post attendees operation
@@ -212,8 +212,8 @@ func (o *AttendIoAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.SystemGetHandler == nil {
-		unregistered = append(unregistered, "system.GetHandler")
+	if o.SystemGetStatusHandler == nil {
+		unregistered = append(unregistered, "system.GetStatusHandler")
 	}
 	if o.TalksGetTalksHandler == nil {
 		unregistered = append(unregistered, "talks.GetTalksHandler")
@@ -338,7 +338,7 @@ func (o *AttendIoAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"][""] = system.NewGet(o.context, o.SystemGetHandler)
+	o.handlers["GET"]["/status"] = system.NewGetStatus(o.context, o.SystemGetStatusHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

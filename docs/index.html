@@ -817,8 +817,8 @@
                       <a href="#api-Attendees-getAttendeeByField">getAttendeeByField</a>
                     </li>
                   <li class="nav-header" data-group="System"><a href="#api-System">API Methods - System</a></li>
-                    <li data-group="System" data-name="rootGet" class="">
-                      <a href="#api-System-rootGet">rootGet</a>
+                    <li data-group="System" data-name="statusGet" class="">
+                      <a href="#api-System-statusGet">statusGet</a>
                     </li>
                   <li class="nav-header" data-group="Talks"><a href="#api-Talks">API Methods - Talks</a></li>
                     <li data-group="Talks" data-name="addAttendeeToTalk" class="">
@@ -855,7 +855,7 @@
         <div id="header">
           <div id="api-_">
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
-              <div class="app-desc">Version: 1.0.0</div>
+              <div class="app-desc">Version: 0.0.1</div>
             <hr>
             <div>A simple talk attendance API</div>
           </div>
@@ -1895,10 +1895,10 @@ except ApiException as e:
                   </section>
                 <section id="api-System">
                   <h1>System</h1>
-                    <div id="api-System-rootGet">
-                      <article id="api-System-rootGet-0" data-group="User" data-name="rootGet" data-version="0">
+                    <div id="api-System-statusGet">
+                      <article id="api-System-statusGet-0" data-group="User" data-name="statusGet" data-version="0">
                         <div class="pull-left">
-                          <h1>rootGet</h1>
+                          <h1>statusGet</h1>
                           <p>Retrieve the System Status</p>
                         </div>
                         <div class="pull-right"></div>
@@ -1907,31 +1907,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/status</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-System-rootGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-System-rootGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-System-rootGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-System-rootGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-System-rootGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-System-rootGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-System-rootGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-System-rootGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-System-rootGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-System-rootGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-System-rootGet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-System-statusGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-System-statusGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-System-statusGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-System-statusGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-System-statusGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-System-statusGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-System-statusGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-System-statusGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-System-statusGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-System-statusGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-System-statusGet-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-System-rootGet-0-curl">
+                          <div class="tab-pane active" id="examples-System-statusGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/github.com/sctskw/attend.io.v1+json"\
-"//"</code></pre>
+"//status"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-System-rootGet-0-java">
+                          <div class="tab-pane" id="examples-System-statusGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -1946,17 +1946,17 @@ public class SystemApiExample {
         
         SystemApi apiInstance = new SystemApi();
         try {
-            SystemStatus result = apiInstance.rootGet();
+            SystemStatus result = apiInstance.statusGet();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling SystemApi#rootGet");
+            System.err.println("Exception when calling SystemApi#statusGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-System-rootGet-0-android">
+                          <div class="tab-pane" id="examples-System-statusGet-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.SystemApi;
 
 public class SystemApiExample {
@@ -1964,25 +1964,25 @@ public class SystemApiExample {
     public static void main(String[] args) {
         SystemApi apiInstance = new SystemApi();
         try {
-            SystemStatus result = apiInstance.rootGet();
+            SystemStatus result = apiInstance.statusGet();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling SystemApi#rootGet");
+            System.err.println("Exception when calling SystemApi#statusGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-System-rootGet-0-groovy">
+  <div class="tab-pane" id="examples-System-statusGet-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-System-rootGet-0-objc">
+                            <div class="tab-pane" id="examples-System-statusGet-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">
 SystemApi *apiInstance = [[SystemApi alloc] init];
 
 // Retrieve the System Status
-[apiInstance rootGetWithCompletionHandler: 
+[apiInstance statusGetWithCompletionHandler: 
               ^(SystemStatus output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -1994,7 +1994,7 @@ SystemApi *apiInstance = [[SystemApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-System-rootGet-0-javascript">
+                            <div class="tab-pane" id="examples-System-statusGet-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
 
 var api = new Attendio.SystemApi()
@@ -2005,14 +2005,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.rootGet(callback);
+api.statusGet(callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-System-rootGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-System-statusGet-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-System-rootGet-0-csharp">
+                            <div class="tab-pane" id="examples-System-statusGet-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -2021,7 +2021,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class rootGetExample
+    public class statusGetExample
     {
         public void main()
         {
@@ -2031,12 +2031,12 @@ namespace Example
             try
             {
                 // Retrieve the System Status
-                SystemStatus result = apiInstance.rootGet();
+                SystemStatus result = apiInstance.statusGet();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling SystemApi.rootGet: " + e.Message );
+                Debug.Print("Exception when calling SystemApi.statusGet: " + e.Message );
             }
         }
     }
@@ -2044,22 +2044,22 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-System-rootGet-0-php">
+                            <div class="tab-pane" id="examples-System-statusGet-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiSystemApi();
 
 try {
-    $result = $api_instance->rootGet();
+    $result = $api_instance->statusGet();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling SystemApi->rootGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling SystemApi->statusGet: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-System-rootGet-0-perl">
+                            <div class="tab-pane" id="examples-System-statusGet-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::SystemApi;
@@ -2067,15 +2067,15 @@ use WWW::SwaggerClient::SystemApi;
 my $api_instance = WWW::SwaggerClient::SystemApi->new();
 
 eval { 
-    my $result = $api_instance->rootGet();
+    my $result = $api_instance->statusGet();
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling SystemApi->rootGet: $@\n";
+    warn "Exception when calling SystemApi->statusGet: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-System-rootGet-0-python">
+                            <div class="tab-pane" id="examples-System-statusGet-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -2087,10 +2087,10 @@ api_instance = swagger_client.SystemApi()
 
 try: 
     # Retrieve the System Status
-    api_response = api_instance.root_get()
+    api_response = api_instance.status_get()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling SystemApi->rootGet: %s\n" % e)</code></pre>
+    print("Exception when calling SystemApi->statusGet: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -2106,14 +2106,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-rootGet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-statusGet-200-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-rootGet-200-schema">
-                                  <div id='responses-rootGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-statusGet-200-schema">
+                                  <div id='responses-statusGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -2139,14 +2139,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-rootGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-rootGet-200-schema-200');
+                                        $('#responses-statusGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-statusGet-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-rootGet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-statusGet-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -2154,14 +2154,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-rootGet-default-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-statusGet-default-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-rootGet-default-schema">
-                                  <div id='responses-rootGet-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-statusGet-default-schema">
+                                  <div id='responses-statusGet-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -2187,14 +2187,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-rootGet-default-schema-data').val(stringify(schema));
-                                        var result = $('#responses-rootGet-default-schema-default');
+                                        $('#responses-statusGet-default-schema-data').val(stringify(schema));
+                                        var result = $('#responses-statusGet-default-schema-default');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-rootGet-default-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-statusGet-default-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 

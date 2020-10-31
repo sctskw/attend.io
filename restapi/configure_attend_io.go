@@ -29,9 +29,9 @@ func configureAPI(api *operations.AttendIoAPI) http.Handler {
 	// Example:
 	// api.Logger = log.Printf
 
-	//api.UseSwaggerUI()
+	api.UseSwaggerUI()
 	// To continue using redoc as your UI, uncomment the following line
-	api.UseRedoc()
+	//api.UseRedoc()
 
 	api.JSONConsumer = runtime.JSONConsumer()
 
