@@ -135,10 +135,6 @@ func (f *firestoreClient) Insert(collection string, b []byte) (FetchOneResponse,
 		delete(data, "id")
 	}
 
-	if _, exists := data["ID"]; exists {
-		delete(data, "ID")
-	}
-
 	ref, _, err := f.client.Collection(collection).Add(context.Background(), data)
 
 	if err != nil {

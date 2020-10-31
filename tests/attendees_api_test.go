@@ -33,9 +33,9 @@ func (s *ApiTestSuite) TestAttendeesAPI() {
 		s.Assert().Equal(200, res.StatusCode)
 	})
 
-	s.Run("delete an Attendee", func() {
-		res := s.Delete("/attendees/" + attendee.ID)
-		s.Assert().Equal(204, res.StatusCode)
-	})
+	//s.Run("delete an Attendee", func() {
+	//	res := s.Delete("/attendees/" + attendee.ID)
+	//	s.Assert().Equal(204, res.StatusCode)
+	//})
 
 }

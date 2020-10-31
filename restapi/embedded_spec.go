@@ -462,10 +462,6 @@ func init() {
         "name"
       ],
       "properties": {
-        "ID": {
-          "type": "string",
-          "readOnly": true
-        },
         "date_time_end": {
           "type": "string",
           "format": "date-time"
@@ -477,6 +473,10 @@ func init() {
         "description": {
           "type": "string",
           "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
         },
         "name": {
           "type": "string",
@@ -945,10 +945,6 @@ func init() {
         "name"
       ],
       "properties": {
-        "ID": {
-          "type": "string",
-          "readOnly": true
-        },
         "date_time_end": {
           "type": "string",
           "format": "date-time"
@@ -960,6 +956,10 @@ func init() {
         "description": {
           "type": "string",
           "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
         },
         "name": {
           "type": "string",

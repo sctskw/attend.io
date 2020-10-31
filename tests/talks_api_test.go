@@ -19,6 +19,13 @@ func (s *ApiTestSuite) TestTalksAPI() {
 	talk := models.Talk{}
 	talks := models.TalkList{}
 
+	a := models.NewAttendee(
+		"John",
+		"Henry",
+		"john.henry@test.com",
+	)
+	attendee := models.Attendee{}
+
 	s.Run("create a Talk", func() {
 		res := s.Create("/talks", t, &talk)
 		s.Assert().Equal(200, res.StatusCode)
@@ -41,15 +48,21 @@ func (s *ApiTestSuite) TestTalksAPI() {
 	})
 
 	s.Run("add Attendee to Talk", func() {
-		res, err := s.Update(fmt.Sprintf("/talks/%s/attendees", talk.ID), []string{"zszPSgO73zCcEUEjdRoq"}, &talk)
+
+		res := s.Create("/attendees", a, &attendee)
+		s.Assert().Equal(200, res.StatusCode)
+		s.Assert().NotEmpty(attendee.ID)
+
+		res, err := s.Update(fmt.Sprintf("/talks/%s/attendees", talk.ID), []string{attendee.ID}, &talk)
 		s.Assert().Nil(err)
 		s.Assert().Equal(200, res.StatusCode)
 		s.Assert().Len(talk.RefAttendees, 1)
 
 	})
 
-	//s.Run("delete a Talk", func() {
-	//	s.Delete("/talks/" + talk.ID)
-	//})
+	s.Run("delete a Talk", func() {
+		s.Delete("/talks/" + talk.ID)
+		s.Delete("/attendees/" + attendee.ID)
+	})
 
 }

@@ -17,10 +17,6 @@ import (
 // swagger:model Talk
 type Talk struct {
 
-	// ID
-	// Read Only: true
-	ID string `json:"ID,omitempty"`
-
 	// date time end
 	// Format: date-time
 	DateTimeEnd strfmt.DateTime `json:"date_time_end,omitempty"`
@@ -32,6 +28,10 @@ type Talk struct {
 	// description
 	// Min Length: 1
 	Description string `json:"description,omitempty"`
+
+	// id
+	// Read Only: true
+	ID string `json:"id,omitempty"`
 
 	// name
 	// Required: true
