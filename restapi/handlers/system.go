@@ -8,9 +8,9 @@ import (
 )
 
 func AttachSystemHandlers(api *operations.AttendIoAPI) {
-	api.SystemGetHandler = system.GetHandlerFunc(GetSystemStatus)
+	api.SystemGetStatusHandler = system.GetStatusHandlerFunc(GetSystemStatus)
 }
 
-func GetSystemStatus(params system.GetParams) middleware.Responder {
-	return system.NewGetOK().WithPayload(services.System().GetStatus())
+func GetSystemStatus(params system.GetStatusParams) middleware.Responder {
+	return system.NewGetStatusOK().WithPayload(services.System().GetStatus())
 }

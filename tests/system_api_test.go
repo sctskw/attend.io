@@ -8,8 +8,8 @@ func (s *ApiTestSuite) TestSystemAPI_GetStatus() {
 
 	status := &models.SystemStatus{}
 
-	s.Fetch("/", &status)
+	s.Fetch("/status", &status)
 
-	s.Assert().EqualValues(200, status.Code, "api is healthy")
+	s.Assert().EqualValues(200, status.Code, "attend.io is alive.")
 
 }

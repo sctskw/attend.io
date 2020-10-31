@@ -18,5 +18,5 @@ func NewSystemService(client db.DatabaseClient) SystemService {
 }
 
 func (s *systemService) GetStatus() *models.SystemStatus {
-	return models.NewSystemStatus(200, "attend.io is running")
+	return models.NewSystemStatus(200, "attend.io is alive.")
 }
