@@ -79,11 +79,16 @@ curl -X GET /talks \
 ```json
 [
   {
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "ID": "string",
     "name": "string",
-    "attendees": [
+    "presenter": "string",
+    "description": "string",
+    "date_time_start": "2019-08-24T14:15:22Z",
+    "date_time_end": "2019-08-24T14:15:22Z",
+    "ref_attendees": [
       {
-        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+        "id": "string",
+        "ref": "string",
         "name_display": "string",
         "name_first": "string",
         "name_last": "string",
@@ -99,6 +104,84 @@ curl -X GET /talks \
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|list the talks|[TalkList](#schematalklist)|
+|default|Default|generic error response|[Error](#schemaerror)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## post__talks
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST /talks \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
+
+```
+
+`POST /talks`
+
+*create a talk*
+
+> Body parameter
+
+```json
+{
+  "name": "string",
+  "presenter": "string",
+  "description": "string",
+  "date_time_start": "2019-08-24T14:15:22Z",
+  "date_time_end": "2019-08-24T14:15:22Z",
+  "ref_attendees": [
+    {
+      "name_display": "string",
+      "name_first": "string",
+      "name_last": "string",
+      "email": "user@example.com"
+    }
+  ]
+}
+```
+
+<h3 id="post__talks-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[Talk](#schematalk)|false|the Talk to create|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "ID": "string",
+  "name": "string",
+  "presenter": "string",
+  "description": "string",
+  "date_time_start": "2019-08-24T14:15:22Z",
+  "date_time_end": "2019-08-24T14:15:22Z",
+  "ref_attendees": [
+    {
+      "id": "string",
+      "ref": "string",
+      "name_display": "string",
+      "name_first": "string",
+      "name_last": "string",
+      "email": "user@example.com"
+    }
+  ]
+}
+```
+
+<h3 id="post__talks-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Talk was created|[Talk](#schematalk)|
 |default|Default|generic error response|[Error](#schemaerror)|
 
 <aside class="success">
@@ -124,7 +207,7 @@ curl -X GET /talks/{id} \
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|id|path|string(uuid)|true|Talk ID|
+|id|path|string|true|Talk ID|
 
 > Example responses
 
@@ -132,11 +215,16 @@ curl -X GET /talks/{id} \
 
 ```json
 {
-  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "ID": "string",
   "name": "string",
-  "attendees": [
+  "presenter": "string",
+  "description": "string",
+  "date_time_start": "2019-08-24T14:15:22Z",
+  "date_time_end": "2019-08-24T14:15:22Z",
+  "ref_attendees": [
     {
-      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+      "id": "string",
+      "ref": "string",
       "name_display": "string",
       "name_first": "string",
       "name_last": "string",
@@ -157,20 +245,71 @@ curl -X GET /talks/{id} \
 This operation does not require authentication
 </aside>
 
-<h1 id="attend-io-events">events</h1>
+## deleteTalkById
 
-## get__events
+<a id="opIddeleteTalkById"></a>
 
 > Code samples
 
 ```shell
 # You can also use wget
-curl -X GET /events \
+curl -X DELETE /talks/{id} \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
 
-`GET /events`
+`DELETE /talks/{id}`
+
+*Deletes a Talk with specific ID*
+
+<h3 id="deletetalkbyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|Talk ID|
+
+> Example responses
+
+> default Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+<h3 id="deletetalkbyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Talk was deleted.|None|
+|default|Default|generic error response|[Error](#schemaerror)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## getTalkAttendees
+
+<a id="opIdgetTalkAttendees"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET /talks/{id}/attendees \
+  -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
+
+```
+
+`GET /talks/{id}/attendees`
+
+<h3 id="gettalkattendees-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|Talk ID|
 
 > Example responses
 
@@ -179,44 +318,59 @@ curl -X GET /events \
 ```json
 [
   {
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-    "name": "string",
-    "talk": "0156e0a5-f7a8-4710-8864-e3389ea9b565"
+    "id": "string",
+    "ref": "string",
+    "name_display": "string",
+    "name_first": "string",
+    "name_last": "string",
+    "email": "user@example.com"
   }
 ]
 ```
 
-<h3 id="get__events-responses">Responses</h3>
+<h3 id="gettalkattendees-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|list the events|[EventList](#schemaeventlist)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|the list of attendees from the event|[AttendeeList](#schemaattendeelist)|
 |default|Default|generic error response|[Error](#schemaerror)|
 
 <aside class="success">
 This operation does not require authentication
 </aside>
 
-## getEventById
+## addAttendeeToTalk
 
-<a id="opIdgetEventById"></a>
+<a id="opIdaddAttendeeToTalk"></a>
 
 > Code samples
 
 ```shell
 # You can also use wget
-curl -X GET /events/{id} \
+curl -X PATCH /talks/{id}/attendees \
+  -H 'Content-Type: application/json' \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
 
-`GET /events/{id}`
+`PATCH /talks/{id}/attendees`
 
-<h3 id="geteventbyid-parameters">Parameters</h3>
+*add an Attendee to a Talk*
+
+> Body parameter
+
+```json
+[
+  "string"
+]
+```
+
+<h3 id="addattendeetotalk-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|id|path|string(uuid)|true|Event ID|
+|id|path|string|true|Talk ID|
+|body|body|array[string]|false|none|
 
 > Example responses
 
@@ -224,17 +378,66 @@ curl -X GET /events/{id} \
 
 ```json
 {
-  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-  "name": "string",
-  "talk": "0156e0a5-f7a8-4710-8864-e3389ea9b565"
+  "id": "string",
+  "ref": "string",
+  "name_display": "string",
+  "name_first": "string",
+  "name_last": "string",
+  "email": "user@example.com"
 }
 ```
 
-<h3 id="geteventbyid-responses">Responses</h3>
+<h3 id="addattendeetotalk-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|the requested Event|[Event](#schemaevent)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attendee was created|[Attendee](#schemaattendee)|
+|default|Default|generic error response|[Error](#schemaerror)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## deleteAttendeeFromTalk
+
+<a id="opIddeleteAttendeeFromTalk"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X DELETE /talks/{id}/attendees/{attendeeId} \
+  -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
+
+```
+
+`DELETE /talks/{id}/attendees/{attendeeId}`
+
+*Deletes a Talk with specific ID*
+
+<h3 id="deleteattendeefromtalk-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|Talk ID|
+|attendeeId|path|string|true|Attendee ID|
+
+> Example responses
+
+> default Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+<h3 id="deleteattendeefromtalk-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Attendeed was deleted from Talk.|None|
 |default|Default|generic error response|[Error](#schemaerror)|
 
 <aside class="success">
@@ -251,19 +454,19 @@ This operation does not require authentication
 
 ```shell
 # You can also use wget
-curl -X GET /attendee \
+curl -X GET /attendees \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
 
-`GET /attendee`
+`GET /attendees`
 
 <h3 id="getattendeebyfield-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |email|query|string(email)|false|Attendee Email|
-|id|query|string(uuid)|false|Attendee ID|
+|id|query|string|false|Attendee ID|
 
 > Example responses
 
@@ -271,7 +474,8 @@ curl -X GET /attendee \
 
 ```json
 {
-  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "id": "string",
+  "ref": "string",
   "name_display": "string",
   "name_first": "string",
   "name_last": "string",
@@ -290,48 +494,104 @@ curl -X GET /attendee \
 This operation does not require authentication
 </aside>
 
-## getAttendeesByEventId
-
-<a id="opIdgetAttendeesByEventId"></a>
+## post__attendees
 
 > Code samples
 
 ```shell
 # You can also use wget
-curl -X GET /attendees/{eventId} \
+curl -X POST /attendees \
+  -H 'Content-Type: application/json' \
   -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
 
 ```
 
-`GET /attendees/{eventId}`
+`POST /attendees`
 
-<h3 id="getattendeesbyeventid-parameters">Parameters</h3>
+*create an Attendee*
+
+> Body parameter
+
+```json
+{
+  "name_display": "string",
+  "name_first": "string",
+  "name_last": "string",
+  "email": "user@example.com"
+}
+```
+
+<h3 id="post__attendees-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
-|eventId|path|string(uuid)|true|Event ID|
+|body|body|[Attendee](#schemaattendee)|false|the Attendee to create|
 
 > Example responses
 
 > 200 Response
 
 ```json
-[
-  {
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-    "name_display": "string",
-    "name_first": "string",
-    "name_last": "string",
-    "email": "user@example.com"
-  }
-]
+{
+  "id": "string",
+  "ref": "string",
+  "name_display": "string",
+  "name_first": "string",
+  "name_last": "string",
+  "email": "user@example.com"
+}
 ```
 
-<h3 id="getattendeesbyeventid-responses">Responses</h3>
+<h3 id="post__attendees-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|list the attendees per event|[AttendeesList](#schemaattendeeslist)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Attendee was created|[Attendee](#schemaattendee)|
+|default|Default|generic error response|[Error](#schemaerror)|
+
+<aside class="success">
+This operation does not require authentication
+</aside>
+
+## deleteAttendeeById
+
+<a id="opIddeleteAttendeeById"></a>
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X DELETE /attendees/{id} \
+  -H 'Accept: application/github.com/sctskw/attend.io.v1+json'
+
+```
+
+`DELETE /attendees/{id}`
+
+*Deletes an Attendee with specific ID*
+
+<h3 id="deleteattendeebyid-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|Attendee ID|
+
+> Example responses
+
+> default Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+<h3 id="deleteattendeebyid-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|Attendee was deleted.|None|
 |default|Default|generic error response|[Error](#schemaerror)|
 
 <aside class="success">
@@ -349,11 +609,16 @@ This operation does not require authentication
 
 ```json
 {
-  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "ID": "string",
   "name": "string",
-  "attendees": [
+  "presenter": "string",
+  "description": "string",
+  "date_time_start": "2019-08-24T14:15:22Z",
+  "date_time_end": "2019-08-24T14:15:22Z",
+  "ref_attendees": [
     {
-      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+      "id": "string",
+      "ref": "string",
       "name_display": "string",
       "name_first": "string",
       "name_last": "string",
@@ -368,9 +633,13 @@ This operation does not require authentication
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string(uuid)|false|read-only|none|
+|ID|string|false|read-only|none|
 |name|string|true|none|none|
-|attendees|[AttendeesList](#schemaattendeeslist)|false|none|none|
+|presenter|string|false|none|none|
+|description|string|false|none|none|
+|date_time_start|string(date-time)|false|none|none|
+|date_time_end|string(date-time)|false|none|none|
+|ref_attendees|[AttendeeList](#schemaattendeelist)|false|none|none|
 
 <h2 id="tocS_TalkList">TalkList</h2>
 <!-- backwards compatibility -->
@@ -382,11 +651,16 @@ This operation does not require authentication
 ```json
 [
   {
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "ID": "string",
     "name": "string",
-    "attendees": [
+    "presenter": "string",
+    "description": "string",
+    "date_time_start": "2019-08-24T14:15:22Z",
+    "date_time_end": "2019-08-24T14:15:22Z",
+    "ref_attendees": [
       {
-        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+        "id": "string",
+        "ref": "string",
         "name_display": "string",
         "name_first": "string",
         "name_last": "string",
@@ -413,7 +687,8 @@ This operation does not require authentication
 
 ```json
 {
-  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+  "id": "string",
+  "ref": "string",
   "name_display": "string",
   "name_first": "string",
   "name_last": "string",
@@ -426,23 +701,25 @@ This operation does not require authentication
 
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
-|id|string(uuid)|false|read-only|none|
+|id|string|false|read-only|none|
+|ref|string|false|read-only|none|
 |name_display|string|false|none|none|
 |name_first|string|true|none|none|
 |name_last|string|true|none|none|
 |email|string(email)|false|none|none|
 
-<h2 id="tocS_AttendeesList">AttendeesList</h2>
+<h2 id="tocS_AttendeeList">AttendeeList</h2>
 <!-- backwards compatibility -->
-<a id="schemaattendeeslist"></a>
-<a id="schema_AttendeesList"></a>
-<a id="tocSattendeeslist"></a>
-<a id="tocsattendeeslist"></a>
+<a id="schemaattendeelist"></a>
+<a id="schema_AttendeeList"></a>
+<a id="tocSattendeelist"></a>
+<a id="tocsattendeelist"></a>
 
 ```json
 [
   {
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "id": "string",
+    "ref": "string",
     "name_display": "string",
     "name_first": "string",
     "name_last": "string",
@@ -457,54 +734,6 @@ This operation does not require authentication
 |Name|Type|Required|Restrictions|Description|
 |---|---|---|---|---|
 |*anonymous*|[[Attendee](#schemaattendee)]|false|none|none|
-
-<h2 id="tocS_Event">Event</h2>
-<!-- backwards compatibility -->
-<a id="schemaevent"></a>
-<a id="schema_Event"></a>
-<a id="tocSevent"></a>
-<a id="tocsevent"></a>
-
-```json
-{
-  "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-  "name": "string",
-  "talk": "0156e0a5-f7a8-4710-8864-e3389ea9b565"
-}
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string(uuid)|false|read-only|none|
-|name|string|true|none|none|
-|talk|string(uuid)|false|none|none|
-
-<h2 id="tocS_EventList">EventList</h2>
-<!-- backwards compatibility -->
-<a id="schemaeventlist"></a>
-<a id="schema_EventList"></a>
-<a id="tocSeventlist"></a>
-<a id="tocseventlist"></a>
-
-```json
-[
-  {
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-    "name": "string",
-    "talk": "0156e0a5-f7a8-4710-8864-e3389ea9b565"
-  }
-]
-
-```
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|*anonymous*|[[Event](#schemaevent)]|false|none|none|
 
 <h2 id="tocS_Error">Error</h2>
 <!-- backwards compatibility -->

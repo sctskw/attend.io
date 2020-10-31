@@ -695,7 +695,10 @@
   "properties" : {
     "id" : {
       "type" : "string",
-      "format" : "uuid",
+      "readOnly" : true
+    },
+    "ref" : {
+      "type" : "string",
       "readOnly" : true
     },
     "name_display" : {
@@ -716,7 +719,7 @@
     }
   }
 };
-            defs["AttendeesList"] = {
+            defs["AttendeeList"] = {
   "type" : "array",
   "items" : {
     "$ref" : "#/components/schemas/Attendee"
@@ -733,31 +736,6 @@
     "message" : {
       "type" : "string"
     }
-  }
-};
-            defs["Event"] = {
-  "required" : [ "name" ],
-  "type" : "object",
-  "properties" : {
-    "id" : {
-      "type" : "string",
-      "format" : "uuid",
-      "readOnly" : true
-    },
-    "name" : {
-      "minLength" : 1,
-      "type" : "string"
-    },
-    "talk" : {
-      "type" : "string",
-      "format" : "uuid"
-    }
-  }
-};
-            defs["EventList"] = {
-  "type" : "array",
-  "items" : {
-    "$ref" : "#/components/schemas/Event"
   }
 };
             defs["SystemStatus"] = {
@@ -777,17 +755,32 @@
   "required" : [ "name" ],
   "type" : "object",
   "properties" : {
-    "id" : {
+    "ID" : {
       "type" : "string",
-      "format" : "uuid",
       "readOnly" : true
     },
     "name" : {
       "minLength" : 1,
       "type" : "string"
     },
-    "attendees" : {
-      "$ref" : "#/components/schemas/AttendeesList"
+    "presenter" : {
+      "minLength" : 1,
+      "type" : "string"
+    },
+    "description" : {
+      "minLength" : 1,
+      "type" : "string"
+    },
+    "date_time_start" : {
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "date_time_end" : {
+      "type" : "string",
+      "format" : "date-time"
+    },
+    "ref_attendees" : {
+      "$ref" : "#/components/schemas/AttendeeList"
     }
   }
 };
@@ -814,29 +807,40 @@
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
                   <li class="nav-header" data-group="Attendees"><a href="#api-Attendees">API Methods - Attendees</a></li>
+                    <li data-group="Attendees" data-name="attendeesPost" class="">
+                      <a href="#api-Attendees-attendeesPost">attendeesPost</a>
+                    </li>
+                    <li data-group="Attendees" data-name="deleteAttendeeById" class="">
+                      <a href="#api-Attendees-deleteAttendeeById">deleteAttendeeById</a>
+                    </li>
                     <li data-group="Attendees" data-name="getAttendeeByField" class="">
                       <a href="#api-Attendees-getAttendeeByField">getAttendeeByField</a>
-                    </li>
-                    <li data-group="Attendees" data-name="getAttendeesByEventId" class="">
-                      <a href="#api-Attendees-getAttendeesByEventId">getAttendeesByEventId</a>
-                    </li>
-                  <li class="nav-header" data-group="Events"><a href="#api-Events">API Methods - Events</a></li>
-                    <li data-group="Events" data-name="eventsGet" class="">
-                      <a href="#api-Events-eventsGet">eventsGet</a>
-                    </li>
-                    <li data-group="Events" data-name="getEventById" class="">
-                      <a href="#api-Events-getEventById">getEventById</a>
                     </li>
                   <li class="nav-header" data-group="System"><a href="#api-System">API Methods - System</a></li>
                     <li data-group="System" data-name="rootGet" class="">
                       <a href="#api-System-rootGet">rootGet</a>
                     </li>
                   <li class="nav-header" data-group="Talks"><a href="#api-Talks">API Methods - Talks</a></li>
+                    <li data-group="Talks" data-name="addAttendeeToTalk" class="">
+                      <a href="#api-Talks-addAttendeeToTalk">addAttendeeToTalk</a>
+                    </li>
+                    <li data-group="Talks" data-name="deleteAttendeeFromTalk" class="">
+                      <a href="#api-Talks-deleteAttendeeFromTalk">deleteAttendeeFromTalk</a>
+                    </li>
+                    <li data-group="Talks" data-name="deleteTalkById" class="">
+                      <a href="#api-Talks-deleteTalkById">deleteTalkById</a>
+                    </li>
+                    <li data-group="Talks" data-name="getTalkAttendees" class="">
+                      <a href="#api-Talks-getTalkAttendees">getTalkAttendees</a>
+                    </li>
                     <li data-group="Talks" data-name="getTalkById" class="">
                       <a href="#api-Talks-getTalkById">getTalkById</a>
                     </li>
                     <li data-group="Talks" data-name="talksGet" class="">
                       <a href="#api-Talks-talksGet">talksGet</a>
+                    </li>
+                    <li data-group="Talks" data-name="talksPost" class="">
+                      <a href="#api-Talks-talksPost">talksPost</a>
                     </li>
           </ul>
         </nav>
@@ -859,6 +863,662 @@
         <div id="sections">
                 <section id="api-Attendees">
                   <h1>Attendees</h1>
+                    <div id="api-Attendees-attendeesPost">
+                      <article id="api-Attendees-attendeesPost-0" data-group="User" data-name="attendeesPost" data-version="0">
+                        <div class="pull-left">
+                          <h1>attendeesPost</h1>
+                          <p>create an Attendee</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/attendees</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Attendees-attendeesPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Attendees-attendeesPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Attendees-attendeesPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Attendees-attendeesPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Attendees-attendeesPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Attendees-attendeesPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Attendees-attendeesPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Attendees-attendeesPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Attendees-attendeesPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Attendees-attendeesPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Attendees-attendeesPost-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Attendees-attendeesPost-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/github.com/sctskw/attend.io.v1+json"\
+-H "Content-Type: application/json"\
+"//attendees"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Attendees-attendeesPost-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.AttendeesApi;
+
+import java.io.File;
+import java.util.*;
+
+public class AttendeesApiExample {
+
+    public static void main(String[] args) {
+        
+        AttendeesApi apiInstance = new AttendeesApi();
+        Attendee body = ; // Attendee | the Attendee to create
+        try {
+            Attendee result = apiInstance.attendeesPost(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AttendeesApi#attendeesPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Attendees-attendeesPost-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.AttendeesApi;
+
+public class AttendeesApiExample {
+
+    public static void main(String[] args) {
+        AttendeesApi apiInstance = new AttendeesApi();
+        Attendee body = ; // Attendee | the Attendee to create
+        try {
+            Attendee result = apiInstance.attendeesPost(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AttendeesApi#attendeesPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Attendees-attendeesPost-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Attendees-attendeesPost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Attendee *body = ; // the Attendee to create (optional)
+
+AttendeesApi *apiInstance = [[AttendeesApi alloc] init];
+
+// create an Attendee
+[apiInstance attendeesPostWith:body
+              completionHandler: ^(Attendee output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Attendees-attendeesPost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
+
+var api = new Attendio.AttendeesApi()
+var opts = { 
+  'body':  // {{Attendee}} the Attendee to create
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.attendeesPost(opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Attendees-attendeesPost-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Attendees-attendeesPost-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class attendeesPostExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new AttendeesApi();
+            var body = new Attendee(); // Attendee | the Attendee to create (optional) 
+
+            try
+            {
+                // create an Attendee
+                Attendee result = apiInstance.attendeesPost(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling AttendeesApi.attendeesPost: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Attendees-attendeesPost-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiAttendeesApi();
+$body = ; // Attendee | the Attendee to create
+
+try {
+    $result = $api_instance->attendeesPost($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AttendeesApi->attendeesPost: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Attendees-attendeesPost-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::AttendeesApi;
+
+my $api_instance = WWW::SwaggerClient::AttendeesApi->new();
+my $body = WWW::SwaggerClient::Object::Attendee->new(); # Attendee | the Attendee to create
+
+eval { 
+    my $result = $api_instance->attendeesPost(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling AttendeesApi->attendeesPost: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Attendees-attendeesPost-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.AttendeesApi()
+body =  # Attendee | the Attendee to create (optional)
+
+try: 
+    # create an Attendee
+    api_response = api_instance.attendees_post(body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling AttendeesApi->attendeesPost: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "the Attendee to create",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Attendee"
+      }
+    }
+  },
+  "required" : false
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_attendeesPost_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_attendeesPost_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Attendee was created </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-attendeesPost-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-attendeesPost-200-schema">
+                                  <div id='responses-attendeesPost-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Attendee was created",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Attendee"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-attendeesPost-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-attendeesPost-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-attendeesPost-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: default - generic error response </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-attendeesPost-default-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-attendeesPost-default-schema">
+                                  <div id='responses-attendeesPost-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "generic error response",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-attendeesPost-default-schema-data').val(stringify(schema));
+                                        var result = $('#responses-attendeesPost-default-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-attendeesPost-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Attendees-deleteAttendeeById">
+                      <article id="api-Attendees-deleteAttendeeById-0" data-group="User" data-name="deleteAttendeeById" data-version="0">
+                        <div class="pull-left">
+                          <h1>deleteAttendeeById</h1>
+                          <p>Deletes an Attendee with specific ID</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/attendees/{id}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Attendees-deleteAttendeeById-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Attendees-deleteAttendeeById-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Attendees-deleteAttendeeById-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Attendees-deleteAttendeeById-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Attendees-deleteAttendeeById-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Attendees-deleteAttendeeById-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Attendees-deleteAttendeeById-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Attendees-deleteAttendeeById-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Attendees-deleteAttendeeById-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Attendees-deleteAttendeeById-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Attendees-deleteAttendeeById-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Attendees-deleteAttendeeById-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/github.com/sctskw/attend.io.v1+json"\
+"//attendees/{id}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.AttendeesApi;
+
+import java.io.File;
+import java.util.*;
+
+public class AttendeesApiExample {
+
+    public static void main(String[] args) {
+        
+        AttendeesApi apiInstance = new AttendeesApi();
+        String id = id_example; // String | Attendee ID
+        try {
+            apiInstance.deleteAttendeeById(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AttendeesApi#deleteAttendeeById");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.AttendeesApi;
+
+public class AttendeesApiExample {
+
+    public static void main(String[] args) {
+        AttendeesApi apiInstance = new AttendeesApi();
+        String id = id_example; // String | Attendee ID
+        try {
+            apiInstance.deleteAttendeeById(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AttendeesApi#deleteAttendeeById");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *id = id_example; // Attendee ID
+
+AttendeesApi *apiInstance = [[AttendeesApi alloc] init];
+
+// Deletes an Attendee with specific ID
+[apiInstance deleteAttendeeByIdWith:id
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
+
+var api = new Attendio.AttendeesApi()
+var id = id_example; // {{String}} Attendee ID
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.deleteAttendeeById(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class deleteAttendeeByIdExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new AttendeesApi();
+            var id = id_example;  // String | Attendee ID
+
+            try
+            {
+                // Deletes an Attendee with specific ID
+                apiInstance.deleteAttendeeById(id);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling AttendeesApi.deleteAttendeeById: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiAttendeesApi();
+$id = id_example; // String | Attendee ID
+
+try {
+    $api_instance->deleteAttendeeById($id);
+} catch (Exception $e) {
+    echo 'Exception when calling AttendeesApi->deleteAttendeeById: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::AttendeesApi;
+
+my $api_instance = WWW::SwaggerClient::AttendeesApi->new();
+my $id = id_example; # String | Attendee ID
+
+eval { 
+    $api_instance->deleteAttendeeById(id => $id);
+};
+if ($@) {
+    warn "Exception when calling AttendeesApi->deleteAttendeeById: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Attendees-deleteAttendeeById-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.AttendeesApi()
+id = id_example # String | Attendee ID
+
+try: 
+    # Deletes an Attendee with specific ID
+    api_instance.delete_attendee_by_id(id)
+except ApiException as e:
+    print("Exception when calling AttendeesApi->deleteAttendeeById: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_deleteAttendeeById_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Attendee ID
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Attendee was deleted. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: default - generic error response </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteAttendeeById-default-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteAttendeeById-default-schema">
+                                  <div id='responses-deleteAttendeeById-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "generic error response",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteAttendeeById-default-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteAttendeeById-default-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteAttendeeById-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Attendees-getAttendeeByField">
                       <article id="api-Attendees-getAttendeeByField-0" data-group="User" data-name="getAttendeeByField" data-version="0">
                         <div class="pull-left">
@@ -871,7 +1531,7 @@
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/attendee</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/attendees</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
@@ -893,7 +1553,7 @@
                           <div class="tab-pane active" id="examples-Attendees-getAttendeeByField-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: application/github.com/sctskw/attend.io.v1+json"\
-"//attendee?email=&id="</code></pre>
+"//attendees?email=&id="</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Attendees-getAttendeeByField-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
@@ -910,7 +1570,7 @@ public class AttendeesApiExample {
         
         AttendeesApi apiInstance = new AttendeesApi();
         String email = email_example; // String | Attendee Email
-        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Attendee ID
+        String id = id_example; // String | Attendee ID
         try {
             Attendee result = apiInstance.getAttendeeByField(email, id);
             System.out.println(result);
@@ -930,7 +1590,7 @@ public class AttendeesApiExample {
     public static void main(String[] args) {
         AttendeesApi apiInstance = new AttendeesApi();
         String email = email_example; // String | Attendee Email
-        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Attendee ID
+        String id = id_example; // String | Attendee ID
         try {
             Attendee result = apiInstance.getAttendeeByField(email, id);
             System.out.println(result);
@@ -947,7 +1607,7 @@ public class AttendeesApiExample {
   </div> -->
                             <div class="tab-pane" id="examples-Attendees-getAttendeeByField-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">String *email = email_example; // Attendee Email (optional)
-UUID *id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // Attendee ID (optional)
+String *id = id_example; // Attendee ID (optional)
 
 AttendeesApi *apiInstance = [[AttendeesApi alloc] init];
 
@@ -970,7 +1630,7 @@ AttendeesApi *apiInstance = [[AttendeesApi alloc] init];
 var api = new Attendio.AttendeesApi()
 var opts = { 
   'email': email_example, // {{String}} Attendee Email
-  'id': 38400000-8cf0-11bd-b23e-10b96e4ef00d // {{UUID}} Attendee ID
+  'id': id_example // {{String}} Attendee ID
 };
 var callback = function(error, data, response) {
   if (error) {
@@ -1002,7 +1662,7 @@ namespace Example
 
             var apiInstance = new AttendeesApi();
             var email = email_example;  // String | Attendee Email (optional) 
-            var id = new UUID(); // UUID | Attendee ID (optional) 
+            var id = id_example;  // String | Attendee ID (optional) 
 
             try
             {
@@ -1025,7 +1685,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiAttendeesApi();
 $email = email_example; // String | Attendee Email
-$id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Attendee ID
+$id = id_example; // String | Attendee ID
 
 try {
     $result = $api_instance->getAttendeeByField($email, $id);
@@ -1043,7 +1703,7 @@ use WWW::SwaggerClient::AttendeesApi;
 
 my $api_instance = WWW::SwaggerClient::AttendeesApi->new();
 my $email = email_example; # String | Attendee Email
-my $id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | Attendee ID
+my $id = id_example; # String | Attendee ID
 
 eval { 
     my $result = $api_instance->getAttendeeByField(email => $email, id => $id);
@@ -1064,7 +1724,7 @@ from pprint import pprint
 # create an instance of the API class
 api_instance = swagger_client.AttendeesApi()
 email = email_example # String | Attendee Email (optional)
-id = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | Attendee ID (optional)
+id = id_example # String | Attendee ID (optional)
 
 try: 
     api_response = api_instance.get_attendee_by_field(email=email, id=id)
@@ -1116,11 +1776,8 @@ except ApiException as e:
                                         <div class="json-schema-view">
                                             <div class="primitive">
                                                 <span class="type">
-                                                    UUID
+                                                    String
                                                 </span>
-                                                    <span class="format">
-                                                        (uuid)
-                                                    </span>
                                 
                                                     <div class="inner description">
                                                         Attendee ID
@@ -1226,1000 +1883,6 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-getAttendeeByField-default-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Attendees-getAttendeesByEventId">
-                      <article id="api-Attendees-getAttendeesByEventId-0" data-group="User" data-name="getAttendeesByEventId" data-version="0">
-                        <div class="pull-left">
-                          <h1>getAttendeesByEventId</h1>
-                          <p></p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/attendees/{eventId}</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Attendees-getAttendeesByEventId-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Attendees-getAttendeesByEventId-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Attendees-getAttendeesByEventId-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/github.com/sctskw/attend.io.v1+json"\
-"//attendees/{eventId}"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.AttendeesApi;
-
-import java.io.File;
-import java.util.*;
-
-public class AttendeesApiExample {
-
-    public static void main(String[] args) {
-        
-        AttendeesApi apiInstance = new AttendeesApi();
-        UUID eventId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Event ID
-        try {
-            AttendeesList result = apiInstance.getAttendeesByEventId(eventId);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling AttendeesApi#getAttendeesByEventId");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.AttendeesApi;
-
-public class AttendeesApiExample {
-
-    public static void main(String[] args) {
-        AttendeesApi apiInstance = new AttendeesApi();
-        UUID eventId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Event ID
-        try {
-            AttendeesList result = apiInstance.getAttendeesByEventId(eventId);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling AttendeesApi#getAttendeesByEventId");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">UUID *eventId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // Event ID
-
-AttendeesApi *apiInstance = [[AttendeesApi alloc] init];
-
-[apiInstance getAttendeesByEventIdWith:eventId
-              completionHandler: ^(AttendeesList output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
-
-var api = new Attendio.AttendeesApi()
-var eventId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {{UUID}} Event ID
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.getAttendeesByEventId(eventId, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class getAttendeesByEventIdExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new AttendeesApi();
-            var eventId = new UUID(); // UUID | Event ID
-
-            try
-            {
-                AttendeesList result = apiInstance.getAttendeesByEventId(eventId);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling AttendeesApi.getAttendeesByEventId: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiAttendeesApi();
-$eventId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Event ID
-
-try {
-    $result = $api_instance->getAttendeesByEventId($eventId);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling AttendeesApi->getAttendeesByEventId: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::AttendeesApi;
-
-my $api_instance = WWW::SwaggerClient::AttendeesApi->new();
-my $eventId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | Event ID
-
-eval { 
-    my $result = $api_instance->getAttendeesByEventId(eventId => $eventId);
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling AttendeesApi->getAttendeesByEventId: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Attendees-getAttendeesByEventId-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.AttendeesApi()
-eventId = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | Event ID
-
-try: 
-    api_response = api_instance.get_attendees_by_event_id(eventId)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling AttendeesApi->getAttendeesByEventId: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">eventId*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_getAttendeesByEventId_eventId">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      UUID
-                                                  </span>
-                                                      <span class="format">
-                                                          (uuid)
-                                                      </span>
-                                  
-                                                      <div class="inner description">
-                                                          Event ID
-                                                      </div>
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - list the attendees per event </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-getAttendeesByEventId-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-getAttendeesByEventId-200-schema">
-                                  <div id='responses-getAttendeesByEventId-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "list the attendees per event",
-  "content" : {
-    "application/github.com/sctskw/attend.io.v1+json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/AttendeesList"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getAttendeesByEventId-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getAttendeesByEventId-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-getAttendeesByEventId-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                            <h3> Status: default - generic error response </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-getAttendeesByEventId-default-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-getAttendeesByEventId-default-schema">
-                                  <div id='responses-getAttendeesByEventId-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "generic error response",
-  "content" : {
-    "application/github.com/sctskw/attend.io.v1+json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/Error"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getAttendeesByEventId-default-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getAttendeesByEventId-default-schema-default');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-getAttendeesByEventId-default-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                  </section>
-                <section id="api-Events">
-                  <h1>Events</h1>
-                    <div id="api-Events-eventsGet">
-                      <article id="api-Events-eventsGet-0" data-group="User" data-name="eventsGet" data-version="0">
-                        <div class="pull-left">
-                          <h1>eventsGet</h1>
-                          <p></p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/events</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Events-eventsGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Events-eventsGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Events-eventsGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Events-eventsGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Events-eventsGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Events-eventsGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Events-eventsGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Events-eventsGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Events-eventsGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Events-eventsGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Events-eventsGet-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Events-eventsGet-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/github.com/sctskw/attend.io.v1+json"\
-"//events"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Events-eventsGet-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.EventsApi;
-
-import java.io.File;
-import java.util.*;
-
-public class EventsApiExample {
-
-    public static void main(String[] args) {
-        
-        EventsApi apiInstance = new EventsApi();
-        try {
-            EventList result = apiInstance.eventsGet();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling EventsApi#eventsGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Events-eventsGet-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.EventsApi;
-
-public class EventsApiExample {
-
-    public static void main(String[] args) {
-        EventsApi apiInstance = new EventsApi();
-        try {
-            EventList result = apiInstance.eventsGet();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling EventsApi#eventsGet");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Events-eventsGet-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Events-eventsGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">
-EventsApi *apiInstance = [[EventsApi alloc] init];
-
-[apiInstance eventsGetWithCompletionHandler: 
-              ^(EventList output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Events-eventsGet-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
-
-var api = new Attendio.EventsApi()
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.eventsGet(callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Events-eventsGet-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Events-eventsGet-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class eventsGetExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new EventsApi();
-
-            try
-            {
-                EventList result = apiInstance.eventsGet();
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling EventsApi.eventsGet: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Events-eventsGet-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiEventsApi();
-
-try {
-    $result = $api_instance->eventsGet();
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling EventsApi->eventsGet: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Events-eventsGet-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::EventsApi;
-
-my $api_instance = WWW::SwaggerClient::EventsApi->new();
-
-eval { 
-    my $result = $api_instance->eventsGet();
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling EventsApi->eventsGet: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Events-eventsGet-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.EventsApi()
-
-try: 
-    api_response = api_instance.events_get()
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling EventsApi->eventsGet: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - list the events </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-eventsGet-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-eventsGet-200-schema">
-                                  <div id='responses-eventsGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "list the events",
-  "content" : {
-    "application/github.com/sctskw/attend.io.v1+json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/EventList"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-eventsGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-eventsGet-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-eventsGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                            <h3> Status: default - generic error response </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-eventsGet-default-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-eventsGet-default-schema">
-                                  <div id='responses-eventsGet-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "generic error response",
-  "content" : {
-    "application/github.com/sctskw/attend.io.v1+json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/Error"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-eventsGet-default-schema-data').val(stringify(schema));
-                                        var result = $('#responses-eventsGet-default-schema-default');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-eventsGet-default-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Events-getEventById">
-                      <article id="api-Events-getEventById-0" data-group="User" data-name="getEventById" data-version="0">
-                        <div class="pull-left">
-                          <h1>getEventById</h1>
-                          <p></p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/events/{id}</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Events-getEventById-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Events-getEventById-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Events-getEventById-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Events-getEventById-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Events-getEventById-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Events-getEventById-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Events-getEventById-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Events-getEventById-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Events-getEventById-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Events-getEventById-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Events-getEventById-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Events-getEventById-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: application/github.com/sctskw/attend.io.v1+json"\
-"//events/{id}"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Events-getEventById-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.EventsApi;
-
-import java.io.File;
-import java.util.*;
-
-public class EventsApiExample {
-
-    public static void main(String[] args) {
-        
-        EventsApi apiInstance = new EventsApi();
-        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Event ID
-        try {
-            Event result = apiInstance.getEventById(id);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling EventsApi#getEventById");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Events-getEventById-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.EventsApi;
-
-public class EventsApiExample {
-
-    public static void main(String[] args) {
-        EventsApi apiInstance = new EventsApi();
-        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Event ID
-        try {
-            Event result = apiInstance.getEventById(id);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling EventsApi#getEventById");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Events-getEventById-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Events-getEventById-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">UUID *id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // Event ID
-
-EventsApi *apiInstance = [[EventsApi alloc] init];
-
-[apiInstance getEventByIdWith:id
-              completionHandler: ^(Event output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Events-getEventById-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
-
-var api = new Attendio.EventsApi()
-var id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {{UUID}} Event ID
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.getEventById(id, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Events-getEventById-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Events-getEventById-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class getEventByIdExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new EventsApi();
-            var id = new UUID(); // UUID | Event ID
-
-            try
-            {
-                Event result = apiInstance.getEventById(id);
-                Debug.WriteLine(result);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling EventsApi.getEventById: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Events-getEventById-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiEventsApi();
-$id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Event ID
-
-try {
-    $result = $api_instance->getEventById($id);
-    print_r($result);
-} catch (Exception $e) {
-    echo 'Exception when calling EventsApi->getEventById: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Events-getEventById-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::EventsApi;
-
-my $api_instance = WWW::SwaggerClient::EventsApi->new();
-my $id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | Event ID
-
-eval { 
-    my $result = $api_instance->getEventById(id => $id);
-    print Dumper($result);
-};
-if ($@) {
-    warn "Exception when calling EventsApi->getEventById: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Events-getEventById-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.EventsApi()
-id = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | Event ID
-
-try: 
-    api_response = api_instance.get_event_by_id(id)
-    pprint(api_response)
-except ApiException as e:
-    print("Exception when calling EventsApi->getEventById: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">id*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_getEventById_id">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      UUID
-                                                  </span>
-                                                      <span class="format">
-                                                          (uuid)
-                                                      </span>
-                                  
-                                                      <div class="inner description">
-                                                          Event ID
-                                                      </div>
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 200 - the requested Event </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-getEventById-200-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-getEventById-200-schema">
-                                  <div id='responses-getEventById-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "the requested Event",
-  "content" : {
-    "application/github.com/sctskw/attend.io.v1+json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/Event"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getEventById-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getEventById-200-schema-200');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-getEventById-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                            <h3> Status: default - generic error response </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-getEventById-default-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-getEventById-default-schema">
-                                  <div id='responses-getEventById-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "generic error response",
-  "content" : {
-    "application/github.com/sctskw/attend.io.v1+json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/Error"
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-getEventById-default-schema-data').val(stringify(schema));
-                                        var result = $('#responses-getEventById-default-schema-default');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-getEventById-default-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -2535,6 +2198,1369 @@ except ApiException as e:
                   </section>
                 <section id="api-Talks">
                   <h1>Talks</h1>
+                    <div id="api-Talks-addAttendeeToTalk">
+                      <article id="api-Talks-addAttendeeToTalk-0" data-group="User" data-name="addAttendeeToTalk" data-version="0">
+                        <div class="pull-left">
+                          <h1>addAttendeeToTalk</h1>
+                          <p>add an Attendee to a Talk</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="patch"><code><span class="pln">/talks/{id}/attendees</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Talks-addAttendeeToTalk-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Talks-addAttendeeToTalk-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Talks-addAttendeeToTalk-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Talks-addAttendeeToTalk-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Talks-addAttendeeToTalk-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Talks-addAttendeeToTalk-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Talks-addAttendeeToTalk-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Talks-addAttendeeToTalk-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Talks-addAttendeeToTalk-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Talks-addAttendeeToTalk-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Talks-addAttendeeToTalk-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Talks-addAttendeeToTalk-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PATCH\
+-H "Accept: application/github.com/sctskw/attend.io.v1+json"\
+-H "Content-Type: application/json"\
+"//talks/{id}/attendees"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.TalksApi;
+
+import java.io.File;
+import java.util.*;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        
+        TalksApi apiInstance = new TalksApi();
+        String id = id_example; // String | Talk ID
+        array[String] body = ; // array[String] | 
+        try {
+            Attendee result = apiInstance.addAttendeeToTalk(id, body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#addAttendeeToTalk");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.TalksApi;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        TalksApi apiInstance = new TalksApi();
+        String id = id_example; // String | Talk ID
+        array[String] body = ; // array[String] | 
+        try {
+            Attendee result = apiInstance.addAttendeeToTalk(id, body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#addAttendeeToTalk");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *id = id_example; // Talk ID
+array[String] *body = ; //  (optional)
+
+TalksApi *apiInstance = [[TalksApi alloc] init];
+
+// add an Attendee to a Talk
+[apiInstance addAttendeeToTalkWith:id
+    body:body
+              completionHandler: ^(Attendee output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
+
+var api = new Attendio.TalksApi()
+var id = id_example; // {{String}} Talk ID
+var opts = { 
+  'body':  // {{array[String]}} 
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.addAttendeeToTalk(id, opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class addAttendeeToTalkExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new TalksApi();
+            var id = id_example;  // String | Talk ID
+            var body = new array[String](); // array[String] |  (optional) 
+
+            try
+            {
+                // add an Attendee to a Talk
+                Attendee result = apiInstance.addAttendeeToTalk(id, body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling TalksApi.addAttendeeToTalk: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiTalksApi();
+$id = id_example; // String | Talk ID
+$body = ; // array[String] | 
+
+try {
+    $result = $api_instance->addAttendeeToTalk($id, $body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling TalksApi->addAttendeeToTalk: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::TalksApi;
+
+my $api_instance = WWW::SwaggerClient::TalksApi->new();
+my $id = id_example; # String | Talk ID
+my $body = [WWW::SwaggerClient::Object::array[String]->new()]; # array[String] | 
+
+eval { 
+    my $result = $api_instance->addAttendeeToTalk(id => $id, body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling TalksApi->addAttendeeToTalk: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-addAttendeeToTalk-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.TalksApi()
+id = id_example # String | Talk ID
+body =  # array[String] |  (optional)
+
+try: 
+    # add an Attendee to a Talk
+    api_response = api_instance.add_attendee_to_talk(id, body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TalksApi->addAttendeeToTalk: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_addAttendeeToTalk_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Talk ID
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "type" : "array",
+        "items" : {
+          "type" : "string"
+        }
+      }
+    }
+  },
+  "required" : false
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_addAttendeeToTalk_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_addAttendeeToTalk_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Attendee was created </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addAttendeeToTalk-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addAttendeeToTalk-200-schema">
+                                  <div id='responses-addAttendeeToTalk-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Attendee was created",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Attendee"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addAttendeeToTalk-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addAttendeeToTalk-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addAttendeeToTalk-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: default - generic error response </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-addAttendeeToTalk-default-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-addAttendeeToTalk-default-schema">
+                                  <div id='responses-addAttendeeToTalk-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "generic error response",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-addAttendeeToTalk-default-schema-data').val(stringify(schema));
+                                        var result = $('#responses-addAttendeeToTalk-default-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-addAttendeeToTalk-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Talks-deleteAttendeeFromTalk">
+                      <article id="api-Talks-deleteAttendeeFromTalk-0" data-group="User" data-name="deleteAttendeeFromTalk" data-version="0">
+                        <div class="pull-left">
+                          <h1>deleteAttendeeFromTalk</h1>
+                          <p>Deletes a Talk with specific ID</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/talks/{id}/attendees/{attendeeId}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Talks-deleteAttendeeFromTalk-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Talks-deleteAttendeeFromTalk-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Talks-deleteAttendeeFromTalk-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/github.com/sctskw/attend.io.v1+json"\
+"//talks/{id}/attendees/{attendeeId}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.TalksApi;
+
+import java.io.File;
+import java.util.*;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        
+        TalksApi apiInstance = new TalksApi();
+        String id = id_example; // String | Talk ID
+        String attendeeId = attendeeId_example; // String | Attendee ID
+        try {
+            apiInstance.deleteAttendeeFromTalk(id, attendeeId);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#deleteAttendeeFromTalk");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.TalksApi;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        TalksApi apiInstance = new TalksApi();
+        String id = id_example; // String | Talk ID
+        String attendeeId = attendeeId_example; // String | Attendee ID
+        try {
+            apiInstance.deleteAttendeeFromTalk(id, attendeeId);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#deleteAttendeeFromTalk");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *id = id_example; // Talk ID
+String *attendeeId = attendeeId_example; // Attendee ID
+
+TalksApi *apiInstance = [[TalksApi alloc] init];
+
+// Deletes a Talk with specific ID
+[apiInstance deleteAttendeeFromTalkWith:id
+    attendeeId:attendeeId
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
+
+var api = new Attendio.TalksApi()
+var id = id_example; // {{String}} Talk ID
+var attendeeId = attendeeId_example; // {{String}} Attendee ID
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.deleteAttendeeFromTalk(id, attendeeId, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class deleteAttendeeFromTalkExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new TalksApi();
+            var id = id_example;  // String | Talk ID
+            var attendeeId = attendeeId_example;  // String | Attendee ID
+
+            try
+            {
+                // Deletes a Talk with specific ID
+                apiInstance.deleteAttendeeFromTalk(id, attendeeId);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling TalksApi.deleteAttendeeFromTalk: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiTalksApi();
+$id = id_example; // String | Talk ID
+$attendeeId = attendeeId_example; // String | Attendee ID
+
+try {
+    $api_instance->deleteAttendeeFromTalk($id, $attendeeId);
+} catch (Exception $e) {
+    echo 'Exception when calling TalksApi->deleteAttendeeFromTalk: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::TalksApi;
+
+my $api_instance = WWW::SwaggerClient::TalksApi->new();
+my $id = id_example; # String | Talk ID
+my $attendeeId = attendeeId_example; # String | Attendee ID
+
+eval { 
+    $api_instance->deleteAttendeeFromTalk(id => $id, attendeeId => $attendeeId);
+};
+if ($@) {
+    warn "Exception when calling TalksApi->deleteAttendeeFromTalk: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-deleteAttendeeFromTalk-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.TalksApi()
+id = id_example # String | Talk ID
+attendeeId = attendeeId_example # String | Attendee ID
+
+try: 
+    # Deletes a Talk with specific ID
+    api_instance.delete_attendee_from_talk(id, attendeeId)
+except ApiException as e:
+    print("Exception when calling TalksApi->deleteAttendeeFromTalk: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_deleteAttendeeFromTalk_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Talk ID
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                                  <tr><td style="width:150px;">attendeeId*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_deleteAttendeeFromTalk_attendeeId">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Attendee ID
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Attendeed was deleted from Talk. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: default - generic error response </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteAttendeeFromTalk-default-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteAttendeeFromTalk-default-schema">
+                                  <div id='responses-deleteAttendeeFromTalk-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "generic error response",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteAttendeeFromTalk-default-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteAttendeeFromTalk-default-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteAttendeeFromTalk-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Talks-deleteTalkById">
+                      <article id="api-Talks-deleteTalkById-0" data-group="User" data-name="deleteTalkById" data-version="0">
+                        <div class="pull-left">
+                          <h1>deleteTalkById</h1>
+                          <p>Deletes a Talk with specific ID</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/talks/{id}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Talks-deleteTalkById-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Talks-deleteTalkById-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Talks-deleteTalkById-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Talks-deleteTalkById-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Talks-deleteTalkById-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Talks-deleteTalkById-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Talks-deleteTalkById-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Talks-deleteTalkById-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Talks-deleteTalkById-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Talks-deleteTalkById-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Talks-deleteTalkById-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Talks-deleteTalkById-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: application/github.com/sctskw/attend.io.v1+json"\
+"//talks/{id}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Talks-deleteTalkById-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.TalksApi;
+
+import java.io.File;
+import java.util.*;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        
+        TalksApi apiInstance = new TalksApi();
+        String id = id_example; // String | Talk ID
+        try {
+            apiInstance.deleteTalkById(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#deleteTalkById");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Talks-deleteTalkById-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.TalksApi;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        TalksApi apiInstance = new TalksApi();
+        String id = id_example; // String | Talk ID
+        try {
+            apiInstance.deleteTalkById(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#deleteTalkById");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Talks-deleteTalkById-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Talks-deleteTalkById-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *id = id_example; // Talk ID
+
+TalksApi *apiInstance = [[TalksApi alloc] init];
+
+// Deletes a Talk with specific ID
+[apiInstance deleteTalkByIdWith:id
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-deleteTalkById-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
+
+var api = new Attendio.TalksApi()
+var id = id_example; // {{String}} Talk ID
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.deleteTalkById(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Talks-deleteTalkById-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Talks-deleteTalkById-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class deleteTalkByIdExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new TalksApi();
+            var id = id_example;  // String | Talk ID
+
+            try
+            {
+                // Deletes a Talk with specific ID
+                apiInstance.deleteTalkById(id);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling TalksApi.deleteTalkById: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-deleteTalkById-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiTalksApi();
+$id = id_example; // String | Talk ID
+
+try {
+    $api_instance->deleteTalkById($id);
+} catch (Exception $e) {
+    echo 'Exception when calling TalksApi->deleteTalkById: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-deleteTalkById-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::TalksApi;
+
+my $api_instance = WWW::SwaggerClient::TalksApi->new();
+my $id = id_example; # String | Talk ID
+
+eval { 
+    $api_instance->deleteTalkById(id => $id);
+};
+if ($@) {
+    warn "Exception when calling TalksApi->deleteTalkById: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-deleteTalkById-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.TalksApi()
+id = id_example # String | Talk ID
+
+try: 
+    # Deletes a Talk with specific ID
+    api_instance.delete_talk_by_id(id)
+except ApiException as e:
+    print("Exception when calling TalksApi->deleteTalkById: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_deleteTalkById_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Talk ID
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 204 - Talk was deleted. </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                            </div>
+
+                            <h3> Status: default - generic error response </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-deleteTalkById-default-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-deleteTalkById-default-schema">
+                                  <div id='responses-deleteTalkById-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "generic error response",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-deleteTalkById-default-schema-data').val(stringify(schema));
+                                        var result = $('#responses-deleteTalkById-default-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-deleteTalkById-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Talks-getTalkAttendees">
+                      <article id="api-Talks-getTalkAttendees-0" data-group="User" data-name="getTalkAttendees" data-version="0">
+                        <div class="pull-left">
+                          <h1>getTalkAttendees</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/talks/{id}/attendees</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Talks-getTalkAttendees-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Talks-getTalkAttendees-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Talks-getTalkAttendees-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Talks-getTalkAttendees-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Talks-getTalkAttendees-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Talks-getTalkAttendees-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Talks-getTalkAttendees-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Talks-getTalkAttendees-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Talks-getTalkAttendees-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Talks-getTalkAttendees-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Talks-getTalkAttendees-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Talks-getTalkAttendees-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: application/github.com/sctskw/attend.io.v1+json"\
+"//talks/{id}/attendees"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Talks-getTalkAttendees-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.TalksApi;
+
+import java.io.File;
+import java.util.*;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        
+        TalksApi apiInstance = new TalksApi();
+        String id = id_example; // String | Talk ID
+        try {
+            AttendeeList result = apiInstance.getTalkAttendees(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#getTalkAttendees");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Talks-getTalkAttendees-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.TalksApi;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        TalksApi apiInstance = new TalksApi();
+        String id = id_example; // String | Talk ID
+        try {
+            AttendeeList result = apiInstance.getTalkAttendees(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#getTalkAttendees");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Talks-getTalkAttendees-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Talks-getTalkAttendees-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">String *id = id_example; // Talk ID
+
+TalksApi *apiInstance = [[TalksApi alloc] init];
+
+[apiInstance getTalkAttendeesWith:id
+              completionHandler: ^(AttendeeList output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-getTalkAttendees-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
+
+var api = new Attendio.TalksApi()
+var id = id_example; // {{String}} Talk ID
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getTalkAttendees(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Talks-getTalkAttendees-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Talks-getTalkAttendees-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class getTalkAttendeesExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new TalksApi();
+            var id = id_example;  // String | Talk ID
+
+            try
+            {
+                AttendeeList result = apiInstance.getTalkAttendees(id);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling TalksApi.getTalkAttendees: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-getTalkAttendees-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiTalksApi();
+$id = id_example; // String | Talk ID
+
+try {
+    $result = $api_instance->getTalkAttendees($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling TalksApi->getTalkAttendees: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-getTalkAttendees-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::TalksApi;
+
+my $api_instance = WWW::SwaggerClient::TalksApi->new();
+my $id = id_example; # String | Talk ID
+
+eval { 
+    my $result = $api_instance->getTalkAttendees(id => $id);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling TalksApi->getTalkAttendees: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-getTalkAttendees-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.TalksApi()
+id = id_example # String | Talk ID
+
+try: 
+    api_response = api_instance.get_talk_attendees(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TalksApi->getTalkAttendees: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_getTalkAttendees_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      String
+                                                  </span>
+                                  
+                                                      <div class="inner description">
+                                                          Talk ID
+                                                      </div>
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - the list of attendees from the event </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getTalkAttendees-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getTalkAttendees-200-schema">
+                                  <div id='responses-getTalkAttendees-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "the list of attendees from the event",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/AttendeeList"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getTalkAttendees-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getTalkAttendees-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getTalkAttendees-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: default - generic error response </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-getTalkAttendees-default-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-getTalkAttendees-default-schema">
+                                  <div id='responses-getTalkAttendees-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "generic error response",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-getTalkAttendees-default-schema-data').val(stringify(schema));
+                                        var result = $('#responses-getTalkAttendees-default-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-getTalkAttendees-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Talks-getTalkById">
                       <article id="api-Talks-getTalkById-0" data-group="User" data-name="getTalkById" data-version="0">
                         <div class="pull-left">
@@ -2585,7 +3611,7 @@ public class TalksApiExample {
     public static void main(String[] args) {
         
         TalksApi apiInstance = new TalksApi();
-        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Talk ID
+        String id = id_example; // String | Talk ID
         try {
             Talk result = apiInstance.getTalkById(id);
             System.out.println(result);
@@ -2604,7 +3630,7 @@ public class TalksApiExample {
 
     public static void main(String[] args) {
         TalksApi apiInstance = new TalksApi();
-        UUID id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Talk ID
+        String id = id_example; // String | Talk ID
         try {
             Talk result = apiInstance.getTalkById(id);
             System.out.println(result);
@@ -2620,7 +3646,7 @@ public class TalksApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Talks-getTalkById-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">UUID *id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // Talk ID
+                              <pre class="prettyprint"><code class="language-cpp">String *id = id_example; // Talk ID
 
 TalksApi *apiInstance = [[TalksApi alloc] init];
 
@@ -2640,7 +3666,7 @@ TalksApi *apiInstance = [[TalksApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
 
 var api = new Attendio.TalksApi()
-var id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // {{UUID}} Talk ID
+var id = id_example; // {{String}} Talk ID
 
 var callback = function(error, data, response) {
   if (error) {
@@ -2671,7 +3697,7 @@ namespace Example
         {
 
             var apiInstance = new TalksApi();
-            var id = new UUID(); // UUID | Talk ID
+            var id = id_example;  // String | Talk ID
 
             try
             {
@@ -2693,7 +3719,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiTalksApi();
-$id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // UUID | Talk ID
+$id = id_example; // String | Talk ID
 
 try {
     $result = $api_instance->getTalkById($id);
@@ -2710,7 +3736,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::TalksApi;
 
 my $api_instance = WWW::SwaggerClient::TalksApi->new();
-my $id = 38400000-8cf0-11bd-b23e-10b96e4ef00d; # UUID | Talk ID
+my $id = id_example; # String | Talk ID
 
 eval { 
     my $result = $api_instance->getTalkById(id => $id);
@@ -2730,7 +3756,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.TalksApi()
-id = 38400000-8cf0-11bd-b23e-10b96e4ef00d # UUID | Talk ID
+id = id_example # String | Talk ID
 
 try: 
     api_response = api_instance.get_talk_by_id(id)
@@ -2756,11 +3782,8 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      UUID
+                                                      String
                                                   </span>
-                                                      <span class="format">
-                                                          (uuid)
-                                                      </span>
                                   
                                                       <div class="inner description">
                                                           Talk ID
@@ -3176,6 +4199,367 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-talksGet-default-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Talks-talksPost">
+                      <article id="api-Talks-talksPost-0" data-group="User" data-name="talksPost" data-version="0">
+                        <div class="pull-left">
+                          <h1>talksPost</h1>
+                          <p>create a talk</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/talks</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Talks-talksPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Talks-talksPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Talks-talksPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Talks-talksPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Talks-talksPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Talks-talksPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Talks-talksPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Talks-talksPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Talks-talksPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Talks-talksPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Talks-talksPost-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Talks-talksPost-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: application/github.com/sctskw/attend.io.v1+json"\
+-H "Content-Type: application/json"\
+"//talks"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Talks-talksPost-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.TalksApi;
+
+import java.io.File;
+import java.util.*;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        
+        TalksApi apiInstance = new TalksApi();
+        Talk body = ; // Talk | the Talk to create
+        try {
+            Talk result = apiInstance.talksPost(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#talksPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Talks-talksPost-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.TalksApi;
+
+public class TalksApiExample {
+
+    public static void main(String[] args) {
+        TalksApi apiInstance = new TalksApi();
+        Talk body = ; // Talk | the Talk to create
+        try {
+            Talk result = apiInstance.talksPost(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling TalksApi#talksPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Talks-talksPost-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Talks-talksPost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Talk *body = ; // the Talk to create (optional)
+
+TalksApi *apiInstance = [[TalksApi alloc] init];
+
+// create a talk
+[apiInstance talksPostWith:body
+              completionHandler: ^(Talk output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-talksPost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var Attendio = require('attendio');
+
+var api = new Attendio.TalksApi()
+var opts = { 
+  'body':  // {{Talk}} the Talk to create
+};
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.talksPost(opts, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Talks-talksPost-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Talks-talksPost-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class talksPostExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new TalksApi();
+            var body = new Talk(); // Talk | the Talk to create (optional) 
+
+            try
+            {
+                // create a talk
+                Talk result = apiInstance.talksPost(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling TalksApi.talksPost: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-talksPost-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiTalksApi();
+$body = ; // Talk | the Talk to create
+
+try {
+    $result = $api_instance->talksPost($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling TalksApi->talksPost: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-talksPost-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::TalksApi;
+
+my $api_instance = WWW::SwaggerClient::TalksApi->new();
+my $body = WWW::SwaggerClient::Object::Talk->new(); # Talk | the Talk to create
+
+eval { 
+    my $result = $api_instance->talksPost(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling TalksApi->talksPost: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Talks-talksPost-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.TalksApi()
+body =  # Talk | the Talk to create (optional)
+
+try: 
+    # create a talk
+    api_response = api_instance.talks_post(body=body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling TalksApi->talksPost: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body </td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "description" : "the Talk to create",
+  "content" : {
+    "application/json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Talk"
+      }
+    }
+  },
+  "required" : false
+};
+                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_talksPost_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_talksPost_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 200 - Talk was created </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-talksPost-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-talksPost-200-schema">
+                                  <div id='responses-talksPost-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Talk was created",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Talk"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-talksPost-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-talksPost-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-talksPost-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: default - generic error response </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-talksPost-default-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-talksPost-default-schema">
+                                  <div id='responses-talksPost-default-schema-default' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "generic error response",
+  "content" : {
+    "application/github.com/sctskw/attend.io.v1+json" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/Error"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["application/github.com/sctskw/attend.io.v1+json"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-talksPost-default-schema-data').val(stringify(schema));
+                                        var result = $('#responses-talksPost-default-schema-default');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-talksPost-default-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
