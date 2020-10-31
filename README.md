@@ -1,4 +1,4 @@
-### attend.io
+## attend.io
 
 A Talk Attendance API
 
