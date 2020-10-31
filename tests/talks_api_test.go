@@ -54,10 +54,14 @@ func (s *ApiTestSuite) TestTalksAPI_CreateTalk() {
 		time.Now(),
 	)
 
-	talk := &models.Talk{}
+	talk := models.Talk{}
 	res := s.Create("/talks", t, &talk)
 
 	s.Assert().Equal(200, res.StatusCode)
+	s.Assert().Empty(t.ID)
+	s.Assert().NotEmpty(talk.ID)
 	s.Assert().Equal(t.Name, talk.Name)
+	s.Assert().Equal(t.Presenter, talk.Presenter)
+	s.Assert().Equal(t.Description, talk.Description)
 
 }

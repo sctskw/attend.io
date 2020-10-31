@@ -10,6 +10,7 @@ type AttendeeService interface {
 	GetAllById(ids ...string) models.AttendeesList
 	GetById(id string) *models.Attendee
 	GetByEmail(email strfmt.Email) *models.Attendee
+	Create(m *models.Attendee) *models.Attendee
 }
 
 type attendeeService struct {
@@ -64,4 +65,25 @@ func (s *attendeeService) GetAllById(ids ...string) (results models.AttendeesLis
 	}
 
 	return results
+}
+
+func (s *attendeeService) Create(m *models.Attendee) *models.Attendee {
+
+	//ensure this field is created
+	data, _ := m.MarshalBinary()
+	res := s.db.Insert("attendees", data)
+
+	//TODO
+	if res == nil {
+		return nil
+	}
+
+	a := &models.Attendee{}
+	err := a.UnmarshalBinary(res)
+
+	if err != nil {
+		return nil
+	}
+
+	return s.GetById(a.ID)
 }

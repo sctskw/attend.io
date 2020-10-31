@@ -91,6 +91,39 @@ func init() {
             }
           }
         }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "attendees"
+        ],
+        "summary": "create an Attendee",
+        "parameters": [
+          {
+            "description": "the Attendee to create",
+            "name": "attendee",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Attendee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendee was created",
+            "schema": {
+              "$ref": "#/definitions/Attendee"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
       }
     },
     "/attendees/{id}": {
@@ -468,6 +501,39 @@ func init() {
         "responses": {
           "200": {
             "description": "find an attendee by id",
+            "schema": {
+              "$ref": "#/definitions/Attendee"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "attendees"
+        ],
+        "summary": "create an Attendee",
+        "parameters": [
+          {
+            "description": "the Attendee to create",
+            "name": "attendee",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Attendee"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attendee was created",
             "schema": {
               "$ref": "#/definitions/Attendee"
             }

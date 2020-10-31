@@ -166,6 +166,28 @@ paths:
           schema:
             $ref: "#/definitions/Error"
 
+    post:
+      summary: create an Attendee
+      tags:
+        - attendees
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: attendee
+          description: the Attendee to create
+          schema:
+            $ref: "#/definitions/Attendee"
+      responses:
+        200:
+          description: Attendee was created
+          schema:
+            $ref: "#/definitions/Attendee"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/Error"
+
   /attendees/{id}:
     delete:
       summary: Deletes an Attendee with specific ID

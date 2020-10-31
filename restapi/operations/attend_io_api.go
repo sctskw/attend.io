@@ -55,6 +55,9 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 		TalksGetTalksHandler: talks.GetTalksHandlerFunc(func(params talks.GetTalksParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.GetTalks has not yet been implemented")
 		}),
+		AttendeesPostAttendeesHandler: attendees.PostAttendeesHandlerFunc(func(params attendees.PostAttendeesParams) middleware.Responder {
+			return middleware.NotImplemented("operation attendees.PostAttendees has not yet been implemented")
+		}),
 		TalksPostTalksHandler: talks.PostTalksHandlerFunc(func(params talks.PostTalksParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.PostTalks has not yet been implemented")
 		}),
@@ -114,6 +117,8 @@ type AttendIoAPI struct {
 	SystemGetHandler system.GetHandler
 	// TalksGetTalksHandler sets the operation handler for the get talks operation
 	TalksGetTalksHandler talks.GetTalksHandler
+	// AttendeesPostAttendeesHandler sets the operation handler for the post attendees operation
+	AttendeesPostAttendeesHandler attendees.PostAttendeesHandler
 	// TalksPostTalksHandler sets the operation handler for the post talks operation
 	TalksPostTalksHandler talks.PostTalksHandler
 	// AttendeesDeleteAttendeeHandler sets the operation handler for the delete attendee operation
@@ -210,6 +215,9 @@ func (o *AttendIoAPI) Validate() error {
 	}
 	if o.TalksGetTalksHandler == nil {
 		unregistered = append(unregistered, "talks.GetTalksHandler")
+	}
+	if o.AttendeesPostAttendeesHandler == nil {
+		unregistered = append(unregistered, "attendees.PostAttendeesHandler")
 	}
 	if o.TalksPostTalksHandler == nil {
 		unregistered = append(unregistered, "talks.PostTalksHandler")
@@ -331,6 +339,10 @@ func (o *AttendIoAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/talks"] = talks.NewGetTalks(o.context, o.TalksGetTalksHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/attendees"] = attendees.NewPostAttendees(o.context, o.AttendeesPostAttendeesHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
