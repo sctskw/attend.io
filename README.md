@@ -6,10 +6,17 @@ version: `0.0.1`
 
 ---
 
+#####Looking for API Docs? Please visit the [Live Documentation](https://attend-io-294107.uc.r.appspot.com/docs)
+
+
+Development
+---
+
 #### Requirements
  - GoLang >= 1.14.9
  - Swagger CodeGen: https://github.com/swagger-api/swagger-codegen
  - GCP Cloud Credential (please ask)
+ 
  
 #### Start Local Server
 
