@@ -31,7 +31,7 @@ func (s *ApiTestSuite) TestTalksAPI() {
 	s.Run("fetch all Talks", func() {
 		res := s.Fetch("/talks", &talks)
 		s.Assert().Equal(200, res.StatusCode)
-		s.Assert().Len(talks, 1)
+		s.Assert().GreaterOrEqual(len(talks), 1)
 	})
 
 	s.Run("fetch Talk by ID", func() {

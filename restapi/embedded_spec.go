@@ -414,6 +414,9 @@ func init() {
         "ref": {
           "type": "string",
           "readOnly": true
+        },
+        "ref_talks": {
+          "$ref": "#/definitions/TalkList"
         }
       }
     },
@@ -894,6 +897,9 @@ func init() {
         "ref": {
           "type": "string",
           "readOnly": true
+        },
+        "ref_talks": {
+          "$ref": "#/definitions/TalkList"
         }
       }
     },

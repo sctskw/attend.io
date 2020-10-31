@@ -42,6 +42,9 @@ type Attendee struct {
 	// ref
 	// Read Only: true
 	Ref string `json:"ref,omitempty"`
+
+	// ref talks
+	RefTalks TalkList `json:"ref_talks,omitempty"`
 }
 
 // Validate validates this attendee
@@ -61,6 +64,10 @@ func (m *Attendee) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateNameLast(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateRefTalks(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -116,6 +123,22 @@ func (m *Attendee) validateNameLast(formats strfmt.Registry) error {
 	}
 
 	if err := validate.MinLength("name_last", "body", string(*m.NameLast), 1); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Attendee) validateRefTalks(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.RefTalks) { // not required
+		return nil
+	}
+
+	if err := m.RefTalks.Validate(formats); err != nil {
+		if ve, ok := err.(*errors.Validation); ok {
+			return ve.ValidateName("ref_talks")
+		}
 		return err
 	}
 
