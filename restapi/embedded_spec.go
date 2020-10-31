@@ -42,7 +42,7 @@ func init() {
         "summary": "Retrieve the System Status",
         "responses": {
           "200": {
-            "description": "api status",
+            "description": "API is operating normally",
             "schema": {
               "type": "object",
               "$ref": "#/definitions/SystemStatus"
@@ -522,7 +522,7 @@ func init() {
         "summary": "Retrieve the System Status",
         "responses": {
           "200": {
-            "description": "api status",
+            "description": "API is operating normally",
             "schema": {
               "type": "object",
               "$ref": "#/definitions/SystemStatus"

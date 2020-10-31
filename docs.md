@@ -52,7 +52,7 @@ curl -X GET / \
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|api status|[SystemStatus](#schemasystemstatus)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|API is operating normally|[SystemStatus](#schemasystemstatus)|
 |default|Default|generic error response|[Error](#schemaerror)|
 
 <aside class="success">

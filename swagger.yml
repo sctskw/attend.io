@@ -19,7 +19,7 @@ paths:
         - system
       responses:
         200:
-          description: api status
+          description: API is operating normally
           schema:
             type: object
             $ref: "#/definitions/SystemStatus"
