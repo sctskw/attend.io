@@ -2,9 +2,13 @@ Hi! Welcome! Thank you for checking out my API. This is a WIP and
 was more done as a rapid prototype to see how quickly a robust API
 can be created.
 
+### Known Issues
+- RefTalks and RefAttendees can be out of sync when Attendees and Talks are removed
+
 ### RoadMap
 
 - Fix CORS in Live Documentation so queries Execute
+- Fix Duplicative nature of NoSQL collections
 - Add Unit Tests to coincide with the current E2E Tests
 - Add In-Memory Database to mock Database calls with Fixtures
 - Add Authentication via API Tokens or GCP API Gateway
@@ -29,6 +33,10 @@ can be created.
   API has the potential for though, it would probably be useful to incorporate an RDBMS.
   Ideally, we can use a hybrid approach thats geared toward mobile, but also something to 
   has good cold storage.
+  
+- De-Duplication: You're currently, able to write duplicate entries for the datasets because
+  there is no checking on unique keys. This is a limitation of the free-form NoSQL approach
+  so should be enforced in code.
   
 ### Technical Decisions
 
