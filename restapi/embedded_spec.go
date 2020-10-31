@@ -332,9 +332,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Attendee was created",
+            "description": "Attendee was Added",
             "schema": {
-              "$ref": "#/definitions/Attendee"
+              "$ref": "#/definitions/Talk"
             }
           },
           "default": {
@@ -815,9 +815,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Attendee was created",
+            "description": "Attendee was Added",
             "schema": {
-              "$ref": "#/definitions/Attendee"
+              "$ref": "#/definitions/Talk"
             }
           },
           "default": {

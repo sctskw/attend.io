@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/sctskw/attend.io/models"
@@ -39,8 +40,16 @@ func (s *ApiTestSuite) TestTalksAPI() {
 		s.Assert().Equal(200, res.StatusCode)
 	})
 
-	s.Run("delete a Talk", func() {
-		s.Delete("/talks/" + talk.ID)
+	s.Run("add Attendee to Talk", func() {
+		res, err := s.Update(fmt.Sprintf("/talks/%s/attendees", talk.ID), []string{"zszPSgO73zCcEUEjdRoq"}, &talk)
+		s.Assert().Nil(err)
+		s.Assert().Equal(200, res.StatusCode)
+		s.Assert().Len(talk.RefAttendees, 1)
+
 	})
+
+	//s.Run("delete a Talk", func() {
+	//	s.Delete("/talks/" + talk.ID)
+	//})
 
 }

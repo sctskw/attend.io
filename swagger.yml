@@ -134,9 +134,9 @@ paths:
               type: string
       responses:
         200:
-          description: Attendee was created
+          description: Attendee was Added
           schema:
-            $ref: "#/definitions/Attendee"
+            $ref: "#/definitions/Talk"
         default:
           description: generic error response
           schema:
@@ -259,7 +259,7 @@ definitions:
     required:
       - name
     properties:
-      ID:
+      id:
         type: string
         readOnly: true
       name:

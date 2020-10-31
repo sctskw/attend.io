@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"fmt"
+
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/sctskw/attend.io/restapi/operations"
 	"github.com/sctskw/attend.io/restapi/operations/talks"
@@ -64,6 +66,8 @@ func DeleteTalk(params talks.DeleteTalkByIDParams) middleware.Responder {
 }
 
 func AddAttendeeToTalk(params talks.AddAttendeeToTalkParams) middleware.Responder {
+
+	fmt.Println(fmt.Sprintf("Talk: %s -> Attendees: %+v", params.ID, params.Attendees))
 
 	result, err := services.Talks().AddAttendee(params.ID, params.Attendees)
 

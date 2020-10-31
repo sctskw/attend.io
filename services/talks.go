@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/sctskw/attend.io/db"
 	"github.com/sctskw/attend.io/models"
 )
@@ -108,6 +110,9 @@ func (s *talkService) AddAttendee(id string, attendees []string) (*models.Talk, 
 
 	refs := Attendees().GetAllById(attendees...)
 	talk.RefAttendees = append(talk.RefAttendees, refs...)
+
+	fmt.Println(fmt.Sprintf("Updated Talk: %+v", talk))
+
 	b, _ := talk.MarshalBinary()
 
 	res, err := s.db.Update("talks", id, b)

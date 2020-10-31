@@ -16,7 +16,7 @@ import (
 // AddAttendeeToTalkOKCode is the HTTP code returned for type AddAttendeeToTalkOK
 const AddAttendeeToTalkOKCode int = 200
 
-/*AddAttendeeToTalkOK Attendee was created
+/*AddAttendeeToTalkOK Attendee was Added
 
 swagger:response addAttendeeToTalkOK
 */
@@ -25,7 +25,7 @@ type AddAttendeeToTalkOK struct {
 	/*
 	  In: Body
 	*/
-	Payload *models.Attendee `json:"body,omitempty"`
+	Payload *models.Talk `json:"body,omitempty"`
 }
 
 // NewAddAttendeeToTalkOK creates AddAttendeeToTalkOK with default headers values
@@ -35,13 +35,13 @@ func NewAddAttendeeToTalkOK() *AddAttendeeToTalkOK {
 }
 
 // WithPayload adds the payload to the add attendee to talk o k response
-func (o *AddAttendeeToTalkOK) WithPayload(payload *models.Attendee) *AddAttendeeToTalkOK {
+func (o *AddAttendeeToTalkOK) WithPayload(payload *models.Talk) *AddAttendeeToTalkOK {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the add attendee to talk o k response
-func (o *AddAttendeeToTalkOK) SetPayload(payload *models.Attendee) {
+func (o *AddAttendeeToTalkOK) SetPayload(payload *models.Talk) {
 	o.Payload = payload
 }
 
