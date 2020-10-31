@@ -111,6 +111,7 @@ func (s *attendeeService) DeleteById(id string) error {
 	s.db.DeleteById("attendees", id)
 
 	//update the Talks
+	//TODO: this isn't efficient. could be a go routine or an async background task since it can happen later
 	for _, t := range a.GetTalkIds() {
 		fmt.Println(fmt.Sprintf("%s DeJoining Talk: %s", id, t))
 		err = Talks().RemoveAttendee(t, id)

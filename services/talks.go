@@ -174,7 +174,7 @@ func (s *talkService) RemoveAttendee(id, aid string) error {
 	}
 
 	//remove the Attendee
-	//TODO: this isn't actually efficient, could make this a routine or a totally async background job
+	//TODO: this isn't efficient. could be a go routine or an async background task since it can happen later
 	updated := models.AttendeeList{}
 	for _, ref := range talk.RefAttendees {
 		if ref.ID != aid {
