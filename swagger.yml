@@ -14,7 +14,7 @@ schemes:
 paths:
   /:
     get:
-      summary: retrieve the system status
+      summary: Retrieve the System Status
       tags:
         - system
       responses:
@@ -30,7 +30,7 @@ paths:
 
   /talks:
     get:
-      summary: retrieve all Talks
+      summary: Retrieve All Talks
       tags:
         - talks
       responses:
@@ -44,7 +44,7 @@ paths:
             $ref: "#/definitions/Error"
 
     post:
-      summary: create a Talk
+      summary: Create a Talk
       tags:
         - talks
       consumes:
@@ -67,7 +67,7 @@ paths:
 
   /talks/{id}:
     get:
-      summary: retrieve a Talk by ID
+      summary: Retrieve a Talk by ID
       tags:
         - talks
       operationId: getTalkById
@@ -129,7 +129,7 @@ paths:
             $ref: "#/definitions/Error"
 
     patch:
-      summary: add an Attendee to a Talk
+      summary: Add an Attendee to a Talk
       tags:
         - talks
       operationId: addAttendeeToTalk
@@ -160,7 +160,7 @@ paths:
 
   /talks/{id}/attendees/{attendeeId}:
     delete:
-      summary: Deletes a Talk with specific ID
+      summary: Remove an Attendee from a Talk
       tags:
         - talks
       operationId: deleteAttendeeFromTalk
@@ -185,7 +185,7 @@ paths:
 
   /attendees:
     get:
-      summary: retrieve an Attendee by its fields
+      summary: Retrieve an Attendee by Email or ID
       tags:
         - attendees
       operationId: getAttendeeByField
@@ -210,7 +210,7 @@ paths:
             $ref: "#/definitions/Error"
 
     post:
-      summary: create an Attendee
+      summary: Create an Attendee
       tags:
         - attendees
       consumes:

@@ -35,7 +35,7 @@ curl -X GET / \
 
 `GET /`
 
-*retrieve the system status*
+*Retrieve the System Status*
 
 > Example responses
 
@@ -74,7 +74,7 @@ curl -X GET /talks \
 
 `GET /talks`
 
-*retrieve all Talks*
+*Retrieve All Talks*
 
 > Example responses
 
@@ -128,7 +128,7 @@ curl -X POST /talks \
 
 `POST /talks`
 
-*create a Talk*
+*Create a Talk*
 
 > Body parameter
 
@@ -207,7 +207,7 @@ curl -X GET /talks/{id} \
 
 `GET /talks/{id}`
 
-*retrieve a Talk by ID*
+*Retrieve a Talk by ID*
 
 <h3 id="gettalkbyid-parameters">Parameters</h3>
 
@@ -363,7 +363,7 @@ curl -X PATCH /talks/{id}/attendees \
 
 `PATCH /talks/{id}/attendees`
 
-*add an Attendee to a Talk*
+*Add an Attendee to a Talk*
 
 > Body parameter
 
@@ -421,7 +421,7 @@ curl -X DELETE /talks/{id}/attendees/{attendeeId} \
 
 `DELETE /talks/{id}/attendees/{attendeeId}`
 
-*Deletes a Talk with specific ID*
+*Remove an Attendee from a Talk*
 
 <h3 id="deleteattendeefromtalk-parameters">Parameters</h3>
 
@@ -469,7 +469,7 @@ curl -X GET /attendees \
 
 `GET /attendees`
 
-*retrieve an Attendee by its fields*
+*Retrieve an Attendee by Email or ID*
 
 <h3 id="getattendeebyfield-parameters">Parameters</h3>
 
@@ -518,7 +518,7 @@ curl -X POST /attendees \
 
 `POST /attendees`
 
-*create an Attendee*
+*Create an Attendee*
 
 > Body parameter
 
