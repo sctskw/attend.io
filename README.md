@@ -8,6 +8,7 @@ link: https://github.com/sctskw/attend.io
 
 ---
 
+Check out my [Authors Notes](./AUTHOR_NOTES.md)
 ##### Looking for API Docs? Please visit the [Live Documentation](https://attend-io-294107.uc.r.appspot.com/docs)
 
 
