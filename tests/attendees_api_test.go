@@ -2,7 +2,7 @@ package tests
 
 import "github.com/sctskw/attend.io/models"
 
-func (s *ApiTestSuite) TestAttendeesAPI_CreateAttendee() {
+func (s *ApiTestSuite) TestAttendeesAPI() {
 
 	a := models.NewAttendee(
 		"Bob",
