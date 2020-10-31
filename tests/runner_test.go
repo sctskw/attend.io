@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -75,5 +76,35 @@ func (s *ApiTestSuite) Fetch(path string, d interface{}) {
 	if err != nil {
 		assert.FailNow(s.T(), "cannot parse response body")
 	}
+
+}
+
+func (s *ApiTestSuite) Create(path string, d interface{}) (resp *http.Response, result map[string]interface{}) {
+
+	b, _ := json.Marshal(d)
+	res, err := http.Post(s.server.URL+path, "", bytes.NewBuffer(b))
+
+	if err != nil {
+		assert.FailNow(s.T(), err.Error())
+	}
+
+	if res == nil || res.Body == nil {
+		assert.FailNow(s.T(), "invalid response body")
+	}
+
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		assert.FailNow(s.T(), err.Error())
+	}
+
+	err = json.Unmarshal(body, &result)
+
+	if err != nil {
+		assert.FailNow(s.T(), "cannot parse response body")
+	}
+
+	return res, result
 
 }

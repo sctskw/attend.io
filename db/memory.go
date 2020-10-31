@@ -38,3 +38,11 @@ func (c *memoryClient) FetchById(collection, id string) FetchOneResponse {
 func (c *memoryClient) FetchByField(collection, field, value string) FetchOneResponse {
 	return nil
 }
+
+func (c *memoryClient) DeleteById(collection, id string) EmptyResponse {
+	return nil
+}
+
+func (c *memoryClient) Insert(collection string, d interface{}) FetchOneResponse {
+	return nil
+}

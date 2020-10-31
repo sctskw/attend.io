@@ -18,6 +18,7 @@ import (
 type Talk struct {
 
 	// ID
+	// Read Only: true
 	ID string `json:"ID,omitempty"`
 
 	// date time end

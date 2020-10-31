@@ -39,7 +39,7 @@ func (f *firestoreClient) FetchAll(collection string) (results FetchAllResponse)
 	docs, err := talks.Documents(context.Background()).GetAll()
 
 	if err != nil {
-		panic(err)
+		return nil
 	}
 
 	for _, doc := range docs {
@@ -80,7 +80,7 @@ func (f *firestoreClient) FetchById(collection, id string) FetchOneResponse {
 	b, err := json.Marshal(d)
 
 	if err != nil {
-		panic(err)
+		return nil
 	}
 
 	return b
@@ -105,8 +105,16 @@ func (f *firestoreClient) FetchByField(collection, field, value string) FetchOne
 	b, err := json.Marshal(d)
 
 	if err != nil {
-		panic(err)
+		return nil
 	}
 
 	return b
+}
+
+func (f *firestoreClient) DeleteById(collection, id string) EmptyResponse {
+	return nil
+}
+
+func (f *firestoreClient) Insert(collection string, d interface{}) FetchOneResponse {
+	return nil
 }

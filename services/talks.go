@@ -6,6 +6,8 @@ import (
 )
 
 type TalkService interface {
+	Create(m *models.Talk) *models.Talk
+	Delete(id string)
 	GetAll() models.TalkList
 	GetById(id string) *models.Talk
 	GetAttendees(id string) models.AttendeesList
@@ -61,4 +63,13 @@ func (s *talkService) GetAttendees(id string) models.AttendeesList {
 	}
 
 	return Attendees().GetAllById(ids...)
+}
+
+func (s *talkService) Create(m *models.Talk) *models.Talk {
+	_ = s.db.Insert("talks", m)
+	return nil
+}
+
+func (s *talkService) Delete(id string) {
+
 }

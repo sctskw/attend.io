@@ -1,14 +1,19 @@
 package models
 
 import (
+	"time"
+
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/google/uuid"
 )
 
-func NewTalk(name string) *Talk {
+func NewTalk(name, presenter, description string, start, end time.Time) *Talk {
 	return &Talk{
-		ID:   uuid.New().String(),
-		Name: swag.String(name),
+		Name:          swag.String(name),
+		Presenter:     presenter,
+		Description:   description,
+		DateTimeEnd:   strfmt.DateTime(end),
+		DateTimeStart: strfmt.DateTime(start),
 	}
 }
 

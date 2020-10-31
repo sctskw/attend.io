@@ -11,6 +11,7 @@
 //
 //  Consumes:
 //    - application/github.com/sctskw/attend.io.v1+json
+//    - application/json
 //
 //  Produces:
 //    - application/github.com/sctskw/attend.io.v1+json

@@ -1,6 +1,8 @@
 package tests
 
 import (
+	"time"
+
 	"github.com/sctskw/attend.io/models"
 )
 
@@ -40,4 +42,20 @@ func (s *ApiTestSuite) TestTalksAPI_GetTalkAttendees() {
 		s.Assert().NotEmpty(a.NameFirst)
 		s.Assert().NotEmpty(a.NameLast)
 	}
+}
+
+func (s *ApiTestSuite) TestTalksAPI_CreateTalk() {
+
+	t := models.NewTalk(
+		"TestTalkX",
+		"Helen Hunt",
+		"its a twister",
+		time.Now(),
+		time.Now(),
+	)
+
+	res, body := s.Create("/talks", t)
+
+	s.Assert().Equal("", res)
+	s.Assert().NotNil("", body)
 }

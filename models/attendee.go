@@ -18,6 +18,7 @@ import (
 type Attendee struct {
 
 	// ID
+	// Read Only: true
 	ID string `json:"ID,omitempty"`
 
 	// email

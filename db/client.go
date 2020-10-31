@@ -7,10 +7,13 @@ type DatabaseClient interface {
 	FetchAllById(collection string, ids ...string) FetchAllResponse
 	FetchById(collection, id string) FetchOneResponse
 	FetchByField(collection, field, value string) FetchOneResponse
+	Insert(collection string, d interface{}) FetchOneResponse
+	DeleteById(collection, id string) EmptyResponse
 }
 
 type FetchAllResponse = []FetchOneResponse
 type FetchOneResponse = []byte
+type EmptyResponse = []byte
 
 func NewClient() DatabaseClient {
 	c := NewFirestoreClient()

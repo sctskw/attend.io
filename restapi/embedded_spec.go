@@ -93,6 +93,35 @@ func init() {
         }
       }
     },
+    "/attendees/{id}": {
+      "delete": {
+        "tags": [
+          "attendees"
+        ],
+        "summary": "Deletes an Attendee with specific ID",
+        "operationId": "deleteAttendee",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Attendee ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Attendee was deleted."
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/talks": {
       "get": {
         "tags": [
@@ -103,6 +132,39 @@ func init() {
             "description": "list the talks",
             "schema": {
               "$ref": "#/definitions/TalkList"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "talks"
+        ],
+        "summary": "create a talk",
+        "parameters": [
+          {
+            "description": "the Talk to create",
+            "name": "talk",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Talk"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Talk was created",
+            "schema": {
+              "$ref": "#/definitions/Talk"
             }
           },
           "default": {
@@ -143,6 +205,23 @@ func init() {
             }
           }
         }
+      },
+      "delete": {
+        "summary": "Deletes a Talk with specific ID",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Talk was deleted."
+          }
+        }
       }
     },
     "/talks/{id}/attendees": {
@@ -175,6 +254,42 @@ func init() {
           }
         }
       }
+    },
+    "/talks/{id}/attendees/{aid}": {
+      "delete": {
+        "tags": [
+          "talks"
+        ],
+        "summary": "Deletes a Talk with specific ID",
+        "operationId": "deleteAttendeeFromTalk",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Attendee ID",
+            "name": "aid",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Attendeed was deleted from Talk."
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -186,7 +301,8 @@ func init() {
       ],
       "properties": {
         "ID": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "email": {
           "type": "string",
@@ -249,7 +365,8 @@ func init() {
       ],
       "properties": {
         "ID": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "date_time_end": {
           "type": "string",
@@ -364,6 +481,35 @@ func init() {
         }
       }
     },
+    "/attendees/{id}": {
+      "delete": {
+        "tags": [
+          "attendees"
+        ],
+        "summary": "Deletes an Attendee with specific ID",
+        "operationId": "deleteAttendee",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Attendee ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Attendee was deleted."
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/talks": {
       "get": {
         "tags": [
@@ -374,6 +520,39 @@ func init() {
             "description": "list the talks",
             "schema": {
               "$ref": "#/definitions/TalkList"
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "talks"
+        ],
+        "summary": "create a talk",
+        "parameters": [
+          {
+            "description": "the Talk to create",
+            "name": "talk",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Talk"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Talk was created",
+            "schema": {
+              "$ref": "#/definitions/Talk"
             }
           },
           "default": {
@@ -414,6 +593,23 @@ func init() {
             }
           }
         }
+      },
+      "delete": {
+        "summary": "Deletes a Talk with specific ID",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Talk was deleted."
+          }
+        }
       }
     },
     "/talks/{id}/attendees": {
@@ -446,6 +642,42 @@ func init() {
           }
         }
       }
+    },
+    "/talks/{id}/attendees/{aid}": {
+      "delete": {
+        "tags": [
+          "talks"
+        ],
+        "summary": "Deletes a Talk with specific ID",
+        "operationId": "deleteAttendeeFromTalk",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Talk ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Attendee ID",
+            "name": "aid",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Attendeed was deleted from Talk."
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -457,7 +689,8 @@ func init() {
       ],
       "properties": {
         "ID": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "email": {
           "type": "string",
@@ -520,7 +753,8 @@ func init() {
       ],
       "properties": {
         "ID": {
-          "type": "string"
+          "type": "string",
+          "readOnly": true
         },
         "date_time_end": {
           "type": "string",

@@ -46,11 +46,23 @@ func NewAttendIoAPI(spec *loads.Document) *AttendIoAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
+		DeleteTalksIDHandler: DeleteTalksIDHandlerFunc(func(params DeleteTalksIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation DeleteTalksID has not yet been implemented")
+		}),
 		SystemGetHandler: system.GetHandlerFunc(func(params system.GetParams) middleware.Responder {
 			return middleware.NotImplemented("operation system.Get has not yet been implemented")
 		}),
 		TalksGetTalksHandler: talks.GetTalksHandlerFunc(func(params talks.GetTalksParams) middleware.Responder {
 			return middleware.NotImplemented("operation talks.GetTalks has not yet been implemented")
+		}),
+		TalksPostTalksHandler: talks.PostTalksHandlerFunc(func(params talks.PostTalksParams) middleware.Responder {
+			return middleware.NotImplemented("operation talks.PostTalks has not yet been implemented")
+		}),
+		AttendeesDeleteAttendeeHandler: attendees.DeleteAttendeeHandlerFunc(func(params attendees.DeleteAttendeeParams) middleware.Responder {
+			return middleware.NotImplemented("operation attendees.DeleteAttendee has not yet been implemented")
+		}),
+		TalksDeleteAttendeeFromTalkHandler: talks.DeleteAttendeeFromTalkHandlerFunc(func(params talks.DeleteAttendeeFromTalkParams) middleware.Responder {
+			return middleware.NotImplemented("operation talks.DeleteAttendeeFromTalk has not yet been implemented")
 		}),
 		AttendeesGetAttendeeByFieldHandler: attendees.GetAttendeeByFieldHandlerFunc(func(params attendees.GetAttendeeByFieldParams) middleware.Responder {
 			return middleware.NotImplemented("operation attendees.GetAttendeeByField has not yet been implemented")
@@ -89,16 +101,25 @@ type AttendIoAPI struct {
 
 	// JSONConsumer registers a consumer for the following mime types:
 	//   - application/github.com/sctskw/attend.io.v1+json
+	//   - application/json
 	JSONConsumer runtime.Consumer
 
 	// JSONProducer registers a producer for the following mime types:
 	//   - application/github.com/sctskw/attend.io.v1+json
 	JSONProducer runtime.Producer
 
+	// DeleteTalksIDHandler sets the operation handler for the delete talks ID operation
+	DeleteTalksIDHandler DeleteTalksIDHandler
 	// SystemGetHandler sets the operation handler for the get operation
 	SystemGetHandler system.GetHandler
 	// TalksGetTalksHandler sets the operation handler for the get talks operation
 	TalksGetTalksHandler talks.GetTalksHandler
+	// TalksPostTalksHandler sets the operation handler for the post talks operation
+	TalksPostTalksHandler talks.PostTalksHandler
+	// AttendeesDeleteAttendeeHandler sets the operation handler for the delete attendee operation
+	AttendeesDeleteAttendeeHandler attendees.DeleteAttendeeHandler
+	// TalksDeleteAttendeeFromTalkHandler sets the operation handler for the delete attendee from talk operation
+	TalksDeleteAttendeeFromTalkHandler talks.DeleteAttendeeFromTalkHandler
 	// AttendeesGetAttendeeByFieldHandler sets the operation handler for the get attendee by field operation
 	AttendeesGetAttendeeByFieldHandler attendees.GetAttendeeByFieldHandler
 	// TalksGetTalkAttendeesHandler sets the operation handler for the get talk attendees operation
@@ -181,11 +202,23 @@ func (o *AttendIoAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.DeleteTalksIDHandler == nil {
+		unregistered = append(unregistered, "DeleteTalksIDHandler")
+	}
 	if o.SystemGetHandler == nil {
 		unregistered = append(unregistered, "system.GetHandler")
 	}
 	if o.TalksGetTalksHandler == nil {
 		unregistered = append(unregistered, "talks.GetTalksHandler")
+	}
+	if o.TalksPostTalksHandler == nil {
+		unregistered = append(unregistered, "talks.PostTalksHandler")
+	}
+	if o.AttendeesDeleteAttendeeHandler == nil {
+		unregistered = append(unregistered, "attendees.DeleteAttendeeHandler")
+	}
+	if o.TalksDeleteAttendeeFromTalkHandler == nil {
+		unregistered = append(unregistered, "talks.DeleteAttendeeFromTalkHandler")
 	}
 	if o.AttendeesGetAttendeeByFieldHandler == nil {
 		unregistered = append(unregistered, "attendees.GetAttendeeByFieldHandler")
@@ -227,6 +260,8 @@ func (o *AttendIoAPI) ConsumersFor(mediaTypes []string) map[string]runtime.Consu
 		switch mt {
 		case "application/github.com/sctskw/attend.io.v1+json":
 			result["application/github.com/sctskw/attend.io.v1+json"] = o.JSONConsumer
+		case "application/json":
+			result["application/json"] = o.JSONConsumer
 		}
 
 		if c, ok := o.customConsumers[mt]; ok {
@@ -284,6 +319,10 @@ func (o *AttendIoAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/talks/{id}"] = NewDeleteTalksID(o.context, o.DeleteTalksIDHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -292,6 +331,18 @@ func (o *AttendIoAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/talks"] = talks.NewGetTalks(o.context, o.TalksGetTalksHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/talks"] = talks.NewPostTalks(o.context, o.TalksPostTalksHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/attendees/{id}"] = attendees.NewDeleteAttendee(o.context, o.AttendeesDeleteAttendeeHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/talks/{id}/attendees/{aid}"] = talks.NewDeleteAttendeeFromTalk(o.context, o.TalksDeleteAttendeeFromTalkHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

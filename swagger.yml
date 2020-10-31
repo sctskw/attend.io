@@ -39,6 +39,28 @@ paths:
           description: generic error response
           schema:
             $ref: "#/definitions/Error"
+    post:
+      summary: create a talk
+      tags:
+        - talks
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: talk
+          description: the Talk to create
+          schema:
+            $ref: "#/definitions/Talk"
+      responses:
+        200:
+          description: Talk was created
+          schema:
+            $ref: "#/definitions/Talk"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/Error"
+
 
   /talks/{id}:
     get:
@@ -61,6 +83,17 @@ paths:
           schema:
             $ref: "#/definitions/Error"
 
+    delete:
+      summary: Deletes a Talk with specific ID
+      parameters:
+        - name: id
+          in: path
+          description: Talk ID
+          type: string
+          required: true
+      responses:
+        204:
+          description: Talk was deleted.
 
   /talks/{id}/attendees:
     get:
@@ -78,6 +111,31 @@ paths:
           description: the list of attendees from the event
           schema:
             $ref: "#/definitions/AttendeesList"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/Error"
+
+  /talks/{id}/attendees/{aid}:
+    delete:
+      summary: Deletes a Talk with specific ID
+      tags:
+        - talks
+      operationId: deleteAttendeeFromTalk
+      parameters:
+        - name: id
+          in: path
+          description: Talk ID
+          type: string
+          required: true
+        - name: aid
+          in: path
+          description: Attendee ID
+          type: string
+          required: true
+      responses:
+        204:
+          description: Attendeed was deleted from Talk.
         default:
           description: generic error response
           schema:
@@ -108,6 +166,26 @@ paths:
           schema:
             $ref: "#/definitions/Error"
 
+  /attendees/{id}:
+    delete:
+      summary: Deletes an Attendee with specific ID
+      tags:
+        - attendees
+      operationId: deleteAttendee
+      parameters:
+        - name: id
+          in: path
+          description: Attendee ID
+          type: string
+          required: true
+      responses:
+        204:
+          description: Attendee was deleted.
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/Error"
+
 
 definitions:
 
@@ -118,6 +196,7 @@ definitions:
     properties:
       ID:
         type: string
+        readOnly: true
       name:
         type: string
         minLength: 1
@@ -151,6 +230,7 @@ definitions:
     properties:
       ID:
         type: string
+        readOnly: true
       name_display:
         type: string
         minLength: 1
