@@ -39,7 +39,7 @@ func init() {
         "tags": [
           "system"
         ],
-        "summary": "retrieve the system status",
+        "summary": "Retrieve the System Status",
         "responses": {
           "200": {
             "description": "api status",
@@ -62,7 +62,7 @@ func init() {
         "tags": [
           "attendees"
         ],
-        "summary": "retrieve an Attendee by its fields",
+        "summary": "Retrieve an Attendee by Email or ID",
         "operationId": "getAttendeeByField",
         "parameters": [
           {
@@ -101,7 +101,7 @@ func init() {
         "tags": [
           "attendees"
         ],
-        "summary": "create an Attendee",
+        "summary": "Create an Attendee",
         "parameters": [
           {
             "description": "the Attendee to create",
@@ -162,7 +162,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "retrieve all Talks",
+        "summary": "Retrieve All Talks",
         "responses": {
           "200": {
             "description": "list the talks",
@@ -185,7 +185,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "create a Talk",
+        "summary": "Create a Talk",
         "parameters": [
           {
             "description": "the Talk to create",
@@ -217,7 +217,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "retrieve a Talk by ID",
+        "summary": "Retrieve a Talk by ID",
         "operationId": "getTalkById",
         "parameters": [
           {
@@ -309,7 +309,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "add an Attendee to a Talk",
+        "summary": "Add an Attendee to a Talk",
         "operationId": "addAttendeeToTalk",
         "parameters": [
           {
@@ -351,7 +351,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "Deletes a Talk with specific ID",
+        "summary": "Remove an Attendee from a Talk",
         "operationId": "deleteAttendeeFromTalk",
         "parameters": [
           {
@@ -519,7 +519,7 @@ func init() {
         "tags": [
           "system"
         ],
-        "summary": "retrieve the system status",
+        "summary": "Retrieve the System Status",
         "responses": {
           "200": {
             "description": "api status",
@@ -542,7 +542,7 @@ func init() {
         "tags": [
           "attendees"
         ],
-        "summary": "retrieve an Attendee by its fields",
+        "summary": "Retrieve an Attendee by Email or ID",
         "operationId": "getAttendeeByField",
         "parameters": [
           {
@@ -581,7 +581,7 @@ func init() {
         "tags": [
           "attendees"
         ],
-        "summary": "create an Attendee",
+        "summary": "Create an Attendee",
         "parameters": [
           {
             "description": "the Attendee to create",
@@ -642,7 +642,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "retrieve all Talks",
+        "summary": "Retrieve All Talks",
         "responses": {
           "200": {
             "description": "list the talks",
@@ -665,7 +665,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "create a Talk",
+        "summary": "Create a Talk",
         "parameters": [
           {
             "description": "the Talk to create",
@@ -697,7 +697,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "retrieve a Talk by ID",
+        "summary": "Retrieve a Talk by ID",
         "operationId": "getTalkById",
         "parameters": [
           {
@@ -789,7 +789,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "add an Attendee to a Talk",
+        "summary": "Add an Attendee to a Talk",
         "operationId": "addAttendeeToTalk",
         "parameters": [
           {
@@ -831,7 +831,7 @@ func init() {
         "tags": [
           "talks"
         ],
-        "summary": "Deletes a Talk with specific ID",
+        "summary": "Remove an Attendee from a Talk",
         "operationId": "deleteAttendeeFromTalk",
         "parameters": [
           {

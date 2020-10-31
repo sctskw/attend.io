@@ -31,7 +31,7 @@ func NewAddAttendeeToTalk(ctx *middleware.Context, handler AddAttendeeToTalkHand
 
 /*AddAttendeeToTalk swagger:route PATCH /talks/{id}/attendees talks addAttendeeToTalk
 
-add an Attendee to a Talk
+Add an Attendee to a Talk
 
 */
 type AddAttendeeToTalk struct {

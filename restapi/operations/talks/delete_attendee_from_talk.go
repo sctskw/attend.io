@@ -31,7 +31,7 @@ func NewDeleteAttendeeFromTalk(ctx *middleware.Context, handler DeleteAttendeeFr
 
 /*DeleteAttendeeFromTalk swagger:route DELETE /talks/{id}/attendees/{attendeeId} talks deleteAttendeeFromTalk
 
-Deletes a Talk with specific ID
+Remove an Attendee from a Talk
 
 */
 type DeleteAttendeeFromTalk struct {

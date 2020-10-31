@@ -31,7 +31,7 @@ func NewPostAttendees(ctx *middleware.Context, handler PostAttendeesHandler) *Po
 
 /*PostAttendees swagger:route POST /attendees attendees postAttendees
 
-create an Attendee
+Create an Attendee
 
 */
 type PostAttendees struct {
