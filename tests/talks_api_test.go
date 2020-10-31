@@ -49,10 +49,12 @@ func (s *ApiTestSuite) TestTalksAPI() {
 
 	s.Run("add Attendee to Talk", func() {
 
+		//need an Attendee first
 		res := s.Create("/attendees", a, &attendee)
 		s.Assert().Equal(200, res.StatusCode)
 		s.Assert().NotEmpty(attendee.ID)
 
+		//update the TalkList
 		res, err := s.Update(fmt.Sprintf("/talks/%s/attendees", talk.ID), []string{attendee.ID}, &talk)
 		s.Assert().Nil(err)
 		s.Assert().Equal(200, res.StatusCode)

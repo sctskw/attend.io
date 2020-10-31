@@ -152,6 +152,10 @@ func (f *firestoreClient) Update(collection, id string, b []byte) (FetchOneRespo
 	data := make(map[string]interface{}, 0)
 	_ = json.Unmarshal(b, &data)
 
+	if _, exists := data["id"]; exists {
+		delete(data, "id")
+	}
+
 	_, err := doc.Set(ctx, data)
 
 	if err != nil {
