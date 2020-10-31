@@ -53,7 +53,7 @@ EMPTY services
 
 #### Generate API Docs
 ```
-make docs && 
+make docs
 ```
 
 #### View Local API Docs

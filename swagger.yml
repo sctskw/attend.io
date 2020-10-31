@@ -317,9 +317,6 @@ definitions:
     items:
       $ref: "#/definitions/Attendee"
 
-  AttendeeTalk:
-
-
   Error:
     type: object
     required:
