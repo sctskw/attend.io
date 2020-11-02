@@ -411,7 +411,11 @@ func init() {
           "type": "string",
           "minLength": 1
         },
-        "ref": {
+        "refId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "refPath": {
           "type": "string",
           "readOnly": true
         },
@@ -485,6 +489,14 @@ func init() {
         "presenter": {
           "type": "string",
           "minLength": 1
+        },
+        "refId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "refPath": {
+          "type": "string",
+          "readOnly": true
         },
         "ref_attendees": {
           "$ref": "#/definitions/AttendeeList"
@@ -894,7 +906,11 @@ func init() {
           "type": "string",
           "minLength": 1
         },
-        "ref": {
+        "refId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "refPath": {
           "type": "string",
           "readOnly": true
         },
@@ -968,6 +984,14 @@ func init() {
         "presenter": {
           "type": "string",
           "minLength": 1
+        },
+        "refId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "refPath": {
+          "type": "string",
+          "readOnly": true
         },
         "ref_attendees": {
           "$ref": "#/definitions/AttendeeList"

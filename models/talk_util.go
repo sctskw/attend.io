@@ -19,7 +19,7 @@ func NewTalk(name, presenter, description string, start, end time.Time) *Talk {
 
 func (m *Talk) GetAttendeeIds() (ids []string) {
 	for _, a := range m.RefAttendees {
-		ids = append(ids, a.ID)
+		ids = append(ids, a.RefID)
 	}
 	return ids
 }

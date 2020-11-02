@@ -39,9 +39,13 @@ type Attendee struct {
 	// Min Length: 1
 	NameLast *string `json:"name_last"`
 
-	// ref
+	// ref Id
 	// Read Only: true
-	Ref string `json:"ref,omitempty"`
+	RefID string `json:"refId,omitempty"`
+
+	// ref path
+	// Read Only: true
+	RefPath string `json:"refPath,omitempty"`
 
 	// ref talks
 	RefTalks TalkList `json:"ref_talks,omitempty"`

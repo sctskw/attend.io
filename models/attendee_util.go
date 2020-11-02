@@ -16,7 +16,8 @@ func NewAttendee(nameFirst, nameLast, email string) *Attendee {
 
 func (m *Attendee) GetTalkIds() (ids []string) {
 	for _, t := range m.RefTalks {
-		ids = append(ids, t.ID)
+		ids = append(ids, t.RefID)
+
 	}
 	return ids
 }

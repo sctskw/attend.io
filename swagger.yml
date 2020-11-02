@@ -262,6 +262,12 @@ definitions:
       id:
         type: string
         readOnly: true
+      refId:
+        type: string
+        readOnly: true
+      refPath:
+        type: string
+        readOnly: true
       name:
         type: string
         minLength: 1
@@ -294,7 +300,10 @@ definitions:
       id:
         type: string
         readOnly: true
-      ref:
+      refId:
+        type: string
+        readOnly: true
+      refPath:
         type: string
         readOnly: true
       name_display:

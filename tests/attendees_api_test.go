@@ -30,15 +30,15 @@ func (s *ApiTestSuite) TestAttendeesAPI() {
 	s.Run("create an Attendee", func() {
 		res := s.Create("/attendees", a, &attendee)
 		s.Assert().Equal(200, res.StatusCode)
-		s.Assert().Empty(a.ID)
-		s.Assert().NotEmpty(attendee.ID)
+		s.Assert().Empty(a.RefID)
+		s.Assert().NotEmpty(attendee.RefID)
 		s.Assert().Equal(a.NameFirst, attendee.NameFirst)
 		s.Assert().Equal(a.NameLast, attendee.NameLast)
 		s.Assert().Equal(a.Email, attendee.Email)
 	})
 
 	s.Run("get Attendee by ID", func() {
-		res := s.Fetch("/attendees?id="+attendee.ID, &attendee)
+		res := s.Fetch("/attendees?id="+attendee.RefID, &attendee)
 		s.Assert().Equal(200, res.StatusCode)
 	})
 
@@ -50,14 +50,14 @@ func (s *ApiTestSuite) TestAttendeesAPI() {
 	s.Run("join a Talk", func() {
 		res := s.Create("/talks", t, &talk)
 		s.Assert().Equal(200, res.StatusCode)
-		s.Assert().NotEmpty(talk.ID)
+		s.Assert().NotEmpty(talk.RefID)
 
 		//update the TalkList
-		res, err := s.Update(fmt.Sprintf("/talks/%s/attendees", talk.ID), []string{attendee.ID}, &talk)
+		res, err := s.Update(fmt.Sprintf("/talks/%s/attendees", talk.RefID), []string{attendee.RefID}, &talk)
 		s.Assert().Nil(err)
 		s.Assert().Equal(200, res.StatusCode)
 		s.Assert().Len(talk.RefAttendees, 1)
-		s.Assert().Equal(talk.RefAttendees[0].ID, attendee.ID)
+		s.Assert().Equal(talk.RefAttendees[0].RefID, attendee.RefID)
 	})
 
 	s.Run("delete an Attendee", func() {
@@ -66,14 +66,14 @@ func (s *ApiTestSuite) TestAttendeesAPI() {
 
 		t := models.Talk{}
 
-		res = s.Delete("/attendees/" + attendee.ID)
+		res = s.Delete("/attendees/" + attendee.RefID)
 		s.Assert().Equal(204, res.StatusCode)
 
-		res = s.Fetch("/talks/"+talk.ID, &t)
+		res = s.Fetch("/talks/"+talk.RefID, &t)
 		s.Assert().Equal(200, res.StatusCode)
 		s.Assert().Len(t.RefAttendees, 0)
 
-		res = s.Delete("/talks/" + t.ID)
+		res = s.Delete("/talks/" + t.RefID)
 		s.Assert().Equal(204, res.StatusCode)
 
 	})

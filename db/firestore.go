@@ -3,11 +3,14 @@ package db
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
 
 	"cloud.google.com/go/firestore"
+
+	"github.com/google/uuid"
 )
 
 type FirestoreClient interface {
@@ -58,8 +61,7 @@ func (f *firestoreClient) FetchAll(collection string) (results FetchAllResponse,
 
 	for _, doc := range docs {
 		d := doc.Data()
-		d["id"] = doc.Ref.ID //copy the id
-		d["ref"] = doc.Ref.Path
+		d["refPath"] = doc.Ref.Path
 
 		//convert to bytes
 		b, _ := json.Marshal(d)
@@ -88,26 +90,7 @@ func (f *firestoreClient) FetchAllById(collection string, ids ...string) (result
 }
 
 func (f *firestoreClient) FetchById(collection, id string) (FetchOneResponse, error) {
-
-	doc := f.client.Collection(collection).Doc(id)
-	item, err := doc.Get(context.Background())
-
-	if err != nil {
-		return nil, err
-	}
-
-	d := item.Data()
-	d["id"] = item.Ref.ID //copy the id
-	d["ref"] = item.Ref.Path
-
-	//convert to bytes
-	b, err := json.Marshal(d)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return b, nil
+	return f.FetchByField(collection, "refId", id)
 }
 
 func (f *firestoreClient) FetchByField(collection, field, value string) (FetchOneResponse, error) {
@@ -123,8 +106,6 @@ func (f *firestoreClient) FetchByField(collection, field, value string) (FetchOn
 	}
 
 	d := doc.Data()
-	d["id"] = doc.Ref.ID //copy the id
-	d["ref"] = doc.Ref.Path
 
 	//convert to bytes
 	b, err := json.Marshal(d)
@@ -145,9 +126,10 @@ func (f *firestoreClient) Insert(collection string, b []byte) (FetchOneResponse,
 		return nil, err
 	}
 
-	if _, exists := data["id"]; exists {
-		delete(data, "id")
-	}
+	refId := uuid.New().String()
+
+	//generate  a custom  internal id since  doc ids  are  unstable
+	data["refId"] = refId
 
 	ref, _, err := f.client.Collection(collection).Add(context.Background(), data)
 
@@ -155,22 +137,39 @@ func (f *firestoreClient) Insert(collection string, b []byte) (FetchOneResponse,
 		return nil, err
 	}
 
-	return f.FetchById(collection, ref.ID)
+	if ref == nil {
+		return nil, errors.New("didnt create document object")
+	}
+
+	return f.FetchById(collection, refId)
 }
 
 func (f *firestoreClient) Update(collection, id string, b []byte) (FetchOneResponse, error) {
 
 	ctx := context.Background()
-	doc := f.client.Collection(collection).Doc(id)
+
+	doc, err := f.client.Collection(collection).
+		Where("refId", "==", id).
+		Limit(1).
+		Documents(ctx).
+		Next()
+
+	if err != nil {
+		return nil, err
+	}
 
 	data := make(map[string]interface{}, 0)
 	_ = json.Unmarshal(b, &data)
 
-	if _, exists := data["id"]; exists {
-		delete(data, "id")
-	}
+	//if _, exists := data["id"]; exists {
+	//	delete(data, "id")
+	//}
+	//
+	//if _, exists := data["ID"]; exists {
+	//	delete(data, "ID")
+	//}
 
-	_, err := doc.Set(ctx, data)
+	_, err = doc.Ref.Set(ctx, data)
 
 	if err != nil {
 		return nil, err

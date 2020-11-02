@@ -42,6 +42,14 @@ type Talk struct {
 	// Min Length: 1
 	Presenter string `json:"presenter,omitempty"`
 
+	// ref Id
+	// Read Only: true
+	RefID string `json:"refId,omitempty"`
+
+	// ref path
+	// Read Only: true
+	RefPath string `json:"refPath,omitempty"`
+
 	// ref attendees
 	RefAttendees AttendeeList `json:"ref_attendees,omitempty"`
 }

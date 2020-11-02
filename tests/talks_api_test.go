@@ -30,8 +30,8 @@ func (s *ApiTestSuite) TestTalksAPI() {
 	s.Run("create a Talk", func() {
 		res := s.Create("/talks", t, &talk)
 		s.Assert().Equal(200, res.StatusCode)
-		s.Assert().Empty(t.ID)
-		s.Assert().NotEmpty(talk.ID)
+		s.Assert().Empty(t.RefID)
+		s.Assert().NotEmpty(talk.RefID)
 		s.Assert().Equal(t.Name, talk.Name)
 		s.Assert().Equal(t.Presenter, talk.Presenter)
 		s.Assert().Equal(t.Description, talk.Description)
@@ -44,7 +44,7 @@ func (s *ApiTestSuite) TestTalksAPI() {
 	})
 
 	s.Run("fetch Talk by ID", func() {
-		res := s.Fetch("/talks/"+talk.ID, &talk)
+		res := s.Fetch("/talks/"+talk.RefID, &talk)
 		s.Assert().Equal(200, res.StatusCode)
 	})
 
@@ -53,10 +53,10 @@ func (s *ApiTestSuite) TestTalksAPI() {
 		//need an Attendee first
 		res := s.Create("/attendees", a, &attendee)
 		s.Assert().Equal(200, res.StatusCode)
-		s.Assert().NotEmpty(attendee.ID)
+		s.Assert().NotEmpty(attendee.RefID)
 
 		//update the TalkList
-		res, err := s.Update(fmt.Sprintf("/talks/%s/attendees", talk.ID), []string{attendee.ID}, &talk)
+		res, err := s.Update(fmt.Sprintf("/talks/%s/attendees", talk.RefID), []string{attendee.RefID}, &talk)
 		s.Assert().Nil(err)
 		s.Assert().Equal(200, res.StatusCode)
 		s.Assert().Len(talk.RefAttendees, 1)
@@ -67,19 +67,19 @@ func (s *ApiTestSuite) TestTalksAPI() {
 		var res *http.Response
 
 		//update the TalkList
-		res = s.Delete(fmt.Sprintf("/talks/%s/attendees/%s", talk.ID, attendee.ID))
+		res = s.Delete(fmt.Sprintf("/talks/%s/attendees/%s", talk.RefID, attendee.RefID))
 		s.Assert().Equal(204, res.StatusCode)
 
 		t := models.Talk{}
-		res = s.Fetch("/talks/"+talk.ID, &t)
+		res = s.Fetch("/talks/"+talk.RefID, &t)
 		s.Assert().Equal(200, res.StatusCode)
 		s.Assert().Len(t.RefAttendees, 0)
 
 	})
 
 	s.Run("delete a Talk", func() {
-		s.Delete("/talks/" + talk.ID)
-		s.Delete("/attendees/" + attendee.ID)
+		s.Delete("/talks/" + talk.RefID)
+		s.Delete("/attendees/" + attendee.RefID)
 	})
 
 }

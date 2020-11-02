@@ -96,7 +96,7 @@ func (s *attendeeService) Create(m *models.Attendee) (*models.Attendee, error) {
 		return nil, err
 	}
 
-	return s.GetById(a.ID)
+	return s.GetById(a.RefID)
 }
 
 func (s *attendeeService) DeleteById(id string) error {

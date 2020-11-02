@@ -115,7 +115,7 @@ func (s *talkService) Create(m *models.Talk) (*models.Talk, error) {
 		return nil, err
 	}
 
-	return s.GetById(t.ID)
+	return s.GetById(t.RefID)
 }
 
 func (s *talkService) Delete(id string) error {
@@ -126,6 +126,8 @@ func (s *talkService) Delete(id string) error {
 func (s *talkService) AddAttendee(id string, attendees []string) (*models.Talk, error) {
 
 	talk, err := s.GetById(id)
+
+	fmt.Println(fmt.Sprintf("Found Talk: %s", id))
 
 	if err != nil {
 		return nil, err
@@ -146,7 +148,7 @@ func (s *talkService) AddAttendee(id string, attendees []string) (*models.Talk, 
 
 	//associate the Talk to the Attendee
 	for _, a := range refs {
-		_, err := Attendees().JoinTalk(a.ID, id)
+		_, err := Attendees().JoinTalk(a.RefID, id)
 
 		//TODO: handle this
 		if err != nil {
@@ -177,7 +179,7 @@ func (s *talkService) RemoveAttendee(id, aid string) error {
 	//TODO: this isn't efficient. could be a go routine or an async background task since it can happen later
 	updated := models.AttendeeList{}
 	for _, ref := range talk.RefAttendees {
-		if ref.ID != aid {
+		if ref.RefID != aid {
 			updated = append(updated, ref)
 		}
 	}
