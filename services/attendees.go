@@ -136,7 +136,7 @@ func (s *attendeeService) JoinTalk(id string, talks ...string) (*models.Attendee
 	refs := Talks().GetAllById(talks...)
 
 	//join the talks
-	attendee.JoinTalks(refs...)
+	attendee.JoinTalks(refs)
 
 	b, _ := attendee.MarshalBinary()
 
@@ -173,7 +173,7 @@ func (s *attendeeService) LeaveTalk(id string, talks ...string) (*models.Attende
 	}
 
 	//leave the talks
-	attendee.LeaveTalks(talks...)
+	attendee.LeaveTalks(refs)
 
 	b, _ := attendee.MarshalBinary()
 

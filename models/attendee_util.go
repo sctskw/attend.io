@@ -22,7 +22,7 @@ func (m *Attendee) GetTalkIds() (ids []string) {
 	return ids
 }
 
-func (m *Attendee) JoinTalks(talks ...*Talk) *Attendee {
+func (m *Attendee) JoinTalks(talks TalkList) *Attendee {
 
 	//TODO: need to check for duplicates
 	for _, t := range talks {
@@ -33,13 +33,13 @@ func (m *Attendee) JoinTalks(talks ...*Talk) *Attendee {
 	return m
 }
 
-func (m *Attendee) LeaveTalks(talkIds ...string) *Attendee {
+func (m *Attendee) LeaveTalks(talks TalkList) *Attendee {
 	//clean up talks
 	//TODO: move to Attendee model
 	updated := TalkList{}
 	for _, talk := range m.RefTalks {
-		for _, tId := range talkIds {
-			if tId != talk.RefID {
+		for _, leaveTalk := range talks {
+			if leaveTalk.RefID != talk.RefID {
 				talk.RefAttendees = nil //sanitize
 				updated = append(updated, talk)
 			}
