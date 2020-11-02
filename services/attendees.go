@@ -167,11 +167,6 @@ func (s *attendeeService) LeaveTalk(id string, talks ...string) (*models.Attende
 
 	refs := Talks().GetAllById(talks...)
 
-	//remove from Talks first
-	for _, talk := range refs {
-		_ = Talks().RemoveAttendee(talk.RefID, attendee.RefID)
-	}
-
 	//leave the talks
 	attendee.LeaveTalks(refs)
 

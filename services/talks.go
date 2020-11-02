@@ -199,6 +199,8 @@ func (s *talkService) RemoveAttendee(id, aid string) error {
 	for _, ref := range talk.RefAttendees {
 		if ref.RefID != aid {
 			updated = append(updated, ref)
+		} else {
+			_, _ = Attendees().LeaveTalk(ref.RefID, talk.RefID)
 		}
 	}
 	talk.RefAttendees = updated //update the list
