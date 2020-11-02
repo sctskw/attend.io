@@ -21,3 +21,34 @@ func (m *Attendee) GetTalkIds() (ids []string) {
 	}
 	return ids
 }
+
+func (m *Attendee) JoinTalks(talks ...*Talk) *Attendee {
+
+	//TODO: need to check for duplicates
+	for _, t := range talks {
+		t.RefAttendees = nil //clean these up so we 're not overloading documents.
+		m.RefTalks = append(m.RefTalks, t)
+	}
+
+	return m
+}
+
+func (m *Attendee) LeaveTalks(talkIds ...string) *Attendee {
+	//clean up talks
+	//TODO: move to Attendee model
+	updated := TalkList{}
+	for _, talk := range m.RefTalks {
+		for _, tId := range talkIds {
+			if tId != talk.RefID {
+				talk.RefAttendees = nil //sanitize
+				updated = append(updated, talk)
+			}
+		}
+	}
+
+	//remove
+	m.RefTalks = updated
+
+	return m
+
+}

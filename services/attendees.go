@@ -135,11 +135,8 @@ func (s *attendeeService) JoinTalk(id string, talks ...string) (*models.Attendee
 
 	refs := Talks().GetAllById(talks...)
 
-	//sanitize
-	for _, r := range refs {
-		r.RefAttendees = nil //clean these up so we 're not overloading documents.
-		attendee.RefTalks = append(attendee.RefTalks, r)
-	}
+	//join the talks
+	attendee.JoinTalks(refs...)
 
 	b, _ := attendee.MarshalBinary()
 
@@ -175,20 +172,8 @@ func (s *attendeeService) LeaveTalk(id string, talks ...string) (*models.Attende
 		_ = Talks().RemoveAttendee(talk.RefID, attendee.RefID)
 	}
 
-	//clean up talks
-	//TODO: move to Attendee model
-	updated := models.TalkList{}
-	for _, talk := range attendee.RefTalks {
-		for _, t := range refs {
-			if t.RefID != talk.RefID {
-				talk.RefAttendees = nil //sanitize
-				updated = append(updated, talk)
-			}
-		}
-	}
-
-	//remove
-	attendee.RefTalks = updated
+	//leave the talks
+	attendee.LeaveTalks(talks...)
 
 	b, _ := attendee.MarshalBinary()
 
