@@ -15,6 +15,7 @@ type AttendeeService interface {
 	Create(m *models.Attendee) (*models.Attendee, error)
 	DeleteById(id string) error
 	JoinTalk(id string, talks ...string) (*models.Attendee, error)
+	LeaveTalk(id string, talks ...string) (*models.Attendee, error)
 }
 
 type attendeeService struct {
@@ -156,5 +157,50 @@ func (s *attendeeService) JoinTalk(id string, talks ...string) (*models.Attendee
 	}
 
 	return a, nil
+}
 
+//TODO: kind of duplicative of JoinTalk. Look to refactore
+func (s *attendeeService) LeaveTalk(id string, talks ...string) (*models.Attendee, error) {
+
+	attendee, err := s.GetById(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	refs := Talks().GetAllById(talks...)
+
+	//remove from Talks first
+	for _, ref := range refs {
+		_ = Talks().RemoveAttendee(ref.RefID, attendee.RefID)
+	}
+
+	//clean up talks
+	//TODO: move to Attendee model
+	updated := models.TalkList{}
+	for _, talk := range attendee.RefTalks {
+		for _, ref := range refs {
+			if ref.RefID != talk.RefID {
+				talk.RefAttendees = nil //sanitize
+				updated = append(updated, talk)
+			}
+		}
+	}
+
+	b, _ := attendee.MarshalBinary()
+
+	res, err := s.db.Update("attendees", id, b)
+
+	if err != nil {
+		return nil, err
+	}
+
+	a := &models.Attendee{}
+	err = a.UnmarshalBinary(res)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return a, nil
 }

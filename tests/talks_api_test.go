@@ -79,6 +79,17 @@ func (s *ApiTestSuite) TestTalksAPI() {
 
 	s.Run("delete a Talk", func() {
 		s.Delete("/talks/" + talk.RefID)
+
+		a := models.Attendee{}
+		res := s.Fetch("/attendees?id="+attendee.RefID, &attendee)
+		s.Assert().Equal(200, res.StatusCode)
+
+		for _, t := range a.RefTalks {
+			if t.RefID == talk.RefID {
+				s.Assert().FailNow("Attendee is still in the Talk")
+			}
+		}
+
 		s.Delete("/attendees/" + attendee.RefID)
 	})
 

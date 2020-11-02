@@ -119,6 +119,20 @@ func (s *talkService) Create(m *models.Talk) (*models.Talk, error) {
 }
 
 func (s *talkService) Delete(id string) error {
+
+	talk, err := s.GetById(id)
+
+	if err != nil {
+		return err
+	}
+
+	ids := talk.GetAttendeeIds()
+
+	//leave talks
+	for _, id := range ids {
+		_, _ = Attendees().LeaveTalk(id, talk.RefID)
+	}
+
 	s.db.DeleteById("talks", id)
 	return nil
 }
