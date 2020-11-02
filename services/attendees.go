@@ -171,21 +171,24 @@ func (s *attendeeService) LeaveTalk(id string, talks ...string) (*models.Attende
 	refs := Talks().GetAllById(talks...)
 
 	//remove from Talks first
-	for _, ref := range refs {
-		_ = Talks().RemoveAttendee(ref.RefID, attendee.RefID)
+	for _, talk := range refs {
+		_ = Talks().RemoveAttendee(talk.RefID, attendee.RefID)
 	}
 
 	//clean up talks
 	//TODO: move to Attendee model
 	updated := models.TalkList{}
 	for _, talk := range attendee.RefTalks {
-		for _, ref := range refs {
-			if ref.RefID != talk.RefID {
+		for _, t := range refs {
+			if t.RefID != talk.RefID {
 				talk.RefAttendees = nil //sanitize
 				updated = append(updated, talk)
 			}
 		}
 	}
+
+	//remove
+	attendee.RefTalks = updated
 
 	b, _ := attendee.MarshalBinary()
 
