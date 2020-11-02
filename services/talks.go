@@ -134,7 +134,11 @@ func (s *talkService) AddAttendee(id string, attendees []string) (*models.Talk, 
 	}
 
 	refs := Attendees().GetAllById(attendees...)
-	talk.RefAttendees = append(talk.RefAttendees, refs...)
+
+	for _, ref := range refs {
+		ref.RefTalks = nil //slim down payload
+		talk.RefAttendees = append(talk.RefAttendees, ref)
+	}
 
 	fmt.Println(fmt.Sprintf("Updated Talk: %+v", talk))
 

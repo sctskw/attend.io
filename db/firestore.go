@@ -61,7 +61,6 @@ func (f *firestoreClient) FetchAll(collection string) (results FetchAllResponse,
 
 	for _, doc := range docs {
 		d := doc.Data()
-		d["refPath"] = doc.Ref.Path
 
 		//convert to bytes
 		b, _ := json.Marshal(d)
@@ -148,11 +147,7 @@ func (f *firestoreClient) Update(collection, id string, b []byte) (FetchOneRespo
 
 	ctx := context.Background()
 
-	doc, err := f.client.Collection(collection).
-		Where("refId", "==", id).
-		Limit(1).
-		Documents(ctx).
-		Next()
+	doc, err := f.getDocByRefId(ctx, collection, id)
 
 	if err != nil {
 		return nil, err
@@ -160,14 +155,6 @@ func (f *firestoreClient) Update(collection, id string, b []byte) (FetchOneRespo
 
 	data := make(map[string]interface{}, 0)
 	_ = json.Unmarshal(b, &data)
-
-	//if _, exists := data["id"]; exists {
-	//	delete(data, "id")
-	//}
-	//
-	//if _, exists := data["ID"]; exists {
-	//	delete(data, "ID")
-	//}
 
 	_, err = doc.Ref.Set(ctx, data)
 
@@ -179,7 +166,22 @@ func (f *firestoreClient) Update(collection, id string, b []byte) (FetchOneRespo
 }
 
 func (f *firestoreClient) DeleteById(collection, id string) EmptyResponse {
-	doc := f.client.Collection(collection).Doc(id)
-	_, _ = doc.Delete(context.Background())
+	ctx := context.Background()
+	doc, err := f.getDocByRefId(ctx, collection, id)
+
+	if err != nil {
+		return nil
+	}
+
+	_, _ = doc.Ref.Delete(ctx)
+
 	return nil
+}
+
+func (f *firestoreClient) getDocByRefId(ctx context.Context, collection, id string) (*firestore.DocumentSnapshot, error) {
+	return f.client.Collection(collection).
+		Where("refId", "==", id).
+		Limit(1).
+		Documents(ctx).
+		Next()
 }
