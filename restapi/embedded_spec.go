@@ -395,10 +395,6 @@ func init() {
           "type": "string",
           "format": "email"
         },
-        "id": {
-          "type": "string",
-          "readOnly": true
-        },
         "name_display": {
           "type": "string",
           "minLength": 1
@@ -412,10 +408,6 @@ func init() {
           "minLength": 1
         },
         "refId": {
-          "type": "string",
-          "readOnly": true
-        },
-        "refPath": {
           "type": "string",
           "readOnly": true
         },
@@ -478,10 +470,6 @@ func init() {
           "type": "string",
           "minLength": 1
         },
-        "id": {
-          "type": "string",
-          "readOnly": true
-        },
         "name": {
           "type": "string",
           "minLength": 1
@@ -491,10 +479,6 @@ func init() {
           "minLength": 1
         },
         "refId": {
-          "type": "string",
-          "readOnly": true
-        },
-        "refPath": {
           "type": "string",
           "readOnly": true
         },
@@ -890,10 +874,6 @@ func init() {
           "type": "string",
           "format": "email"
         },
-        "id": {
-          "type": "string",
-          "readOnly": true
-        },
         "name_display": {
           "type": "string",
           "minLength": 1
@@ -907,10 +887,6 @@ func init() {
           "minLength": 1
         },
         "refId": {
-          "type": "string",
-          "readOnly": true
-        },
-        "refPath": {
           "type": "string",
           "readOnly": true
         },
@@ -973,10 +949,6 @@ func init() {
           "type": "string",
           "minLength": 1
         },
-        "id": {
-          "type": "string",
-          "readOnly": true
-        },
         "name": {
           "type": "string",
           "minLength": 1
@@ -986,10 +958,6 @@ func init() {
           "minLength": 1
         },
         "refId": {
-          "type": "string",
-          "readOnly": true
-        },
-        "refPath": {
           "type": "string",
           "readOnly": true
         },

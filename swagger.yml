@@ -259,13 +259,7 @@ definitions:
     required:
       - name
     properties:
-      id:
-        type: string
-        readOnly: true
       refId:
-        type: string
-        readOnly: true
-      refPath:
         type: string
         readOnly: true
       name:
@@ -297,13 +291,7 @@ definitions:
       - name_first
       - name_last
     properties:
-      id:
-        type: string
-        readOnly: true
       refId:
-        type: string
-        readOnly: true
-      refPath:
         type: string
         readOnly: true
       name_display:

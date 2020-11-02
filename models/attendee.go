@@ -21,10 +21,6 @@ type Attendee struct {
 	// Format: email
 	Email strfmt.Email `json:"email,omitempty"`
 
-	// id
-	// Read Only: true
-	ID string `json:"id,omitempty"`
-
 	// name display
 	// Min Length: 1
 	NameDisplay string `json:"name_display,omitempty"`
@@ -42,10 +38,6 @@ type Attendee struct {
 	// ref Id
 	// Read Only: true
 	RefID string `json:"refId,omitempty"`
-
-	// ref path
-	// Read Only: true
-	RefPath string `json:"refPath,omitempty"`
 
 	// ref talks
 	RefTalks TalkList `json:"ref_talks,omitempty"`
